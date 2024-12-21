@@ -16,17 +16,17 @@
             Route="MainPage" />
 
         <ShellContent
-           Title="Home"
+           Title="Map"
            ContentTemplate="{DataTemplate local:MapPage}"
            Route="MapPage" />  
         
         <ShellContent
-           Title="Home"
+           Title="Settings"
            ContentTemplate="{DataTemplate local:SettingsPage}"
            Route="SettingsPage" />
         
        <!-- <ShellContent
-           Title="Home"
+           Title="Help"
            ContentTemplate="{DataTemplate local:HelpPopUpPage}"
            Route="HelpPopUpPage" />-->
 
