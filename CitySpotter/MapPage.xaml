@@ -20,9 +20,9 @@
     <custom:BindableMap 
         x:Name="MapView"
         Grid.Row="1"
-         MvvmMapElements="{Binding MapElements}"
+        MvvmMapElements="{Binding MapElements}"
         VisibleRegion="{Binding CurrentMapSpan}"
         IsShowingUser="True"
-         MapType="Street" />
+        MapType="Street" />
     </VerticalStackLayout>
 </ContentPage>

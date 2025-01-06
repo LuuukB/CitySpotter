@@ -60,4 +60,4 @@ namespace CitySpotter.Domain.Services
         }
     }
 }
-}
+

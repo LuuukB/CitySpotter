@@ -23,6 +23,9 @@ namespace CitySpotter
             builder.Services.AddSingleton<MapViewModel>();
             builder.Services.AddSingleton<MapPage>(s => new MapPage(s.GetRequiredService<MapViewModel>()));
 
+
+            builder.Services.AddSingleton<MainPage>();
+            
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
