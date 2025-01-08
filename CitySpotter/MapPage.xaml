@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CitySpotter.MapPage"
+             Title="MapPage"
+             xmlns:viewmodel="clr-namespace:CitySpotter.Domain.Services"
+             x:DataType="viewmodel:MapViewModel"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             xmlns:custom="clr-namespace:CitySpotter.Domain.Services">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+            <Label 
+            Text="Welcome to .NET MAUI!"
+            Grid.Row="0"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+            <custom:BindableMap 
+            x:Name="MapView"
+            Grid.Row="1"
+            MvvmMapElements="{Binding MapElements}"
+            VisibleRegion="{Binding CurrentMapSpan}"
+            IsShowingUser="True"
+            MapType="Street" 
+            />
+        
+
+    </Grid>
+    
+    
+</ContentPage>
