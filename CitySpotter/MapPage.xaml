@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
 
             <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="Hier ziet u de kaart!"
             Grid.Row="0"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
@@ -26,7 +26,7 @@
             MvvmMapElements="{Binding MapElements}"
             VisibleRegion="{Binding CurrentMapSpan}"
             IsShowingUser="True"
-            MapType="Street" 
+            MapType="Hybrid" 
             />
         
 

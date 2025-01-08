@@ -1,6 +1,7 @@
 using CitySpotter.Domain.Services;
 using CitySpotter.Locations.Locations;
 using Microsoft.Maui.Controls.Maps;
+using Microsoft.Maui.Maps;
 using System.Diagnostics;
 
 namespace CitySpotter;
@@ -11,6 +12,11 @@ public partial class MapPage : ContentPage
 	{
 		InitializeComponent();
         BindingContext = viewModel;
+
+        Location location = new Location(51.588331, 4.777802);
+        MapSpan mapSpan = new MapSpan(location, 0.015, 0.015);
+        MapView.VisibleRegion = mapSpan;
+
         createPins();
 	}
 
@@ -110,9 +116,10 @@ public partial class MapPage : ContentPage
             Location = new Location(51.592496, 4.77975),
             Type = PinType.Generic
         };
+
         valkenBergParkPin.MarkerClicked += async (s, args) =>
         {
-            Debug.WriteLine("Marker is ingedrukt van het monument");
+            Debug.WriteLine($"{valkenBergParkPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add( valkenBergParkPin );
         
@@ -249,6 +256,11 @@ public partial class MapPage : ContentPage
             Label = "Begijnenhof",
             Location = new Location(51.589695, 4.778362)
         });
+
+    }
+
+    private void MapView_DescendantAdded(object sender, ElementEventArgs e)
+    {
 
     }
 }
