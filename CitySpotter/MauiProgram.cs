@@ -1,5 +1,7 @@
 ﻿using CitySpotter.Domain.Services;
 using Microsoft.Extensions.Logging;
+using CitySpotter.Domain.Model;
+using CitySpotter.Infrastructure;
 
 namespace CitySpotter
 {
@@ -17,6 +19,11 @@ namespace CitySpotter
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "route.db");
+
+            builder.Services.AddSingleton<IDatabaseRepo>(s =>
+                new DatabaseRepo(dbPath));
 
             builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
 
