@@ -1,5 +1,7 @@
 using CitySpotter.Domain.Services;
+using CitySpotter.Locations.Locations;
 using Microsoft.Maui.Controls.Maps;
+using System.Diagnostics;
 
 namespace CitySpotter;
 
@@ -101,11 +103,25 @@ public partial class MapPage : ContentPage
 
     public void createPins()
     {
-        MapView.Pins.Add(new Pin
+        
+        Pin valkenBergParkPin = new Pin
+        {
+            Label = "Monument ValkenbergPark",
+            Location = new Location(51.592496, 4.77975),
+            Type = PinType.Generic
+        };
+        valkenBergParkPin.MarkerClicked += async (s, args) =>
+        {
+            Debug.WriteLine("Marker is ingedrukt van het monument");
+        };
+        MapView.Pins.Add( valkenBergParkPin );
+        
+        /*MapView.Pins.Add(new Pin
         {
             Label = "Monument ValkenbergPark",
             Location = new Location(51.592496, 4.77975 )
-        });
+           
+        });*/
 
         MapView.Pins.Add(new Pin
         {
