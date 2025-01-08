@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using CitySpotter.Locations.Locations;
+using SQLite;
 
 
 namespace CitySpotter.Domain.Model
@@ -9,6 +10,6 @@ namespace CitySpotter.Domain.Model
         public string RouteName {  get; set; }
         [PrimaryKey, AutoIncrement, Column("Index")]
         public int RouteId {  get; set; }
-        public List<Location> RoutePoints { get; set; }
+        public List<ILocation> RoutePoints { get; set; }
     }
 }
