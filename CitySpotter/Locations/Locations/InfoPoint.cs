@@ -16,7 +16,7 @@ namespace CitySpotter.Locations.Locations
         private string imageSource { get; set; }
         private bool isVisited { get; set; }
 
-        public InfoPoint(double lon, double lat, string name, string info, string imageSource, bool isVisited) {
+        public InfoPoint(double lon, double lat, string name, string info, string imageSource, bool isVisited = false) {
             this.latitude = lon;
             this.longitude = lat;
             this.name = name;
