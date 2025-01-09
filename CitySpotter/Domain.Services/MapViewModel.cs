@@ -39,7 +39,6 @@ namespace CitySpotter.Domain.Services
         {
             _geolocation = geolocation;
             _geolocation.LocationChanged += LocationChanged;
-            InitializeMap();
         }
         public void LocationChanged(object? sender, GeolocationLocationChangedEventArgs e) 
         {
@@ -73,22 +72,7 @@ namespace CitySpotter.Domain.Services
         {
             _geolocation.StopListeningForeground();
         }
-        private async void InitializeMap()
-        {
-            try
-            {
-                var location = await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
-
-                if (location is not null)
-                {
-                    CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(10));
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Fout bij ophalen locatie: {ex.Message}");
-            }
-        }
+      
 
         
         private void UpdateRoute(Location location)
