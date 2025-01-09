@@ -43,17 +43,13 @@ namespace CitySpotter.Domain.Services
             _databaseRepo = repository;
             _geolocation = geolocation;
             //todo: beter gezegd de currentmapspan moet naar user toe op het moment dat de map word gemaakt.
-            Route route = new()
-            {
-                RouteName = "testRoute",
-                RoutePoints = [new InfoPoint(51.592496, 4.779975, "Monument ValkenburgPark", "info text over dit monument","nassaubaroniemonument.jpg"),
-                               new routePoint(51.592833, 4.77872), new routePoint(51.592496, 4.77975),
-                               new InfoPoint(51.590612, 4.776167, "Kasteel van Breda", "info tekst over kasteel van breda", "kasteelbreda.jpg")]
-            };
 
             _databaseRepo.Init();
-            _databaseRepo.AddRoute(route);
-
+            //new RouteLocation{ longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "info text over dit monument", imageSource = "nassaubaroniemonument.jpg"};
+            
+            _databaseRepo.AddRoute(new RouteLocation { longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "info text over dit monument", imageSource = "nassaubaroniemonument.jpg" });
+            Debug.WriteLine("De database heef zoveel punten: " + _databaseRepo.GetAllRoutes().Count);
+            
             InitializeMap();
         }
 
