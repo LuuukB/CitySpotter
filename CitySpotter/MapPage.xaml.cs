@@ -1,13 +1,16 @@
 using CitySpotter.Domain.Services;
 using CitySpotter.Locations.Locations;
 using Microsoft.Maui.Controls.Maps;
+using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Maps;
+using Mopups.Services;
 using System.Diagnostics;
 
 namespace CitySpotter;
 
 public partial class MapPage : ContentPage
 {
+    
 	public MapPage(MapViewModel viewModel)
 	{
 		InitializeComponent();
@@ -119,10 +122,11 @@ public partial class MapPage : ContentPage
 
         valkenBergParkPin.MarkerClicked += async (s, args) =>
         {
+            MopupService.Instance.PushAsync(new InfoPointPopup());
             Debug.WriteLine($"{valkenBergParkPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add( valkenBergParkPin );
-        
+
         /*MapView.Pins.Add(new Pin
         {
             Label = "Monument ValkenbergPark",
@@ -130,11 +134,23 @@ public partial class MapPage : ContentPage
            
         });*/
 
-        MapView.Pins.Add(new Pin
+        Pin vuurtorenPin = new Pin
+        {
+            Label = "Vuurtoren",
+            Location = new Location(51.592833, 4.77872),
+            Type = PinType.SavedPin
+        };
+        vuurtorenPin.MarkerClicked += (s, args) =>
+        {
+            Debug.WriteLine($"{vuurtorenPin.Label}");
+        };
+        MapView.Pins.Add(vuurtorenPin);
+
+        /*MapView.Pins.Add(new Pin
         {
             Label = "Vuurtoren",
             Location = new Location(51.592833, 4.77872)
-        });
+        });*/
 
         MapView.Pins.Add(new Pin
         {
