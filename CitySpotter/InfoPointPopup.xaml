@@ -15,6 +15,12 @@
                     FontSize="20"
                     HorizontalOptions="Center">
                 </Label>
+                <Image
+                    Source="nassaubaroniemonument.jpg"
+                    HeightRequest="180"
+                    WidthRequest="180"
+                    Aspect="AspectFit">
+                </Image>
             </VerticalStackLayout>
                 </Border>
         </ScrollView>
