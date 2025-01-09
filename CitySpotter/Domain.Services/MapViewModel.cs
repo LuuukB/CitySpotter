@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace CitySpotter.Domain.Services
 {
@@ -23,7 +24,7 @@ namespace CitySpotter.Domain.Services
 
         private System.Timers.Timer? _locationTimer;
 
-        //private readonly List<Location> _routeCoordinates = new();
+ 
 
         [ObservableProperty] private ObservableCollection<MapElement> _mapElements = new();
 
@@ -32,16 +33,46 @@ namespace CitySpotter.Domain.Services
 
         [ObservableProperty] public MapSpan _currentMapSpan;
 
-        //[ObservableProperty]
-        //public string currentLocation;
+  
 
         public MapViewModel(IGeolocation geolocation)
         {
             _geolocation = geolocation;
-            //todo: beter gezegd de currentmapspan moet naar user toe op het moment dat de map word gemaakt.
+            _geolocation.LocationChanged += LocationChanged;
             InitializeMap();
         }
+        public void LocationChanged(object? sender, GeolocationLocationChangedEventArgs e) 
+        {
+            if (e?.Location != null)
+            {
+                try
+                {
+                    Debug.WriteLine("Location: {0}", e.Location);
+                    CurrentMapSpan = MapSpan.FromCenterAndRadius(e.Location, Distance.FromMeters(30));
 
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Fout bij ophalen locatie: {ex.Message}");
+                }
+            }
+
+        }
+        //deze methode moet eerst aangeroepen worden voordat het gps event gebint met werken. 
+        public async Task ListeningToLocation()
+        {
+            await _geolocation.StartListeningForegroundAsync(new GeolocationListeningRequest
+            {
+                MinimumTime = TimeSpan.FromSeconds(5),
+                DesiredAccuracy = GeolocationAccuracy.Best
+            });
+
+        }
+        //voor het stoppen van het event. anders blijft die continu doorgaan.
+        public void StopListeningToLocation()
+        {
+            _geolocation.StopListeningForeground();
+        }
         private async void InitializeMap()
         {
             try
@@ -59,63 +90,7 @@ namespace CitySpotter.Domain.Services
             }
         }
 
-        //[RelayCommand]
-        //public void RouteStarting()
-        //{
-        //    Debug.WriteLine("starting route/timer");
-        //    _locationTimer = new System.Timers.Timer(5000);
-        //    _locationTimer.Elapsed += OnTimedEvent;
-        //    _locationTimer.AutoReset = true;
-        //    _locationTimer.Start();
-        //    IsStartEnabled = false;
-        //    IsStopEnabled = true;
-        //}
-
-        //[RelayCommand]
-        //public void RouteStop()
-        //{
-        //    Debug.WriteLine("stopping route/timer");
-
-        //    if (_locationTimer != null)
-        //    {
-        //        _locationTimer.Stop();
-        //        _locationTimer.Dispose();
-        //        _locationTimer = null;
-        //        IsStartEnabled = true;
-        //        IsStopEnabled = false;
-        //        MapElements.Clear();
-        //        //todo eerst route opslaan voordat je de lijnen weg haalt idk wat we nog echt willen gaan doen.
-        //    }
-        //}
-
-        private void OnTimedEvent(object? sender, ElapsedEventArgs e)
-        {
-            Task.Run(OnTimedEventAsync);
-        }
-
-        private async Task OnTimedEventAsync()
-        {
-            try
-            {
-                Debug.WriteLine("Running {0} at {1}", nameof(OnTimedEventAsync), DateTime.Now.ToShortTimeString());
-
-                var location =
-                    await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
-
-                if (location is not null)
-                {
-                    Debug.WriteLine("Location: {0}", location);
-                    CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(10));
-
-                    UpdateRoute(location);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Fout bij ophalen locatie: {ex.Message}");
-            }
-        }
-
+        
         private void UpdateRoute(Location location)
         {
             Debug.WriteLine("Running {0} at {1}.", nameof(UpdateRoute), DateTime.Now.ToShortTimeString());
