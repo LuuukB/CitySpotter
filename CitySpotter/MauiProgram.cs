@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using CitySpotter.Domain.Model;
 using CitySpotter.Infrastructure;
+using Mopups.Hosting;
 
 namespace CitySpotter
 {
@@ -13,10 +14,12 @@ namespace CitySpotter
             builder
                 .UseMauiApp<App>()
                 .UseMauiMaps()
+                .ConfigureMopups()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+  
                 });
 
 
