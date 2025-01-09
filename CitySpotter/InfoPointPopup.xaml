@@ -3,11 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
              x:Class="CitySpotter.InfoPointPopup"
-             Title="InfoPointPopup" BackgroundColor="Black">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="InfoPointPopup">
+
+    <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
+        <Border WidthRequest="300" HeightRequest="600"
+                        BackgroundColor="White"
+                        HorizontalOptions="Center">
+            <VerticalStackLayout Spacing="3">
+                <Label 
+                    Text="Informatie"
+                    FontSize="20"
+                    HorizontalOptions="Center">
+                </Label>
+            </VerticalStackLayout>
+                </Border>
+        </ScrollView>
 </mopups:PopupPage>
