@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CitySpotter.Domain.Model;
+using CitySpotter.Locations.Locations;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
@@ -28,6 +30,7 @@ namespace CitySpotter.Domain.Services
         [ObservableProperty] private ObservableCollection<MapElement> _mapElements = new();
 
         private List<Location> _locationCache = [];
+        private IDatabaseRepo _databaseRepo;
 
 
         [ObservableProperty] public MapSpan _currentMapSpan;
@@ -35,10 +38,18 @@ namespace CitySpotter.Domain.Services
         //[ObservableProperty]
         //public string currentLocation;
 
-        public MapViewModel(IGeolocation geolocation)
+        public MapViewModel(IGeolocation geolocation, IDatabaseRepo repository)
         {
+            _databaseRepo = repository;
             _geolocation = geolocation;
             //todo: beter gezegd de currentmapspan moet naar user toe op het moment dat de map word gemaakt.
+
+            _databaseRepo.Init();
+            //new RouteLocation{ longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "info text over dit monument", imageSource = "nassaubaroniemonument.jpg"};
+            
+            _databaseRepo.AddRoute(new RouteLocation { longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "info text over dit monument", imageSource = "nassaubaroniemonument.jpg" });
+            Debug.WriteLine("De database heef zoveel punten: " + _databaseRepo.GetAllRoutes().Count);
+            
             InitializeMap();
         }
 
