@@ -32,6 +32,8 @@ namespace CitySpotter
 
             builder.Services.AddSingleton<MapViewModel>();
             builder.Services.AddSingleton<MapPage>(s => new MapPage(s.GetRequiredService<MapViewModel>()));
+            builder.Services.AddTransient<InfoPopupViewModel>();
+            builder.Services.AddTransient<InfoPointPopup>();
 
 
             builder.Services.AddSingleton<MainPage>();

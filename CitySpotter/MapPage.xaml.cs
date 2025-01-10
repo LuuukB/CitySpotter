@@ -122,26 +122,22 @@ public partial class MapPage : ContentPage
 
         valkenBergParkPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "info text over dit monument", imageSource = "nassaubaroniemonument.jpg" })));
             Debug.WriteLine($"{valkenBergParkPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add( valkenBergParkPin );
 
-        /*MapView.Pins.Add(new Pin
-        {
-            Label = "Monument ValkenbergPark",
-            Location = new Location(51.592496, 4.77975 )
-           
-        });*/
-
+        
         Pin vuurtorenPin = new Pin
         {
             Label = "Vuurtoren",
             Location = new Location(51.592833, 4.77872),
             Type = PinType.SavedPin
         };
-        vuurtorenPin.MarkerClicked += (s, args) =>
+        vuurtorenPin.MarkerClicked += async (s, args) =>
         {
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.592833, latitude = 4.779975, name = "Vuurtoren", description = "Breda ligt niet aan de haven", imageSource = "vuurtoren.jpg" })));
             Debug.WriteLine($"{vuurtorenPin.Label}");
         };
         MapView.Pins.Add(vuurtorenPin);
@@ -150,7 +146,7 @@ public partial class MapPage : ContentPage
         {
             Label = "Vuurtoren",
             Location = new Location(51.592833, 4.77872)
-        });*/
+        });
 
         Pin KasteelPin = new Pin
         {
@@ -538,6 +534,7 @@ public partial class MapPage : ContentPage
             Debug.WriteLine($"{BegijnenhofPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(BegijnenhofPin);
+        */
 
     }
 

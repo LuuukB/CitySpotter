@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
              x:Class="CitySpotter.InfoPointPopup"
+             xmlns:viewmodel="clr-namespace:CitySpotter.Domain.Services"
+             x:DataType="viewmodel:InfoPopupViewModel"
              Title="InfoPointPopup">
 
     <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
@@ -16,7 +18,7 @@
                     HorizontalOptions="Center">
                 </Label>
                 <Image
-                    Source="nassaubaroniemonument.jpg"
+                    Source="{Binding ImageSource}"
                     HeightRequest="180"
                     WidthRequest="180"
                     Aspect="AspectFit">
