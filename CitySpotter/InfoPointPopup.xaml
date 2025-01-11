@@ -7,7 +7,7 @@
              x:DataType="viewmodel:InfoPopupViewModel"
              Title="InfoPointPopup">
 
-    <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
+    <ScrollView HorizontalOptions="Center" VerticalOptions="Center" Padding="10">
         <Border WidthRequest="300" HeightRequest="600"
                         BackgroundColor="White"
                         HorizontalOptions="Center">
@@ -23,6 +23,15 @@
                     WidthRequest="180"
                     Aspect="AspectFit">
                 </Image>
+                <ScrollView>
+                    <Border BackgroundColor="White" WidthRequest="290" HeightRequest="350" Padding="10">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="0"/>
+                        </Border.StrokeShape>
+                        <Label LineBreakMode="WordWrap" Text="{Binding Description}"></Label>
+                    </Border>
+                </ScrollView>
+                
             </VerticalStackLayout>
                 </Border>
         </ScrollView>

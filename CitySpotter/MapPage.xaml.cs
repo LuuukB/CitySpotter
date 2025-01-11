@@ -123,7 +123,7 @@ public partial class MapPage : ContentPage
         valkenBergParkPin.MarkerClicked += async (s, args) =>
         {
             
-            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "info text over dit monument", imageSource = "nassaubaroniemonument.jpg" })));
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "nassaubaroniemonumentbeschrijving.txt", imageSource = "nassaubaroniemonument.jpg" })));
             Debug.WriteLine($"{valkenBergParkPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add( valkenBergParkPin );

@@ -14,17 +14,27 @@ namespace CitySpotter.Domain.Services
         private RouteLocation routeLocation { get; set; }
         public InfoPopupViewModel(RouteLocation location) { 
             routeLocation = location;
-            setImage();
+            setData();
         }
 
         [ObservableProperty]
         private string _ImageSource;
         [ObservableProperty]
         private string locationName;
+        [ObservableProperty]
+        private string _Description;
 
-        public void setImage()
+        public async void setData()
         {
             _ImageSource = routeLocation.imageSource;
+
+            using Stream fileStream = await FileSystem.Current.OpenAppPackageFileAsync(routeLocation.description);
+            using StreamReader reader = new StreamReader(fileStream);
+
+            for (int i = 0; i < reader.Read(); i++)
+            {
+                _Description  += reader.ReadLine();
+            }
         }
     }
 }
