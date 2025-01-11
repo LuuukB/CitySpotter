@@ -23,15 +23,14 @@
                     WidthRequest="180"
                     Aspect="AspectFit">
                 </Image>
-                <ScrollView>
-                    <Border BackgroundColor="White" WidthRequest="290" HeightRequest="350" Padding="10">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="0"/>
-                        </Border.StrokeShape>
+                <Border BackgroundColor="White" WidthRequest="290" HeightRequest="350" Padding="10">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="0"/>
+                    </Border.StrokeShape>
+                    <ScrollView>
                         <Label LineBreakMode="WordWrap" Text="{Binding Description}"></Label>
-                    </Border>
-                </ScrollView>
-                
+                    </ScrollView>
+                </Border>
             </VerticalStackLayout>
                 </Border>
         </ScrollView>
