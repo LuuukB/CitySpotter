@@ -277,7 +277,7 @@ public partial class MapPage : ContentPage
         Pin hetPoortje = new Pin
         {
             Label = "Het poortje",
-            Location = new Location(51.588195, 4.775138),
+            Location = new Location(51.587907, 4.775381),
             Type = PinType.Generic
         };
 
