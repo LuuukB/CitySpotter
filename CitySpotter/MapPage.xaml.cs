@@ -137,7 +137,7 @@ public partial class MapPage : ContentPage
         };
         vuurtorenPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.592833, latitude = 4.779975, name = "Vuurtoren", description = "Breda ligt niet aan de haven", imageSource = "vuurtoren.jpg" })));
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.592833, latitude = 4.779975, name = "Vuurtoren", description = "vvvkantoorbeschrijving.txt", imageSource = "vuurtoren.jpg" })));
             Debug.WriteLine($"{vuurtorenPin.Label}");
         };
         MapView.Pins.Add(vuurtorenPin);
