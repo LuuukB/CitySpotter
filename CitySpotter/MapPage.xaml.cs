@@ -137,16 +137,10 @@ public partial class MapPage : ContentPage
         };
         vuurtorenPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.592833, latitude = 4.779975, name = "Vuurtoren", description = "vvvkantoorbeschrijving.txt", imageSource = "vuurtoren.jpg" })));
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.592833, latitude = 4.779975, name = "Vuurtoren", description = "vuurtorenbeschrijving.txt", imageSource = "vuurtoren.jpg" })));
             Debug.WriteLine($"{vuurtorenPin.Label}");
         };
         MapView.Pins.Add(vuurtorenPin);
-
-        /*MapView.Pins.Add(new Pin
-        {
-            Label = "Vuurtoren",
-            Location = new Location(51.592833, 4.77872)
-        });
 
         Pin KasteelPin = new Pin
         {
@@ -157,12 +151,12 @@ public partial class MapPage : ContentPage
 
         KasteelPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation {  longitude = 51.590612, latitude = 4.776167, name = "Kasteel van Breda", description = "kasteelbeschrijving.txt",imageSource = "kasteelbreda.jpg"})));
             Debug.WriteLine($"{KasteelPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(KasteelPin);
 
-        //MapView.Pins.Add(new Pin
+        /*MapView.Pins.Add(new Pin
         //{
         //    Label = "Kasteel van Breda",
         //    Location = new Location(51.590612, 4.776167)
