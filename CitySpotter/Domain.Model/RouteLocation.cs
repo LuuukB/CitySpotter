@@ -17,6 +17,7 @@ namespace CitySpotter.Locations.Locations
         public double longitude { get; set; }
         public string? imageSource { get; set; }
         public bool isVisited { get; set; }
+        public string routeTag { get; set; }
 
         /*public RouteLocation(double lon, double lat, string name, string info, string imageSource, bool isVisited)
         {
