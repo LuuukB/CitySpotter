@@ -13,7 +13,7 @@
                         HorizontalOptions="Center">
             <VerticalStackLayout Spacing="3">
                 <Label 
-                    Text="Informatie"
+                    Text="{Binding LocationName}"
                     FontSize="20"
                     HorizontalOptions="Center">
                 </Label>

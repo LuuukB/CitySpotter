@@ -27,6 +27,7 @@ namespace CitySpotter.Domain.Services
         public async void setData()
         {
             _ImageSource = routeLocation.imageSource;
+            locationName = routeLocation.name;
 
             using Stream fileStream = await FileSystem.Current.OpenAppPackageFileAsync(routeLocation.description);
             using StreamReader reader = new StreamReader(fileStream);

@@ -156,12 +156,6 @@ public partial class MapPage : ContentPage
         };
         MapView.Pins.Add(KasteelPin);
 
-        /*MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Kasteel van Breda",
-        //    Location = new Location(51.590612, 4.776167)
-        //});
-
         Pin stadhoudersPoortPin = new Pin
         {
             Label = "Stadhouderspoort",
@@ -171,16 +165,10 @@ public partial class MapPage : ContentPage
 
         stadhoudersPoortPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.589695, latitude = 4.776138, name = "Stadhouderspoort", description = "stadhouderspoortbeschrijving.txt", imageSource = "stadhouderspoort.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{stadhoudersPoortPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(stadhoudersPoortPin);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "StadhoudersPoort/Beeld Willem III",
-        //    Location = new Location(51.592496, 4.77975)
-        //});
 
         Pin huisVanBrecht = new Pin
         {
@@ -191,16 +179,10 @@ public partial class MapPage : ContentPage
 
         huisVanBrecht.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.590028, latitude = 4.774362, name = "Huis van Brecht", description = "huisvanbrechtbeschrijving.txt", imageSource = "huisvanbrecht7.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{huisVanBrecht.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(huisVanBrecht);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Huis van Brecht", //Huis aan de rechterkant
-        //    Location = new Location(51.590028, 4.774362)
-        //});
 
         Pin spanjaardsgat = new Pin
         {
@@ -211,16 +193,11 @@ public partial class MapPage : ContentPage
 
         spanjaardsgat.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.590195, latitude = 4.773445, name = "Spanjaardsgat", description = "spanjaardsgatbeschrijving.txt", imageSource = "spanjaardsgat.jpg", routeTag = "historischeKilometer" })));
+
             Debug.WriteLine($"{spanjaardsgat.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(spanjaardsgat);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Spanjaardsgat", //langs het water aan de rechter kant
-        //    Location = new Location(51.590195, 4.773445)
-        //});
 
         Pin vismarkt = new Pin
         {
@@ -231,22 +208,23 @@ public partial class MapPage : ContentPage
 
         vismarkt.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.589833, latitude = 4.773333, name = "Vismarkt", description = "vismarktbeschrijving.txt", imageSource = "vismarktbreda.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{vismarkt.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(vismarkt);
 
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Vismarkt",
-        //    Location = new Location(51.589833, 4.773333)
-        //});
-
-        MapView.Pins.Add(new Pin
+        Pin havermarktPin = new Pin
         {
             Label = "Havermarkt",
-            Location = new Location(51.589362, 4.774445)
-        });
+            Location = new Location(51.589362, 4.774445),
+            Type = PinType.Generic
+        };
+        havermarktPin.MarkerClicked += async (s, args) =>
+        {
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.589362, latitude = 4.774445, name = "Havermarkt", description = "havermarktbeschrijving.txt", imageSource = "havermarkt.webp", routeTag = "historischeKilometer" })));
+        };
+        MapView.Pins.Add(havermarktPin);
+
 
         Pin groteKerk = new Pin
         {
@@ -257,16 +235,10 @@ public partial class MapPage : ContentPage
 
         groteKerk.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.588833, latitude = 4.775278, name = "Grote Kerk Breda", description = "grotekerkbeschrijving.txt", imageSource = "grotekerk.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{groteKerk.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(groteKerk);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Grote kerk",
-        //    Location = new Location(51.588833, 4.775278)
-        //});
 
         Pin hetPoortje = new Pin
         {
@@ -277,16 +249,10 @@ public partial class MapPage : ContentPage
 
         hetPoortje.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.588195, latitude = 4.775138, name = "Het Poortje", description = "poortjebeschrijving.txt", imageSource = "hetpoortje.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{hetPoortje.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(hetPoortje);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Het poortje", //Op streetview geen poortje te zien?
-        //    Location = new Location(51.592496, 4.77975)
-        //});
 
         Pin ridderstraatPin = new Pin
         {
@@ -297,16 +263,10 @@ public partial class MapPage : ContentPage
 
         ridderstraatPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.587083, latitude = 4.775750, name = "Ridderstraat", description = "ridderstraatbeschrijving.txt", imageSource = "ridderstraat.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{ridderstraatPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(ridderstraatPin);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "RidderStraat",
-        //    Location = new Location(51.587083, 4.775750)
-        //});
 
         Pin groteMarktPin = new Pin
         {
@@ -317,16 +277,10 @@ public partial class MapPage : ContentPage
 
         groteMarktPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.587417, latitude = 4.776555, name = "De Grote Markt", description = "grotemarktbeschrijving.txt", imageSource = "grotemarktbreda.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{groteMarktPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(groteMarktPin);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Grote markt",
-        //    Location = new Location(51.587417, 4.776555)
-        //});
 
         Pin bevrijdingsMonumentPin = new Pin
         {
@@ -337,16 +291,10 @@ public partial class MapPage : ContentPage
 
         bevrijdingsMonumentPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.588028, latitude = 4.776333, name = "Bevrijdingsmonument", description = "bevrijdingmonumentbeschrijving.txt", imageSource = "bevrijdingsmonument.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{bevrijdingsMonumentPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(bevrijdingsMonumentPin);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Bevrijdingsmonument", //Midden op de markt
-        //    Location = new Location(51.588028, 4.776333)
-        //});
 
         Pin oudStadhuisPin = new Pin
         {
@@ -357,36 +305,24 @@ public partial class MapPage : ContentPage
 
         oudStadhuisPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.588750, latitude = 4.776112, name = "Stadhuis", description = "stadhuisbeschrijving.txt", imageSource = "stadhuis.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{oudStadhuisPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(oudStadhuisPin);
 
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Oud stadhuis", //Aan de rechterkant
-        //    Location = new Location(51.588750, 4.776112)
-        //});
-
         Pin antoniusVanPaduaKerkPin = new Pin
         {
-            Label = "De Antonius van Pardua Kerk",
+            Label = "De Antonius van Padua Kerk",
             Location = new Location(51.5876638, 4.777250),
             Type = PinType.Generic
         };
 
         antoniusVanPaduaKerkPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.587638, latitude = 4.777250, name = "Antonius van Padua Kerk", description = "antoniusvanpadaukerkbeschrijving.txt", imageSource = "paduakerk.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{antoniusVanPaduaKerkPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(antoniusVanPaduaKerkPin);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Antonius van PaduaKerk", //Aan de rechterkant
-        //    Location = new Location(51.5876638, 4.777250)
-        //});
 
         Pin bibliotheekPin = new Pin
         {
@@ -397,16 +333,10 @@ public partial class MapPage : ContentPage
 
         bibliotheekPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.588000, latitude = 4.778945, name = "Bibliotheek", description = "bibliotheekbeschrijving.txt", imageSource = "bibliotheekbreda.webp", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{bibliotheekPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(bibliotheekPin);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Bibliotheek", //Aan de rechterkant
-        //    Location = new Location(51.588000, 4.778945)
-        //});
 
         Pin KloosterKazernePin = new Pin
         {
@@ -417,17 +347,10 @@ public partial class MapPage : ContentPage
 
         KloosterKazernePin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.587722, latitude = 4.781028, name = "Kloosterkazerne", description = "kloosterkazernebeschrijving.txt", imageSource = "kloosterkazerne.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{KloosterKazernePin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(KloosterKazernePin);
-
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Kloosterkazerne (Holland casino)", //Aan de rechterkant
-        //    Location = new Location(51.592496, 4.77975)
-        //});
 
         Pin ChasseTheaterPin = new Pin
         {
@@ -438,16 +361,10 @@ public partial class MapPage : ContentPage
 
         ChasseTheaterPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.587750, latitude = 4.782000, name = "Chassé theater", description = "chassetheaterbeschrijving.txt", imageSource = "chassetheater.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{ChasseTheaterPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(ChasseTheaterPin);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Chasse theater", //Aan de rechterkant, aangebouwd in kloosterkazerne
-        //    Location = new Location(51.587750, 4.782000)
-        //});
 
         Pin BeyerdPin = new Pin
         {
@@ -458,16 +375,10 @@ public partial class MapPage : ContentPage
 
         BeyerdPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.589667, latitude = 4.781000, name = "Beyerd", description = "beyerdbeschrijving.txt", imageSource = "beyerd.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{BeyerdPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(BeyerdPin);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Beyerd", // Aan de rechterkant
-        //    Location = new Location(51.589667, 4.781000)
-        //});
 
         Pin gastHuisPoortPin = new Pin
         {
@@ -478,16 +389,10 @@ public partial class MapPage : ContentPage
 
         gastHuisPoortPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.589555, latitude = 4.780000, name = "Gasthuispoort", description = "gasthuispoortbeschrijving.txt", imageSource = "gasthuispoort.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{gastHuisPoortPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(gastHuisPoortPin);
-
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Gasthuispoort",
-        //    Location = new Location(51.589555, 4.780000)
-        //});
 
         Pin willemMerkxTuin = new Pin
         {
@@ -498,17 +403,12 @@ public partial class MapPage : ContentPage
 
         willemMerkxTuin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.589112, latitude = 4.777945, name = "Willem Merkxtuin", description = "willemmerkxtuinbeschrijving.txt", imageSource = "willemmerkxtuin.webp", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{willemMerkxTuin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(willemMerkxTuin);
 
-        //MapView.Pins.Add(new Pin
-        //{
-        //    Label = "Willen Merkxtuin", //ingang aan de rechterkant
-        //    Location = new Location(51.589112, 4.777945)
-        //});
-
+        //Om aan te geven dat de code zo eerst was opgesteld met deze modules, wij hebben dit nu opgeschaald naar meteen een actie afhandeling eraan te koppelen.
         //MapView.Pins.Add(new Pin
         //{
         //    Label = "Begijnenhof",
@@ -517,18 +417,17 @@ public partial class MapPage : ContentPage
 
         Pin BegijnenhofPin = new Pin
         {
-            Label = "Het begijnenhof",
+            Label = "Het begijnhof",
             Location = new Location(51.589695, 4.778362),
             Type = PinType.Generic
         };
 
         BegijnenhofPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup());
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.589695, latitude = 4.778362, name = "Begijnhof", description = "begijnhofbeschrijving.txt", imageSource = "begijnhof.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{BegijnenhofPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(BegijnenhofPin);
-        */
 
     }
 
