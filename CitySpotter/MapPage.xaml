@@ -29,16 +29,15 @@
             ItemsSource="{Binding Pins}"
             IsShowingUser="True"
             MapType="Hybrid" 
-            />
-        <custom:BindableMap.ItemTemplate>
-            <DataTemplate x:DataType="maps:Pin">
-                <maps:Pin MarkerClicked="Pin_OnMarkerClicked" Location="{Binding Location}"
+            >
+            <custom:BindableMap.ItemTemplate>
+                <DataTemplate x:DataType="maps:Pin">
+                    <maps:Pin MarkerClicked="Pin_OnMarkerClicked" Location="{Binding Location}"
                       Address="{Binding Address}"
                       Label="{Binding Label}"/>
-            </DataTemplate>
-        </custom:BindableMap.ItemTemplate>
+                </DataTemplate>
+            </custom:BindableMap.ItemTemplate>
         </custom:BindableMap>
-
 
     </Grid>
 </ContentPage>
