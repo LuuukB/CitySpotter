@@ -1,4 +1,4 @@
-﻿using CitySpotter.Domain.Model;
+using CitySpotter.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +37,11 @@ namespace CitySpotter.Infrastructure
             using SQLiteConnection sQLiteConnection = new(_dpPath);
             //   sQLiteConnection.CreateTable<Route>();
             sQLiteConnection.CreateTable<RouteLocation>();
+        }
+        public void Drop()
+        {
+            using SQLiteConnection sQLiteConnection = new SQLiteConnection(_dpPath);
+            sQLiteConnection.DropTable<RouteLocation>();
         }
 
         public List<RouteLocation> GetPointsSpecificRoute(string tagRoute) 

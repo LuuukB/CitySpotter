@@ -291,7 +291,7 @@ public partial class MapPage : ContentPage
 
         bevrijdingsMonumentPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.588028, latitude = 4.776333, name = "Bevrijdingsmonument", description = "bevrijdingmonumentbeschrijving.txt", imageSource = "bevrijdingsmonument.jpg", routeTag = "historischeKilometer" })));
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.588028, latitude = 4.776333, name = "Bevrijdingsmonument", description = "bevrijdingsmonumentbeschrijving.txt", imageSource = "bevrijdingsmonument.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{bevrijdingsMonumentPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(bevrijdingsMonumentPin);
