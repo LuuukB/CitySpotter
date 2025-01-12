@@ -22,6 +22,7 @@ namespace CitySpotter.Domain.Services
         public MainPageViewModel(IDatabaseRepo database, ILocationPermissionsService locationPermissionsService)
         {
             _databaseRepo = database;
+            _permissionsService = locationPermissionsService;
             RouteNames = new ObservableCollection<string>();
         }
         [RelayCommand]
