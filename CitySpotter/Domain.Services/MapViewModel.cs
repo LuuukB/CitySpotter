@@ -212,16 +212,17 @@ namespace CitySpotter.Domain.Services
         }
         public void CreateRoute(string routeTag)
         {
-            List<RouteLocation> routeLocations = _databaseRepo.GetPointsSpecificRoute(routeTag);
+            var routeLocations = _databaseRepo.GetPointsSpecificRoute(routeTag);
 
             foreach (var routeLocation in routeLocations)
             {
-                if (routeLocation.name != null)
-                {
-                    CreatePin(routeLocation);
-                }
+                if (routeLocation.name is not null) CreatePin(routeLocation);
             }
-            MapElements.Add(CreatePolyLineOfLocations(_databaseRepo.GetAllRoutes().Select(x => new Location(x.longitude, x.latitude))));
+
+            
+            // NOTE: Yes, lat & long reversed ;)
+            MapElements.Add(CreatePolyLineOfLocations(routeLocations.Select(x => new Location(x.longitude, x.latitude))));
+            MapElements = new ObservableCollection<MapElement>(MapElements);
             OnPropertyChanged(nameof(MapElements));
         }
         public void CreatePin(RouteLocation routeLocation)
