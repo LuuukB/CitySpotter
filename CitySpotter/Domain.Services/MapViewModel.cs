@@ -100,10 +100,6 @@ namespace CitySpotter.Domain.Services
             CurrentMapSpan = mapSpan;
 
 
-            // Force update lines.
-            // NOTE: Yes, lat & long reversed ;)
-            MapElements.Add(CreatePolyLineOfLocations(_databaseRepo.GetAllRoutes().Select(x => new Location(x.longitude, x.latitude))));
-            OnPropertyChanged(nameof(MapElements));
         }
         public List<RouteLocation> GetRouteLocations()
         {
@@ -218,17 +214,15 @@ namespace CitySpotter.Domain.Services
         {
             List<RouteLocation> routeLocations = _databaseRepo.GetPointsSpecificRoute(routeTag);
 
-            Polyline line = new Polyline();
             foreach (var routeLocation in routeLocations)
             {
-                line.Add(new Location(routeLocation.latitude, routeLocation.longitude));
-
                 if (routeLocation.name != null)
                 {
                     CreatePin(routeLocation);
                 }
             }
-            MapElements.Add(line);
+            MapElements.Add(CreatePolyLineOfLocations(_databaseRepo.GetAllRoutes().Select(x => new Location(x.longitude, x.latitude))));
+            OnPropertyChanged(nameof(MapElements));
         }
         public void CreatePin(RouteLocation routeLocation)
         {
