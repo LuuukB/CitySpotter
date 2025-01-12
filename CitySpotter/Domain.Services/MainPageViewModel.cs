@@ -39,27 +39,22 @@ namespace CitySpotter.Domain.Services
         public void GetRoutesForView() 
         { 
             Debug.WriteLine("Loading routes");
-            LoadRoutesNames();
+            LoadRoutesLocations();
            
 
         }
      
-        private void LoadRoutesNames()
-        {
-            Debug.WriteLine("Loading routes");
-            var allLocations = _databaseRepo.GetAllRoutes();
+        private void LoadRoutesLocations()
+        { 
+            var allRoutesNames = _databaseRepo.GetAllNamesRoutes();
             RouteNames.Clear();
 
-            // Haal de unieke RouteNames op
-            var uniqueRouteNames = allLocations
-                .Select(location => location.RouteName)
-                .Distinct()
-                .ToList();
-
-            foreach (var routeName in uniqueRouteNames)
+            foreach (var route in allRoutesNames)
             {
-                RouteNames.Add(routeName);
+                RouteNames.Add(route);
             }
+
+
         }
 
 
@@ -67,6 +62,7 @@ namespace CitySpotter.Domain.Services
         [RelayCommand]
         private async Task NavigateToMap()
         {
+            Debug.WriteLine("in Navigate to Map");
             if (SelectedRoute != null)
             {
                 Debug.WriteLine($"Navigating to map with route: {SelectedRoute}");

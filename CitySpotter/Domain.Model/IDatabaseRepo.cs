@@ -13,5 +13,9 @@ namespace CitySpotter.Domain.Model
         List<RouteLocation> GetAllRoutes();
         void AddRoute(RouteLocation location);
         void Delete(int id);
+
+        List<RouteLocation> GetPointsSpecificRoute(string routeTag);
+
+        List<string> GetAllNamesRoutes();
     }
 }

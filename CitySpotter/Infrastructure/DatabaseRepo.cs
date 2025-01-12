@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SQLite;
 using CitySpotter.Locations.Locations;
 
+
 namespace CitySpotter.Infrastructure
 {
     public class DatabaseRepo : IDatabaseRepo
@@ -36,6 +37,27 @@ namespace CitySpotter.Infrastructure
             using SQLiteConnection sQLiteConnection = new(_dpPath);
             //   sQLiteConnection.CreateTable<Route>();
             sQLiteConnection.CreateTable<RouteLocation>();
+        }
+
+        public List<RouteLocation> GetPointsSpecificRoute(string tagRoute) 
+        {
+            using (var db = new SQLiteConnection(_dpPath)) 
+            {
+                return db.Table<RouteLocation>().Where(x => x.routeTag == tagRoute).ToList();
+            }
+
+        }
+
+        public List<string> GetAllNamesRoutes() 
+        {
+            using (var db = new SQLiteConnection(_dpPath))
+            {
+                return db.Table<RouteLocation>()
+                         .Select(p => p.RouteName)
+                         .Distinct()
+                         .ToList();
+            }
+
         }
     }
 }

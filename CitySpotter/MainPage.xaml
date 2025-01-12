@@ -14,11 +14,7 @@
                 HorizontalOptions="Center"
                 Command ="{Binding GetRoutesForViewCommand}" />
 
-            <Button Text="Navigate to Map"
-            Command="{Binding NavigateToMapCommand}"
-            HorizontalOptions="Fill"
-            VerticalOptions="Start"
-            Margin="0,0,0,10" />
+        
 
         </HorizontalStackLayout>
 
