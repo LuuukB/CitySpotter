@@ -1,4 +1,4 @@
-﻿using CitySpotter.Domain.Model;
+using CitySpotter.Domain.Model;
 using CitySpotter.Locations.Locations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
