@@ -98,6 +98,12 @@ namespace CitySpotter.Domain.Services
             Location location = new Location(51.588331, 4.777802);
             MapSpan mapSpan = new MapSpan(location, 0.015, 0.015);
             CurrentMapSpan = mapSpan;
+
+
+            // Force update lines.
+            // NOTE: Yes, lat & long reversed ;)
+            MapElements.Add(CreatePolyLineOfLocations(_databaseRepo.GetAllRoutes().Select(x => new Location(x.longitude, x.latitude))));
+            OnPropertyChanged(nameof(MapElements));
         }
         public List<RouteLocation> GetRouteLocations()
         {
@@ -191,7 +197,7 @@ namespace CitySpotter.Domain.Services
                 status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
             }
         }
-        private Polyline CreatePolyLineOfLocations(IEnumerable<Location> locations)
+        private MapElement CreatePolyLineOfLocations(IEnumerable<Location> locations)
         {
             Debug.WriteLine("Constructing {0}", args: nameof(Polyline));
             Polyline polyline = new Polyline
@@ -200,8 +206,10 @@ namespace CitySpotter.Domain.Services
                 StrokeWidth = 12,
             };
             Debug.WriteLine("Adding to {0}.", args: nameof(polyline.Geopath));
+            polyline.Geopath.Clear();
             foreach (var loc in locations)
             {
+                Debug.WriteLine($"Adding location: {loc.Latitude}, {loc.Longitude}");
                 polyline.Geopath.Add(loc);
             }
             return polyline;
