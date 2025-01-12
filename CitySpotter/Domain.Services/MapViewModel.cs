@@ -1,4 +1,4 @@
-using Android.Gms.Maps;
+using Microsoft.Maui.Controls;
 using CitySpotter.Domain.Model;
 using CitySpotter.Locations.Locations;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -33,18 +33,20 @@ namespace CitySpotter.Domain.Services
 
         [ObservableProperty] private ObservableCollection<MapElement> _mapElements = new();
 
-        private List<Location> _locationCache = [];
+        
         private IDatabaseRepo _databaseRepo;
 
 
         [ObservableProperty] public MapSpan _currentMapSpan;
+        private readonly LocationPermissionService _locationService;
 
- 
 
         public MapViewModel(IGeolocation geolocation, IDatabaseRepo repository)
         {
+
             _databaseRepo = repository;
             _geolocation = geolocation;
+            _locationService = new LocationPermissionService();
             //todo: beter gezegd de currentmapspan moet naar user toe op het moment dat de map word gemaakt.
 
             _databaseRepo.Init();
@@ -109,6 +111,22 @@ namespace CitySpotter.Domain.Services
 
         }
 
+        public async Task HandleOnAppearingAsync()
+        {
+            var hasPermission = await _locationService.CheckAndRequestLocationPermissionAsync();
+
+            if (hasPermission == PermissionStatus.Denied)
+            {
+                bool openedSettings = await _locationService.ShowSettingsIfPermissionDeniedAsync();
+
+                if (!openedSettings)
+                {
+                    // Sluit de app af als de gebruiker niet naar instellingen wil gaan
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
+                }
+            }
+        }
+
 
         //methode wordt veranderd en mag binnenkort weg
         public void LoadRoute(string routeName)
@@ -144,7 +162,7 @@ namespace CitySpotter.Domain.Services
 
         
         public void RouteStarting()
-        {
+        { 
             Debug.WriteLine("starting route/timer");
             _locationTimer = new System.Timers.Timer(5000);
             _locationTimer.Elapsed += OnTimedEvent;
@@ -173,24 +191,36 @@ namespace CitySpotter.Domain.Services
 
         private async Task OnTimedEventAsync()
         {
-            try
+
+            PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            if (status == PermissionStatus.Granted)
             {
-                Debug.WriteLine("Running {0} at {1}", nameof(OnTimedEventAsync), DateTime.Now.ToShortTimeString());
-
-                var location = await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
-
-                if (location is not null)
+                try
                 {
-                    Debug.WriteLine("Location: {0}", location);
-                    CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(60));
+                    Debug.WriteLine("Running {0} at {1}", nameof(OnTimedEventAsync), DateTime.Now.ToShortTimeString());
+
+                    var location = await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
+
+                    if (location is not null)
+                    {
+                        Debug.WriteLine("Location: {0}", location);
+                        CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(60));
 
 
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Fout bij ophalen locatie: {ex.Message}");
                 }
             }
-            catch (Exception ex)
+            else if (status == PermissionStatus.Denied) 
             {
-                Debug.WriteLine($"Fout bij ophalen locatie: {ex.Message}");
+
+                status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+
             }
+
         }
 
      

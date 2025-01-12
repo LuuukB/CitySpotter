@@ -12,6 +12,7 @@ namespace CitySpotter;
 public partial class MapPage : ContentPage
 {
     
+
 	public MapPage(MapViewModel viewModel)
 	{
 		InitializeComponent();
