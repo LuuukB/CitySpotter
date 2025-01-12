@@ -30,6 +30,29 @@ namespace CitySpotter.Domain.Services
                     }
                 });
 
+        public static readonly BindableProperty MvvmPinElementsProperty = 
+            BindableProperty.Create(
+                nameof(PinElements),
+                typeof(IList<Pin>),
+                typeof(BindableMap),null, 
+                propertyChanged: (b, _, n) =>
+                {
+                    if (b is BindableMap map)
+                    {
+                        map.Pins.Clear();
+                        foreach (var element in (IList<Pin>)n)
+                        {
+                            map.Pins.Add(element);
+                        }
+                    }
+                });
+
+        public IList<Pin> PinElements
+        {
+            get => (IList<Pin>)GetValue(MvvmPinElementsProperty);
+            set => SetValue(MvvmPinElementsProperty, value);
+        }
+
         public static readonly BindableProperty VisibleRegionProperty =
           BindableProperty.Create(
               nameof(VisibleRegion),

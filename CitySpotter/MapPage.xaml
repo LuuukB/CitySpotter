@@ -26,6 +26,7 @@
             Grid.Row="1"
             MvvmMapElements="{Binding MapElements}"
             VisibleRegion="{Binding CurrentMapSpan}"
+            PinElements="{Binding PinElements}"
             IsShowingUser="True"
             MapType="Hybrid" 
             />

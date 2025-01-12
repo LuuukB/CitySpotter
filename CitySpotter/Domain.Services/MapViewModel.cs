@@ -21,8 +21,11 @@ namespace CitySpotter.Domain.Services
         [ObservableProperty] private string _routeName;
         [ObservableProperty] private ObservableCollection<MapElement> _mapElements = new();
         [ObservableProperty] public MapSpan _currentMapSpan;
+        [ObservableProperty] private ObservableCollection<Pin> _pinElements = new();
 
         private readonly IGeolocation _geolocation;
+
+
         private IDatabaseRepo _databaseRepo;
 
         private System.Timers.Timer? _locationTimer;
@@ -34,7 +37,8 @@ namespace CitySpotter.Domain.Services
             _databaseRepo = repository;
             _geolocation = geolocation;
             _locationService = new LocationPermissionService();
-            //todo: beter gezegd de currentmapspan moet naar user toe op het moment dat de map word gemaakt.
+            
+
 
             _databaseRepo.Init();
 
@@ -121,6 +125,7 @@ namespace CitySpotter.Domain.Services
             if (routeLocations.Count() >= 2)
             {
                 var routePolyline = CreatePolyLineOfLocations(routeLocations.Select(loc => new Location(loc.latitude, loc.longitude)));
+               
                 var existingPolylines = MapElements.OfType<Polyline>().ToList();
                 foreach (var polyline in existingPolylines)
                 {
