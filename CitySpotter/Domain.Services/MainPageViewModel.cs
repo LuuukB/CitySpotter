@@ -16,12 +16,12 @@ namespace CitySpotter.Domain.Services
     {
         private readonly IDatabaseRepo _databaseRepo;
 
-        [ObservableProperty] private string _selectedRoute;
-        [ObservableProperty] private string _nameOfRoute;
+        [ObservableProperty] public string _selectedRoute;
+        [ObservableProperty] public string _nameOfRoute;
 
 
 
-        [ObservableProperty] private ObservableCollection<string> _routeNames;
+        [ObservableProperty] public ObservableCollection<string> _routeNames;
 
 
         public MainPageViewModel(IDatabaseRepo database)
@@ -60,15 +60,19 @@ namespace CitySpotter.Domain.Services
 
 
         [RelayCommand]
-        private async Task NavigateToMap()
+        private async Task NavigateToMap(string routeName)
         {
-            Debug.WriteLine("in Navigate to Map");
-            if (SelectedRoute != null)
+            Debug.WriteLine("In Navigate to Map");
+            if (!string.IsNullOrWhiteSpace(routeName))
             {
-                Debug.WriteLine($"Navigating to map with route: {SelectedRoute}");
+                Debug.WriteLine($"Navigating to map with route: {routeName}");
 
-                //await Shell.Current.GoToAsync($"MapPage?routeName={SelectedRoute}");
+                // Navigeren naar de MapPage met de geselecteerde route als queryparameter
+                await Shell.Current.GoToAsync($"///MapPage?routeName={routeName}");
+
+
             }
+
         }
 
 

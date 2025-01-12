@@ -20,6 +20,10 @@ namespace CitySpotter.Domain.Services
         [ObservableProperty] private bool _isStartEnabled = true;
         [ObservableProperty] private bool _isStopEnabled = false;
 
+        [ObservableProperty]
+        private string _routeName;
+
+
         private readonly IGeolocation _geolocation;
 
 
@@ -101,6 +105,39 @@ namespace CitySpotter.Domain.Services
             InitializeMap();
         }
 
+
+
+        public void LoadRoute(string routeName)
+        {
+            Debug.WriteLine($"Loading route: {routeName}");
+
+            // Haal de punten van de specifieke route op
+            var routeLocations = _databaseRepo.GetPointsSpecificRoute(routeName);
+
+            if (routeLocations.Any())
+            {
+                // Maak een polyline aan van de routepunten
+                var routePolyline = CreatePolyLineOfLocations(routeLocations.Select(loc => new Location(loc.latitude, loc.longitude)));
+
+                // Verwijder bestaande polylines
+                var existingPolylines = MapElements.OfType<Polyline>().ToList();
+                foreach (var polyline in existingPolylines)
+                {
+                    MapElements.Remove(polyline);
+                }
+
+                // nieuwe polyline 
+                MapElements.Add(routePolyline);
+
+            }
+            else
+            {
+                Debug.WriteLine("Geen locaties gevonden voor deze route.");
+            }
+        }
+
+
+
         private async void InitializeMap()
         {
             try
@@ -166,7 +203,6 @@ namespace CitySpotter.Domain.Services
                     Debug.WriteLine("Location: {0}", location);
                     CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(10));
 
-                    UpdateRoute(location);
                 }
             }
             catch (Exception ex)
@@ -175,38 +211,7 @@ namespace CitySpotter.Domain.Services
             }
         }
 
-        private void UpdateRoute(Location location)
-        {
-            Debug.WriteLine("Running {0} at {1}.", nameof(UpdateRoute), DateTime.Now.ToShortTimeString());
-
-            ProcessNewLocation(location);
-
-            // Alleen tekenen als er meer dan 2 punten zijn. Anders heb je natuurlijk geen lijn!
-            if (_locationCache.Count >= 2)
-            {
-                MapElements = [CreatePolyLineOfLocations(_locationCache)];
-            }
-
-            Debug.WriteLine("Added to {0}.", args: nameof(MapElements));
-
-            Debug.WriteLine($"Route bijgewerkt: {location.Latitude}, {location.Longitude}");
-        }
-
-        private void ProcessNewLocation(Location location)
-        {
-            // TODO: Niet toevoegen als hij te dichtbij is bij de vorige locatie! En misschien andere logica toevoegen.
-            const double minDistance = 0.01;
-            if (_locationCache.Count == 0 || location.CalculateDistance(_locationCache.Last(), DistanceUnits.Kilometers) >= minDistance)
-            {
-                _locationCache.Add(location);
-            }
-            else
-            {
-                Debug.WriteLine($"Locatie te dicht bij de vorige locatie: {location.Latitude}, {location.Longitude}");
-            }
-
-        }
-
+     
         private Polyline CreatePolyLineOfLocations(IEnumerable<Location> locations)
         {
             Debug.WriteLine("Constructing {0}", args: nameof(Polyline));
@@ -225,6 +230,6 @@ namespace CitySpotter.Domain.Services
             return polyline;
         }
 
-
+        
     }
 }
