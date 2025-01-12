@@ -21,7 +21,8 @@ public partial class MapPage : ContentPage
         MapSpan mapSpan = new MapSpan(location, 0.015, 0.015);
         MapView.VisibleRegion = mapSpan;
 
-        createPins();
+        createPin(new RouteLocation { longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "nassaubaroniemonumentbeschrijving.txt", imageSource = "nassaubaroniemonument.jpg" });
+        createPin(new RouteLocation { longitude = 51.590612, latitude = 4.776167, name = "Kasteel van Breda", description = "kasteelbeschrijving.txt", imageSource = "kasteelbreda.jpg" });
 	}
 
     public string RouteName
@@ -123,11 +124,32 @@ public partial class MapPage : ContentPage
             }
         }
     }
-
-    public void createPins()
+    public void createRoute(List<RouteLocation> routeLocations)
     {
+        foreach (var routeLocation in routeLocations)
+        {
+            if (routeLocation.name != null)
+            {
+                createPin(routeLocation);
+            }
+        }
+    }
+    public void createPin(RouteLocation routeLocation)
+    {
+        Pin pinCreated = new Pin
+        {
+            Label = routeLocation.name,
+            Location = new Location(routeLocation.longitude, routeLocation.latitude),
+            Type = PinType.Generic
+        }; 
+        pinCreated.MarkerClicked += async (s, args) =>
+        {
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation {longitude = routeLocation.longitude, latitude = routeLocation.latitude, name = routeLocation.name, description = routeLocation.description, imageSource = routeLocation.imageSource})));
+
+        };
+        MapView.Pins.Add(pinCreated);
         
-        Pin valkenBergParkPin = new Pin
+        /*Pin valkenBergParkPin = new Pin
         {
             Label = "Monument ValkenbergPark",
             Location = new Location(51.592496, 4.77975),
@@ -305,7 +327,7 @@ public partial class MapPage : ContentPage
 
         bevrijdingsMonumentPin.MarkerClicked += async (s, args) =>
         {
-            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.588028, latitude = 4.776333, name = "Bevrijdingsmonument", description = "bevrijdingmonumentbeschrijving.txt", imageSource = "bevrijdingsmonument.jpg", routeTag = "historischeKilometer" })));
+            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.588028, latitude = 4.776333, name = "Bevrijdingsmonument", description = "bevrijdingsmonumentbeschrijving.txt", imageSource = "bevrijdingsmonument.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{bevrijdingsMonumentPin.Label} is ingedrukt: ");
         };
         MapView.Pins.Add(bevrijdingsMonumentPin);
@@ -441,8 +463,7 @@ public partial class MapPage : ContentPage
             await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = 51.589695, latitude = 4.778362, name = "Begijnhof", description = "begijnhofbeschrijving.txt", imageSource = "begijnhof.jpg", routeTag = "historischeKilometer" })));
             Debug.WriteLine($"{BegijnenhofPin.Label} is ingedrukt: ");
         };
-        MapView.Pins.Add(BegijnenhofPin);
-
+        MapView.Pins.Add(BegijnenhofPin);*/
     }
 
     private void MapView_DescendantAdded(object sender, ElementEventArgs e)
