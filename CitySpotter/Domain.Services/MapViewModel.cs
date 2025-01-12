@@ -113,15 +113,15 @@ namespace CitySpotter.Domain.Services
         {
             Debug.WriteLine($"Loading route: {routeName}");
 
-            // Haal de punten van de specifieke route op
+           
             var routeLocations = _databaseRepo.GetPointsSpecificRoute(routeName);
 
-            if (routeLocations.Any())
+            if (routeLocations.Count() >= 2)
             {
-                // Maak een polyline aan van de routepunten
+               
                 var routePolyline = CreatePolyLineOfLocations(routeLocations.Select(loc => new Location(loc.latitude, loc.longitude)));
 
-                // Verwijder bestaande polylines
+               
                 var existingPolylines = MapElements.OfType<Polyline>().ToList();
                 foreach (var polyline in existingPolylines)
                 {
@@ -197,8 +197,7 @@ namespace CitySpotter.Domain.Services
             {
                 Debug.WriteLine("Running {0} at {1}", nameof(OnTimedEventAsync), DateTime.Now.ToShortTimeString());
 
-                var location =
-                    await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
+                var location = await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
 
                 if (location is not null)
                 {
