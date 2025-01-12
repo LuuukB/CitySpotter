@@ -47,7 +47,7 @@ namespace CitySpotter.Domain.Services
             _databaseRepo.Init();
             //new RouteLocation{ longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "info text over dit monument", imageSource = "nassaubaroniemonument.jpg"};
             
-            _databaseRepo.AddRoute(new RouteLocation { longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "info text over dit monument", imageSource = "nassaubaroniemonument.jpg" });
+            _databaseRepo.AddRoute(new RouteLocation { longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", RouteName = "Historische route",description = "info text over dit monument", imageSource = "nassaubaroniemonument.jpg" });
             Debug.WriteLine("De database heef zoveel punten: " + _databaseRepo.GetAllRoutes().Count);
             
             InitializeMap();

@@ -1,4 +1,5 @@
 ﻿using CitySpotter.Domain.Model;
+using CitySpotter.Locations.Locations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -15,41 +16,66 @@ namespace CitySpotter.Domain.Services
     {
         private readonly IDatabaseRepo _databaseRepo;
 
-        [ObservableProperty] private Route _selectedRoute;
-        [ObservableProperty] private Route _routeName;
+        [ObservableProperty] private string _selectedRoute;
+        [ObservableProperty] private string _nameOfRoute;
 
 
 
-        [ObservableProperty] private ObservableCollection<Route> _routes;
+        [ObservableProperty] private ObservableCollection<string> _routeNames;
 
-        public MainPageViewModel(IDatabaseRepo database) 
-        { 
+
+        public MainPageViewModel(IDatabaseRepo database)
+        {
             _databaseRepo = database;
-            Routes = new ObservableCollection<Route>();
-            LoadRoutes();
+            RouteNames = new ObservableCollection<string>();
+           
+
+
         }
 
-      
-        private void LoadRoutes()
-        {
-            var allRoutes = _databaseRepo.GetAllRoutes();
-            Routes.Clear();
 
-            foreach (var route in allRoutes)
+
+        [RelayCommand]
+        public void GetRoutesForView() 
+        { 
+            Debug.WriteLine("Loading routes");
+            LoadRoutesNames();
+           
+
+        }
+     
+        private void LoadRoutesNames()
+        {
+            Debug.WriteLine("Loading routes");
+            var allLocations = _databaseRepo.GetAllRoutes();
+            RouteNames.Clear();
+
+            // Haal de unieke RouteNames op
+            var uniqueRouteNames = allLocations
+                .Select(location => location.RouteName)
+                .Distinct()
+                .ToList();
+
+            foreach (var routeName in uniqueRouteNames)
             {
-                Routes.Add(route);
-                RouteName.RouteName = route.RouteName;
+                RouteNames.Add(routeName);
             }
         }
+
+
 
         [RelayCommand]
         private async Task NavigateToMap()
         {
             if (SelectedRoute != null)
             {
-                await Shell.Current.GoToAsync($"MapPage?routeId={SelectedRoute.RouteId}");
+                Debug.WriteLine($"Navigating to map with route: {SelectedRoute}");
+
+                //await Shell.Current.GoToAsync($"MapPage?routeName={SelectedRoute}");
             }
         }
+
+
 
 
     }

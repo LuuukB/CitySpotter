@@ -35,6 +35,7 @@ namespace CitySpotter
 
 
             builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<MainPageViewModel>();
             
 #if DEBUG
             builder.Logging.AddDebug();
