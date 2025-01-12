@@ -58,7 +58,7 @@ namespace CitySpotter.Infrastructure
             using (var db = new SQLiteConnection(_dpPath))
             {
                 return db.Table<RouteLocation>()
-                         .Select(p => p.RouteName)
+                         .Select(p => p.routeTag)
                          .Distinct()
                          .ToList();
             }

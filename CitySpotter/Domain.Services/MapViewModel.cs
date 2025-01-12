@@ -23,13 +23,15 @@ namespace CitySpotter.Domain.Services
         [ObservableProperty]
         private string _routeName;
 
-
+        public string RouteName { get; set; }
+            
+        
         private readonly IGeolocation _geolocation;
 
 
         private System.Timers.Timer? _locationTimer;
 
-        //private readonly List<Location> _routeCoordinates = new();
+
 
         [ObservableProperty] private ObservableCollection<MapElement> _mapElements = new();
 
@@ -39,8 +41,7 @@ namespace CitySpotter.Domain.Services
 
         [ObservableProperty] public MapSpan _currentMapSpan;
 
-        //[ObservableProperty]
-        //public string currentLocation;
+ 
 
         public MapViewModel(IGeolocation geolocation, IDatabaseRepo repository)
         {

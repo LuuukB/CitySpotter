@@ -16,7 +16,6 @@ namespace CitySpotter.Domain.Services
     {
         private readonly IDatabaseRepo _databaseRepo;
 
-        [ObservableProperty] public string _selectedRoute;
         [ObservableProperty] public string _nameOfRoute;
 
 

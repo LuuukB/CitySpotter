@@ -12,7 +12,6 @@ namespace CitySpotter.Locations.Locations
         public string? name { get; set; }
         [PrimaryKey, AutoIncrement, Column("Index")]
         public int locationInRoute { get; set; }
-        public string RouteName { get; set; }
         public string? description { get; set; }
         public double latitude { get; set; }
         public double longitude { get; set; }
