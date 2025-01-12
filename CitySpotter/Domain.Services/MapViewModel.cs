@@ -1,3 +1,4 @@
+using Android.Gms.Maps;
 using CitySpotter.Domain.Model;
 using CitySpotter.Locations.Locations;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -17,13 +18,10 @@ namespace CitySpotter.Domain.Services
 {
     public partial class MapViewModel : ObservableObject
     {
-        [ObservableProperty] private bool _isStartEnabled = true;
-        [ObservableProperty] private bool _isStopEnabled = false;
-
+        
         [ObservableProperty]
         private string _routeName;
-
-        public string RouteName { get; set; }
+        
             
         
         private readonly IGeolocation _geolocation;
@@ -102,19 +100,22 @@ namespace CitySpotter.Domain.Services
                 _databaseRepo.AddRoute(new RouteLocation { longitude = 51.589500, latitude = 4.776250, routeTag = "historischeKilometer" });
             }
 
-
+          
             Debug.WriteLine("De database heef zoveel punten: " + _databaseRepo.GetAllRoutes().Count);
-            
-            InitializeMap();
+
+            Location location = new Location(51.588331, 4.777802);
+            MapSpan mapSpan = new MapSpan(location, 0.015, 0.015);
+            CurrentMapSpan = mapSpan;
+
         }
 
 
-
+        //methode wordt veranderd en mag binnenkort weg
         public void LoadRoute(string routeName)
         {
             Debug.WriteLine($"Loading route: {routeName}");
+            RouteStarting();
 
-           
             var routeLocations = _databaseRepo.GetPointsSpecificRoute(routeName);
 
             if (routeLocations.Count() >= 2)
@@ -128,7 +129,7 @@ namespace CitySpotter.Domain.Services
                 {
                     MapElements.Remove(polyline);
                 }
-
+                
                 // nieuwe polyline 
                 MapElements.Add(routePolyline);
 
@@ -141,51 +142,29 @@ namespace CitySpotter.Domain.Services
 
 
 
-        private async void InitializeMap()
+        
+        public void RouteStarting()
         {
-            try
-            {
-                var location = await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
-
-                if (location is not null)
-                {
-                    CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(10));
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Fout bij ophalen locatie: {ex.Message}");
-            }
+            Debug.WriteLine("starting route/timer");
+            _locationTimer = new System.Timers.Timer(5000);
+            _locationTimer.Elapsed += OnTimedEvent;
+            _locationTimer.AutoReset = true;
+            _locationTimer.Start();
+          
         }
 
-        //[RelayCommand]
-        //public void RouteStarting()
-        //{
-        //    Debug.WriteLine("starting route/timer");
-        //    _locationTimer = new System.Timers.Timer(5000);
-        //    _locationTimer.Elapsed += OnTimedEvent;
-        //    _locationTimer.AutoReset = true;
-        //    _locationTimer.Start();
-        //    IsStartEnabled = false;
-        //    IsStopEnabled = true;
-        //}
 
-        //[RelayCommand]
-        //public void RouteStop()
-        //{
-        //    Debug.WriteLine("stopping route/timer");
+        public void RouteStop()
+        {
+            Debug.WriteLine("stopping route/timer");
 
-        //    if (_locationTimer != null)
-        //    {
-        //        _locationTimer.Stop();
-        //        _locationTimer.Dispose();
-        //        _locationTimer = null;
-        //        IsStartEnabled = true;
-        //        IsStopEnabled = false;
-        //        MapElements.Clear();
-        //        //todo eerst route opslaan voordat je de lijnen weg haalt idk wat we nog echt willen gaan doen.
-        //    }
-        //}
+            if (_locationTimer != null)
+            {
+                _locationTimer.Stop();
+                _locationTimer.Dispose();
+                _locationTimer = null;
+            }
+        }
 
         private void OnTimedEvent(object? sender, ElapsedEventArgs e)
         {
@@ -203,7 +182,8 @@ namespace CitySpotter.Domain.Services
                 if (location is not null)
                 {
                     Debug.WriteLine("Location: {0}", location);
-                    CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(10));
+                    CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(60));
+
 
                 }
             }

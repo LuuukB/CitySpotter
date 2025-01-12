@@ -17,9 +17,6 @@ public partial class MapPage : ContentPage
 		InitializeComponent();
         BindingContext = viewModel;
 
-        Location location = new Location(51.588331, 4.777802);
-        MapSpan mapSpan = new MapSpan(location, 0.015, 0.015);
-        MapView.VisibleRegion = mapSpan;
 
         createPin(new RouteLocation { longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "nassaubaroniemonumentbeschrijving.txt", imageSource = "nassaubaroniemonument.jpg" });
         createPin(new RouteLocation { longitude = 51.590612, latitude = 4.776167, name = "Kasteel van Breda", description = "kasteelbeschrijving.txt", imageSource = "kasteelbreda.jpg" });
