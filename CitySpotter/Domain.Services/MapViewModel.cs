@@ -45,11 +45,10 @@ namespace CitySpotter.Domain.Services
             //todo: beter gezegd de currentmapspan moet naar user toe op het moment dat de map word gemaakt.
 
             _databaseRepo.Init();
+           
             //new RouteLocation{ longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "info text over dit monument", imageSource = "nassaubaroniemonument.jpg"};
 
-            //_databaseRepo.AddRoute(new RouteLocation {latitude = 4.779975, name = "Monument ValkenburgPark", description = "nassaubaroniemonumentbeschrijving.txt", imageSource = "nassaubaroniemonument.jpg" });
-            //_databaseRepo.AddRoute(new RouteLocation { longitude = 51.372190, latitude = 4.236718 });
-            _databaseRepo.AddRoute(new RouteLocation { longitude = 51.594112, latitude = 4.779417, name = "VVV-Kantoor", description = "vvvkantoorbeschrijving.txt", imageSource = "vvvkantoor.jpg", routeTag = "historischeKilometer" });
+            /*_databaseRepo.AddRoute(new RouteLocation { longitude = 51.594112, latitude = 4.779417, name = "VVV-Kantoor", description = "vvvkantoorbeschrijving.txt", imageSource = "vvvkantoor.jpg", routeTag = "historischeKilometer" });
             _databaseRepo.AddRoute(new RouteLocation { longitude = 51.593278, latitude = 4.779388, name = "Liefdeszuster", description = "liefdeszusterbeschrijving.txt", imageSource = "liefdeszuster.jpg", routeTag = "historischeKilometer" });
             _databaseRepo.AddRoute(new RouteLocation { longitude = 51.592500, latitude = 4.779695, name = "Nassau-Baroniemonument", description = "nassaubaroniemonumentbeschrijving.txt", imageSource = "nassaubaroniemonument.jpg", routeTag = "historischeKilometer" });
             _databaseRepo.AddRoute(new RouteLocation { longitude = 51.592500, latitude = 4.779388, routeTag = "historischeKilometer" });
@@ -93,7 +92,7 @@ namespace CitySpotter.Domain.Services
             _databaseRepo.AddRoute(new RouteLocation { longitude = 51.589667, latitude = 4.777805, routeTag = "historischeKilometer" });
             _databaseRepo.AddRoute(new RouteLocation { longitude = 51.589695, latitude = 4.778362, name = "Begijnhof", description = "begijnhofbeschrijving.txt", imageSource = "begijnhof.jpg", routeTag = "historischeKilometer" });
             _databaseRepo.AddRoute(new RouteLocation { longitude = 51.589667, latitude = 4.777805, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation { longitude = 51.589500, latitude = 4.776250, routeTag = "historischeKilometer" });
+            _databaseRepo.AddRoute(new RouteLocation { longitude = 51.589500, latitude = 4.776250, routeTag = "historischeKilometer" });*/
 
 
             Debug.WriteLine("De database heef zoveel punten: " + _databaseRepo.GetAllRoutes().Count);

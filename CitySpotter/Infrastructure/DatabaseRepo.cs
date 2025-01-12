@@ -37,5 +37,10 @@ namespace CitySpotter.Infrastructure
             //   sQLiteConnection.CreateTable<Route>();
             sQLiteConnection.CreateTable<RouteLocation>();
         }
+        public void Drop()
+        {
+            using SQLiteConnection sQLiteConnection = new SQLiteConnection(_dpPath);
+            sQLiteConnection.DropTable<RouteLocation>();
+        }
     }
 }
