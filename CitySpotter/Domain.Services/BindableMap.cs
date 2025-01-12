@@ -30,32 +30,10 @@ namespace CitySpotter.Domain.Services
                     }
                 });
 
-        public static readonly BindableProperty MvvmPinElementsProperty = 
-            BindableProperty.Create(
-                nameof(PinElements),
-                typeof(IList<Pin>),
-                typeof(BindableMap),null, 
-                propertyChanged: (b, _, n) =>
-                {
-                    if (b is BindableMap map)
-                    {
-                        map.Pins.Clear();
-                        foreach (var element in (IList<Pin>)n)
-                        {
-                            map.Pins.Add(element);
-                        }
-                    }
-                });
-
-        public IList<Pin> PinElements
-        {
-            get => (IList<Pin>)GetValue(MvvmPinElementsProperty);
-            set => SetValue(MvvmPinElementsProperty, value);
-        }
 
         public static readonly BindableProperty VisibleRegionProperty =
           BindableProperty.Create(
-              nameof(VisibleRegion),
+              nameof(VisibleRegionInMap),
               typeof(MapSpan),
               typeof(BindableMap),
               default(MapSpan),
@@ -65,7 +43,7 @@ namespace CitySpotter.Domain.Services
             get => (ICollection<MapElement>)GetValue(MvvmMapElementsProperty);
             set => SetValue(MvvmMapElementsProperty, value);
         }
-        public MapSpan VisibleRegion
+        public MapSpan VisibleRegionInMap
         {
             get => (MapSpan)GetValue(VisibleRegionProperty);
             set => SetValue(VisibleRegionProperty, value);

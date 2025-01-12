@@ -21,7 +21,7 @@ namespace CitySpotter.Domain.Services
         [ObservableProperty] private string _routeName;
         [ObservableProperty] private ObservableCollection<MapElement> _mapElements = new();
         [ObservableProperty] public MapSpan _currentMapSpan;
-        [ObservableProperty] private ObservableCollection<Pin> _pinElements = new();
+        [ObservableProperty] private ObservableCollection<Pin> _pins = new();
 
         private readonly IGeolocation _geolocation;
 
