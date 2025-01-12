@@ -13,6 +13,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using Mopups.Services;
+using System.Reflection.Metadata;
 
 namespace CitySpotter.Domain.Services
 {
@@ -203,6 +205,36 @@ namespace CitySpotter.Domain.Services
                 polyline.Geopath.Add(loc);
             }
             return polyline;
-        }  
+        }
+        public void CreateRoute(string routeTag)
+        {
+            List<RouteLocation> routeLocations = _databaseRepo.GetPointsSpecificRoute(routeTag);
+
+            Polyline line = new Polyline();
+            foreach (var routeLocation in routeLocations)
+            {
+                line.Add(new Location(routeLocation.latitude, routeLocation.longitude));
+
+                if (routeLocation.name != null)
+                {
+                    CreatePin(routeLocation);
+                }
+            }
+            MapElements.Add(line);
+        }
+        public void CreatePin(RouteLocation routeLocation)
+        {
+            Pin pinCreated = new Pin
+            {
+                Label = routeLocation.name,
+                Location = new Location(routeLocation.longitude, routeLocation.latitude),
+                Type = PinType.Generic
+            };
+            pinCreated.MarkerClicked += async (s, args) =>
+            {
+                await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = routeLocation.longitude, latitude = routeLocation.latitude, name = routeLocation.name, description = routeLocation.description, imageSource = routeLocation.imageSource })));
+            };
+            Pins.Add(pinCreated);
+        }
     }
 }

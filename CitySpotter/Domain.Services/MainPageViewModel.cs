@@ -47,7 +47,7 @@ namespace CitySpotter.Domain.Services
                 Debug.WriteLine($"Navigating to map with route: {routeName}");
 
                 // Navigeren naar de MapPage met de geselecteerde route als queryparameter
-                await Shell.Current.GoToAsync($"///MapPage?routeName={routeName}");
+                
             }
         }
     }

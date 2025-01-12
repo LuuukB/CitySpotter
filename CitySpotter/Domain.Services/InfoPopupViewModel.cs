@@ -19,7 +19,7 @@ namespace CitySpotter.Domain.Services
         [ObservableProperty] private string _ImageSource;
         [ObservableProperty] private string locationName;
         [ObservableProperty] private string _Description;
-        public async void setData()
+        public async Task setData()
         {
             _ImageSource = routeLocation.imageSource;
             locationName = routeLocation.name;
