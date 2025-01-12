@@ -11,17 +11,13 @@ namespace CitySpotter.Domain.Services
 {
     public class LocationPermissionService : ILocationPermissionsService
     {
-       
         public async Task<PermissionStatus> CheckAndRequestLocationPermissionAsync()
         {
             PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-
             if (status == PermissionStatus.Granted)
                 return status;
-
             if (status == PermissionStatus.Denied && DeviceInfo.Platform == DevicePlatform.iOS)
                 return status;
-
             if (status == PermissionStatus.Denied && DeviceInfo.Platform == DevicePlatform.Android)
             {
                 if (Permissions.ShouldShowRationale<Permissions.LocationWhenInUse>())
@@ -33,14 +29,11 @@ namespace CitySpotter.Domain.Services
                         "Toestaan",
                         "Annuleren"
                     );
-
                     if (!shouldContinue)
                         return PermissionStatus.Denied;
                 }
-
                 status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
             }
-
             return status;
         }
         //voor wanneer settings verwijzing nodig is
@@ -56,7 +49,6 @@ namespace CitySpotter.Domain.Services
                 "Naar Instellingen",
                 "Annuleren"
             );
-
             if (shouldOpenSettings)
             {
 #if ANDROID
@@ -69,9 +61,7 @@ namespace CitySpotter.Domain.Services
 #endif
                 return true;
             }
-
             return false;
         }
-    }
-    
+    }  
 }

@@ -19,19 +19,16 @@ namespace CitySpotter.Infrastructure
             using SQLiteConnection sQLiteConnection = new(_dpPath);
             sQLiteConnection.Insert(location);
         }
-
         public void Delete(int id)
         {
             using SQLiteConnection sQLiteConnection = new(_dpPath);
             sQLiteConnection.Delete<RouteLocation>(id);
         }
-
         public List<RouteLocation> GetAllRoutes()
         {
             using SQLiteConnection sQLiteConnection = new(_dpPath);
             return sQLiteConnection.Table<RouteLocation>().ToList();
         }
-
         public void Init()
         {
             using SQLiteConnection sQLiteConnection = new(_dpPath);
@@ -43,16 +40,13 @@ namespace CitySpotter.Infrastructure
             using SQLiteConnection sQLiteConnection = new SQLiteConnection(_dpPath);
             sQLiteConnection.DropTable<RouteLocation>();
         }
-
         public List<RouteLocation> GetPointsSpecificRoute(string tagRoute) 
         {
             using (var db = new SQLiteConnection(_dpPath)) 
             {
                 return db.Table<RouteLocation>().Where(x => x.routeTag == tagRoute).ToList();
             }
-
         }
-
         public List<string> GetAllNamesRoutes() 
         {
             using (var db = new SQLiteConnection(_dpPath))
@@ -62,7 +56,6 @@ namespace CitySpotter.Infrastructure
                          .Distinct()
                          .ToList();
             }
-
         }
     }
 }

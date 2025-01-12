@@ -37,20 +37,16 @@ namespace CitySpotter.Domain.Services
               typeof(BindableMap),
               default(MapSpan),
               propertyChanged: OnVisibleRegionChanged);
-
-
         public ICollection<MapElement> MvvmMapElements
         {
             get => (ICollection<MapElement>)GetValue(MvvmMapElementsProperty);
             set => SetValue(MvvmMapElementsProperty, value);
         }
-
         public MapSpan VisibleRegion
         {
             get => (MapSpan)GetValue(VisibleRegionProperty);
             set => SetValue(VisibleRegionProperty, value);
         }
-
         private static void OnVisibleRegionChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is BindableMap map && newValue is MapSpan newRegion)

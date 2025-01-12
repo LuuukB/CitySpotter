@@ -17,47 +17,27 @@ namespace CitySpotter.Domain.Services
         private readonly IDatabaseRepo _databaseRepo;
 
         [ObservableProperty] public string _nameOfRoute;
-
-
-
         [ObservableProperty] public ObservableCollection<string> _routeNames;
-
-
         public MainPageViewModel(IDatabaseRepo database)
         {
             _databaseRepo = database;
             RouteNames = new ObservableCollection<string>();
-           
-
-
         }
-
-
-
         [RelayCommand]
         public void GetRoutesForView() 
         { 
             Debug.WriteLine("Loading routes");
             LoadRoutesLocations();
-           
-
         }
-     
         private void LoadRoutesLocations()
         { 
             var allRoutesNames = _databaseRepo.GetAllNamesRoutes();
             RouteNames.Clear();
-
             foreach (var route in allRoutesNames)
             {
                 RouteNames.Add(route);
             }
-
-
         }
-
-
-
         [RelayCommand]
         private async Task NavigateToMap(string routeName)
         {
@@ -68,14 +48,7 @@ namespace CitySpotter.Domain.Services
 
                 // Navigeren naar de MapPage met de geselecteerde route als queryparameter
                 await Shell.Current.GoToAsync($"///MapPage?routeName={routeName}");
-
-
             }
-
         }
-
-
-
-
     }
 }

@@ -18,40 +18,25 @@ namespace CitySpotter.Domain.Services
 {
     public partial class MapViewModel : ObservableObject
     {
-        
-        [ObservableProperty]
-        private string _routeName;
-        
-            
-        
-        private readonly IGeolocation _geolocation;
+        [ObservableProperty] private string _routeName;
+        [ObservableProperty] private ObservableCollection<MapElement> _mapElements = new();
+        [ObservableProperty] public MapSpan _currentMapSpan;
 
+        private readonly IGeolocation _geolocation;
+        private IDatabaseRepo _databaseRepo;
 
         private System.Timers.Timer? _locationTimer;
-
-
-
-        [ObservableProperty] private ObservableCollection<MapElement> _mapElements = new();
-
-        
-        private IDatabaseRepo _databaseRepo;
         private List<RouteLocation> _routeLocations;
-
-
-        [ObservableProperty] public MapSpan _currentMapSpan;
         private readonly LocationPermissionService _locationService;
-
 
         public MapViewModel(IGeolocation geolocation, IDatabaseRepo repository)
         {
-
             _databaseRepo = repository;
             _geolocation = geolocation;
             _locationService = new LocationPermissionService();
             //todo: beter gezegd de currentmapspan moet naar user toe op het moment dat de map word gemaakt.
 
             _databaseRepo.Init();
-
 
             //new RouteLocation{ longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "info text over dit monument", imageSource = "nassaubaroniemonument.jpg"};
             if (_databaseRepo.GetAllRoutes().Count == 0)
@@ -102,18 +87,14 @@ namespace CitySpotter.Domain.Services
                 _databaseRepo.AddRoute(new RouteLocation { longitude = 51.589667, latitude = 4.777805, routeTag = "historischeKilometer" });
                 _databaseRepo.AddRoute(new RouteLocation { longitude = 51.589500, latitude = 4.776250, routeTag = "historischeKilometer" });
             }
-
-          
             Debug.WriteLine("De database heef zoveel punten: " + _databaseRepo.GetAllRoutes().Count);
 
             Location location = new Location(51.588331, 4.777802);
             MapSpan mapSpan = new MapSpan(location, 0.015, 0.015);
             CurrentMapSpan = mapSpan;
-
         }
         public List<RouteLocation> GetRouteLocations()
         {
-
             return _databaseRepo.GetAllRoutes();
         }
         public async Task HandleOnAppearingAsync()
@@ -131,41 +112,28 @@ namespace CitySpotter.Domain.Services
                 }
             }
         }
-
-
         //methode wordt veranderd en mag binnenkort weg
         public void LoadRoute(string routeName)
         {
             Debug.WriteLine($"Loading route: {routeName}");
             RouteStarting();
-
             var routeLocations = _databaseRepo.GetPointsSpecificRoute(routeName);
-
             if (routeLocations.Count() >= 2)
             {
-               
                 var routePolyline = CreatePolyLineOfLocations(routeLocations.Select(loc => new Location(loc.latitude, loc.longitude)));
-
-               
                 var existingPolylines = MapElements.OfType<Polyline>().ToList();
                 foreach (var polyline in existingPolylines)
                 {
                     MapElements.Remove(polyline);
                 }
-                
                 // nieuwe polyline 
                 MapElements.Add(routePolyline);
-
             }
             else
             {
                 Debug.WriteLine("Geen locaties gevonden voor deze route.");
             }
         }
-
-
-
-        
         public void RouteStarting()
         { 
             Debug.WriteLine("starting route/timer");
@@ -174,8 +142,6 @@ namespace CitySpotter.Domain.Services
             _locationTimer.AutoReset = true;
             _locationTimer.Start();
         }
-
-
         public void RouteStop()
         {
             Debug.WriteLine("stopping route/timer");
@@ -187,15 +153,12 @@ namespace CitySpotter.Domain.Services
                 _locationTimer = null;
             }
         }
-
         private void OnTimedEvent(object? sender, ElapsedEventArgs e)
         {
          //   Task.Run(OnTimedEventAsync);
         }
-
         private async Task OnTimedEventAsync()
         {
-
             PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
             if (status == PermissionStatus.Granted)
             {
@@ -209,8 +172,6 @@ namespace CitySpotter.Domain.Services
                     {
                         Debug.WriteLine("Location: {0}", location);
                         CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(60));
-
-
                     }
                 }
                 catch (Exception ex)
@@ -220,14 +181,9 @@ namespace CitySpotter.Domain.Services
             }
             else if (status == PermissionStatus.Denied) 
             {
-
                 status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-
             }
-
         }
-
-     
         private Polyline CreatePolyLineOfLocations(IEnumerable<Location> locations)
         {
             Debug.WriteLine("Constructing {0}", args: nameof(Polyline));
@@ -236,16 +192,12 @@ namespace CitySpotter.Domain.Services
                 StrokeColor = Colors.Red,
                 StrokeWidth = 12,
             };
-
             Debug.WriteLine("Adding to {0}.", args: nameof(polyline.Geopath));
             foreach (var loc in locations)
             {
                 polyline.Geopath.Add(loc);
             }
-
             return polyline;
-        }
-
-        
+        }  
     }
 }
