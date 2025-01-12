@@ -11,7 +11,6 @@ namespace CitySpotter;
 [QueryProperty(nameof(RouteName), "routeName")]
 public partial class MapPage : ContentPage
 {
-    private List<RouteLocation> routes = new List<RouteLocation>();
     private string _routeName;
     public MapPage(MapViewModel viewModel)
 	{
@@ -27,6 +26,17 @@ public partial class MapPage : ContentPage
             if (BindingContext is MapViewModel viewModel && !string.IsNullOrEmpty(value))
             {
                 viewModel.CreateRoute(value);
+            }
+        }
+    }
+
+    private void Pin_OnMarkerClicked(object? sender, PinClickedEventArgs e)
+    {
+        if (this.BindingContext is MapViewModel viewModel)
+        {
+            if (sender is Pin pin)
+            {
+                viewModel.MarkerClickedCommand.Execute(pin);
             }
         }
     }

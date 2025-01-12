@@ -230,11 +230,43 @@ namespace CitySpotter.Domain.Services
                 Location = new Location(routeLocation.longitude, routeLocation.latitude),
                 Type = PinType.Generic
             };
-            pinCreated.MarkerClicked += async (s, args) =>
-            {
-                await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation { longitude = routeLocation.longitude, latitude = routeLocation.latitude, name = routeLocation.name, description = routeLocation.description, imageSource = routeLocation.imageSource })));
-            };
             Pins.Add(pinCreated);
+
+
+        }
+
+        [RelayCommand]
+        private async Task MarkerClicked(Pin pin)
+        {
+            Debug.WriteLine("Clicked on Marker.");
+
+            // First find the proper routeLocation
+            double tolerance = 0.0001D;
+            var routeLocation = _databaseRepo.GetAllRoutes().FirstOrDefault(ro =>
+                // NOTE: LONGIDUDE EN LATITUDE ZIJN OMGEDRAAIT WTF BROEDERS> MAAR DIT WERKT
+                // First check latitude
+                Math.Abs(ro.longitude - pin.Location.Latitude) < tolerance
+
+                // Then check longitude
+                && Math.Abs(ro.latitude - pin.Location.Longitude) < tolerance);
+
+            if (routeLocation is not null)
+            {
+                // Then rev up those fryers
+                Debug.WriteLine("Firing pop up.");
+                await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation
+                {
+                    longitude = routeLocation.longitude,
+                    latitude = routeLocation.latitude,
+                    name = routeLocation.name,
+                    description = routeLocation.description,
+                    imageSource = routeLocation.imageSource
+                })));
+            }
+            else
+            {
+                Debug.WriteLine($"No {nameof(routeLocation)} found.");
+            }
         }
     }
 }
