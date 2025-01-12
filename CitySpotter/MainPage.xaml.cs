@@ -1,13 +1,15 @@
-﻿namespace CitySpotter
+﻿using CitySpotter.Domain.Services;
+
+namespace CitySpotter
 {
     public partial class MainPage : ContentPage
     {
      
 
-        public MainPage()
+        public MainPage(MainPageViewModel viewModel)
         {
             InitializeComponent();
-           
+           BindingContext = viewModel;
 
         }
 
