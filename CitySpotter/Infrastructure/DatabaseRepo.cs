@@ -14,48 +14,50 @@ namespace CitySpotter.Infrastructure
     {
         private string _dpPath;
         public DatabaseRepo(string dbPath) { _dpPath = dbPath; }
-        public void AddRoute(RouteLocation location)
+        public async Task AddRoute(RouteLocation location)
         {
-            using SQLiteConnection sQLiteConnection = new(_dpPath);
-            sQLiteConnection.Insert(location);
+            SQLiteAsyncConnection sQLiteConnection = new(_dpPath);
+            await sQLiteConnection.InsertAsync(location);
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            using SQLiteConnection sQLiteConnection = new(_dpPath);
-            sQLiteConnection.Delete<RouteLocation>(id);
+            SQLiteAsyncConnection sQLiteConnection = new(_dpPath);
+            await sQLiteConnection.DeleteAsync<RouteLocation>(id);
         }
-        public List<RouteLocation> GetAllRoutes()
+        public async Task<List<RouteLocation>> GetAllRoutes()
         {
-            using SQLiteConnection sQLiteConnection = new(_dpPath);
-            return sQLiteConnection.Table<RouteLocation>().ToList();
+            SQLiteAsyncConnection sQLiteConnection = new(_dpPath);
+            return await sQLiteConnection.Table<RouteLocation>().ToListAsync();
         }
-        public void Init()
+        public async Task Init()
         {
-            using SQLiteConnection sQLiteConnection = new(_dpPath);
+            SQLiteAsyncConnection sQLiteConnection = new(_dpPath);
             //   sQLiteConnection.CreateTable<Route>();
-            sQLiteConnection.CreateTable<RouteLocation>();
+           await sQLiteConnection.CreateTableAsync<RouteLocation>();
         }
-        public void Drop()
+        public async Task Drop()
         {
-            using SQLiteConnection sQLiteConnection = new SQLiteConnection(_dpPath);
-            sQLiteConnection.DropTable<RouteLocation>();
+            SQLiteAsyncConnection sQLiteConnection = new (_dpPath);
+            await sQLiteConnection.CreateTableAsync<RouteLocation>();
         }
-        public List<RouteLocation> GetPointsSpecificRoute(string tagRoute) 
+        public async Task<List<RouteLocation>> GetPointsSpecificRoute(string tagRoute) 
         {
-            using (var db = new SQLiteConnection(_dpPath)) 
-            {
-                return db.Table<RouteLocation>().Where(x => x.routeTag == tagRoute).ToList();
-            }
+            SQLiteAsyncConnection sQLiteConnection = new SQLiteAsyncConnection(_dpPath);
+            return await sQLiteConnection.Table<RouteLocation>().Where(x => x.routeTag == tagRoute).ToListAsync();
+            
         }
-        public List<string> GetAllNamesRoutes() 
+        public async Task<List<string>> GetAllNamesRoutes() 
         {
-            using (var db = new SQLiteConnection(_dpPath))
-            {
-                return db.Table<RouteLocation>()
-                         .Select(p => p.routeTag)
-                         .Distinct()
-                         .ToList();
-            }
+            SQLiteAsyncConnection sQLiteConnection = new(_dpPath);
+
+            var allData = await sQLiteConnection.Table<RouteLocation>().ToListAsync();
+            var uniqueRouteTags = allData
+                .Select(p => p.routeTag) // Selecteer de gewenste kolom
+                .Distinct() // Filter de unieke waarden
+                .ToList();
+
+            return uniqueRouteTags;
+
         }
     }
 }
