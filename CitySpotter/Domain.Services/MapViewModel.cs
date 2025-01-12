@@ -35,6 +35,7 @@ namespace CitySpotter.Domain.Services
 
         
         private IDatabaseRepo _databaseRepo;
+        private List<RouteLocation> _routeLocations;
 
 
         [ObservableProperty] public MapSpan _currentMapSpan;
@@ -110,7 +111,11 @@ namespace CitySpotter.Domain.Services
             CurrentMapSpan = mapSpan;
 
         }
+        public List<RouteLocation> GetRouteLocations()
+        {
 
+            return _databaseRepo.GetAllRoutes();
+        }
         public async Task HandleOnAppearingAsync()
         {
             var hasPermission = await _locationService.CheckAndRequestLocationPermissionAsync();
@@ -168,7 +173,6 @@ namespace CitySpotter.Domain.Services
             _locationTimer.Elapsed += OnTimedEvent;
             _locationTimer.AutoReset = true;
             _locationTimer.Start();
-          
         }
 
 
@@ -186,7 +190,7 @@ namespace CitySpotter.Domain.Services
 
         private void OnTimedEvent(object? sender, ElapsedEventArgs e)
         {
-            Task.Run(OnTimedEventAsync);
+         //   Task.Run(OnTimedEventAsync);
         }
 
         private async Task OnTimedEventAsync()

@@ -11,16 +11,16 @@ namespace CitySpotter;
 [QueryProperty(nameof(RouteName), "routeName")]
 public partial class MapPage : ContentPage
 {
+    private List<RouteLocation> routes = new List<RouteLocation>();
     
 
 	public MapPage(MapViewModel viewModel)
 	{
 		InitializeComponent();
         BindingContext = viewModel;
-
-
-        createPin(new RouteLocation { longitude = 51.592496, latitude = 4.779975, name = "Monument ValkenburgPark", description = "nassaubaroniemonumentbeschrijving.txt", imageSource = "nassaubaroniemonument.jpg" });
-        createPin(new RouteLocation { longitude = 51.590612, latitude = 4.776167, name = "Kasteel van Breda", description = "kasteelbeschrijving.txt", imageSource = "kasteelbreda.jpg" });
+        routes = viewModel.GetRouteLocations();
+        Debug.WriteLine(routes.Count());
+        createRoute(routes);
 	}
 
     public string RouteName
@@ -126,8 +126,8 @@ public partial class MapPage : ContentPage
     {
         foreach (var routeLocation in routeLocations)
         {
-            if (routeLocation.name != null)
-            {
+            
+            if(routeLocation.name != null) {
                 createPin(routeLocation);
             }
         }
