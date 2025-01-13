@@ -13,15 +13,6 @@ namespace CitySpotter.Domain.Model
         public string? imageSource { get; set; }
         public bool isVisited { get; set; }
         public string routeTag { get; set; }
-        /*public RouteLocation(double lon, double lat, string name, string info, string imageSource, bool isVisited)
-        {
-            this.latitude = lon;
-            this.longitude = lat;
-            this.name = name;
-            this.description = info;
-            this.imageSource = imageSource;
-            this.isVisited = isVisited;
-        }*/
         public void setVisited()
         {
             this.isVisited = true;

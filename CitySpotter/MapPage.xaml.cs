@@ -15,6 +15,11 @@ public partial class MapPage : ContentPage
         {
             await DisplayAlert("Geen verbinding", message, "OK");
         };
+        _mapViewModel.LocationLost += async (sender, message) =>
+        {
+            await DisplayAlert("Geen locatie", message, "OK");
+        };
+
         BindingContext = viewModel;
 
 	}

@@ -25,11 +25,13 @@ public partial class MapViewModel : ObservableObject
 
     private System.Timers.Timer _locationTimer;
     public event EventHandler<string> InternetConnectionLost;
+    public event EventHandler<string> LocationLost;
 
     private readonly IGeolocation _geolocation;
     private readonly IDatabaseRepo _databaseRepo;
     private readonly IInternetHandler _internetHandler;
-    private bool isShowing = false;
+    private bool _isShowingNetwerkError = true;
+    private bool _isShowingLocationError = true;
 
     public bool HasInternetConnection
     {
@@ -57,19 +59,6 @@ public partial class MapViewModel : ObservableObject
         _locationTimer.AutoReset = true;
         _locationTimer.Start();
 
-    }
-
-
-    public void RouteStop()
-    {
-        Debug.WriteLine("stopping route/timer");
-
-        if (_locationTimer != null)
-        {
-            _locationTimer.Stop();
-            _locationTimer.Dispose();
-            _locationTimer = null;
-        }
     }
 
     private void OnTimedEvent(object? sender, ElapsedEventArgs e)
@@ -131,70 +120,26 @@ public partial class MapViewModel : ObservableObject
         {
             if (displayGpsError)
             {
-                await Application.Current.MainPage.DisplayAlert(
-                    "Kan geen locatie verkrijgen",
-                    "De app kan niet goed werken zolang je locatie niet te verkrijgen. Check je instellingen.",
-                    "OK"
-                );
+                if (_isShowingLocationError)
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        LocationLost?.Invoke(this, "gps geeft geen locatie meer weer");
+                    });
+                    _isShowingLocationError = false;
+                }
+
             }
+            else 
+            {
+                _isShowingLocationError = true; 
+            }
+            
         }
-        //try
-        //{
-        //    Debug.WriteLine("Running {0} at {1}", nameof(OnTimedEventAsync), DateTime.Now.ToShortTimeString());
-
-        //    var location = await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.High));
-
-        //    if (location is not null)
-        //    {
-        //        Debug.WriteLine("Location: {0}", location);
-        //        CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(60));
-
-
-        //    }
-        //}
-        //catch (Exception ex)
-        //{
-        //    Debug.WriteLine($"Fout bij ophalen locatie: {ex.Message}");
-        //}
+        
     }
 
 
-    //private async Task InitListener(IGeolocation geolocation, GeolocationAccuracy accuracy = GeolocationAccuracy.High)
-    //{
-    //    var displayGpsError = false;
-
-    //    try
-    //    {
-    //        Debug.WriteLine("Initializing location listener.");
-    //        geolocation.LocationChanged += Geolocation_LocationChanged;
-    //        var request = new GeolocationListeningRequest(accuracy);
-    //        var success = await geolocation.StartListeningForegroundAsync(request);
-
-    //        string status = success
-    //            ? "Started listening for foreground location updates"
-    //            : "Couldn't start listening";
-
-    //        Debug.WriteLine(status);
-
-    //        if (!success) displayGpsError = true;
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        displayGpsError = true;
-    //        Debug.WriteLine(ex);
-    //    }
-    //    finally
-    //    {
-    //        if (displayGpsError)
-    //        {
-    //            await Application.Current.MainPage.DisplayAlert(
-    //                "Kan geen locatie verkrijgen",
-    //                "De app kan niet goed werken zolang je locatie niet te verkrijgen. Check je instellingen.",
-    //                "OK"
-    //            );
-    //        }
-    //    }
-    //}
     private void ZoomToBreda()
     {
         Location location = new Location(51.588331, 4.777802);
@@ -202,44 +147,23 @@ public partial class MapViewModel : ObservableObject
         CurrentMapSpan = mapSpan;
     }
 
-    //[ObservableProperty] private string _distanceToPin;
-    //private void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
-    //{
-    //    var curLoc = e.Location;
-
-    //    Debug.WriteLine($"Last pulled pos: {curLoc.Latitude}, {curLoc.Longitude}");
-
-    //    // Now check if close to location.
-    //    foreach (var pin in Pins)
-    //    {
-    //        Debug.WriteLine($"Checking if {curLoc.Latitude}, {curLoc.Longitude} close to {pin.Location.Latitude}, {pin.Location.Longitude}");
-    //        var distInMeters = curLoc.CalculateDistance(pin.Location, DistanceUnits.Kilometers) * 1000;
-    //        if (distInMeters <= 20)
-    //        {
-    //            Debug.WriteLine($"Close enough to {pin.Label}");
-    //            DistanceToPin = distInMeters.ToString();
-    //            MarkerClickedCommand.Execute(pin);
-    //        }
-    //    }
-    //}
-
     private void CheckInternetConnection()
     {
         OnPropertyChanged(nameof(HasInternetConnection));
         if (!HasInternetConnection)
         {
-            if (isShowing)
+            if (_isShowingNetwerkError)
             {
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     InternetConnectionLost?.Invoke(this, "Verbinding is verbroken");
-                    isShowing = false;
+                    _isShowingNetwerkError = false;
                 });
             }
         }
         else
         {
-            isShowing = true;
+            _isShowingNetwerkError = true;
         }
     }
 
@@ -265,7 +189,6 @@ public partial class MapViewModel : ObservableObject
     public void OnLoad(string routeTag)
     {
         MainThread.InvokeOnMainThreadAsync(() => CreateRoute(routeTag));
-        //Task.Run(() => InitListener(_geolocation));
         Task.Run(() => RouteStarting());
 
         InitInternetCheckTimer();
