@@ -4,6 +4,7 @@ using CitySpotter.Domain.Model;
 using CitySpotter.Infrastructure;
 using Mopups.Hosting;
 using CommunityToolkit.Maui;
+using CitySpotter.Domain.Services.Internet;
 
 namespace CitySpotter
 {
@@ -41,7 +42,10 @@ namespace CitySpotter
 
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainPageViewModel>();
-            
+
+            builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+            builder.Services.AddSingleton<IInternetHandler, InternetHandler>();
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

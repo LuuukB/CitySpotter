@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Timers;
 using Mopups.Services;
+using CitySpotter.Domain.Services.Internet;
 
 namespace CitySpotter.Domain.Services;
 
@@ -22,11 +23,22 @@ public partial class MapViewModel : ObservableObject
     private readonly IDatabaseRepo _databaseRepo;
 
     private System.Timers.Timer? _locationTimer;
+    private readonly IInternetHandler _internetHandler;
 
-    public MapViewModel(IGeolocation geolocation, IDatabaseRepo repository)
+    public bool HasInternetConnection
+    {
+        get
+        {
+            Debug.WriteLine("Checking Internet connection");
+            return _internetHandler.HasInternetConnection();
+        }
+    }
+
+    public MapViewModel(IGeolocation geolocation, IDatabaseRepo repository, IInternetHandler internetHandler)
     {
         _databaseRepo = repository;
         _geolocation = geolocation;
+        _internetHandler = internetHandler;
 
         _databaseRepo.Init();
 
@@ -295,6 +307,11 @@ public partial class MapViewModel : ObservableObject
         Debug.WriteLine("De database heef zoveel punten: " + _databaseRepo.GetAllRoutes().Count);
 
         ZoomToBreda();
+        //todo dit in methode zetten 
+        const int updateTimeInMs = 4000;
+        System.Timers.Timer timer = new System.Timers.Timer(updateTimeInMs);
+        timer.Elapsed += (sender, args) => CheckInternetConnection();
+        timer.Start();
     }
 
     private void ZoomToBreda()
@@ -302,6 +319,11 @@ public partial class MapViewModel : ObservableObject
         Location location = new Location(51.588331, 4.777802);
         MapSpan mapSpan = new MapSpan(location, 0.015, 0.015);
         CurrentMapSpan = mapSpan;
+    }
+
+    private void CheckInternetConnection()
+    {
+        OnPropertyChanged(nameof(HasInternetConnection));
     }
 
     public void RouteStarting()
