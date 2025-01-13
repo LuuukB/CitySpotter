@@ -70,7 +70,7 @@ namespace CitySpotter.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ik ben Erik.
+        ///   Looks up a localized string similar to Text is English.
         /// </summary>
         internal static string name {
             get {
