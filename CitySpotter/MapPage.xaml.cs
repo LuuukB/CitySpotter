@@ -6,10 +6,17 @@ namespace CitySpotter;
 public partial class MapPage : ContentPage
 {
     private string _routeName;
+    private MapViewModel _mapViewModel;
     public MapPage(MapViewModel viewModel)
 	{
 		InitializeComponent();
+        _mapViewModel = viewModel;
+        _mapViewModel.InternetConnectionLost += async (sender, message) =>
+        {
+            await DisplayAlert("Geen verbinding", message, "OK");
+        };
         BindingContext = viewModel;
+
 	}
     public string RouteName
     {

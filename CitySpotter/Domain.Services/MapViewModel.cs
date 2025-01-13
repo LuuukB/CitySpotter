@@ -24,10 +24,12 @@ public partial class MapViewModel : ObservableObject
     [ObservableProperty] private ObservableCollection<Pin> _pins = [];
 
     private System.Timers.Timer _locationTimer;
+    public event EventHandler<string> InternetConnectionLost;
 
     private readonly IGeolocation _geolocation;
     private readonly IDatabaseRepo _databaseRepo;
     private readonly IInternetHandler _internetHandler;
+    private bool isShowing = false;
 
     public bool HasInternetConnection
     {
@@ -220,6 +222,21 @@ public partial class MapViewModel : ObservableObject
     private void CheckInternetConnection()
     {
         OnPropertyChanged(nameof(HasInternetConnection));
+        if (!HasInternetConnection)
+        {
+            if (isShowing)
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    InternetConnectionLost?.Invoke(this, "Verbinding is verbroken");
+                    isShowing = false;
+                });
+            }
+        }
+        else
+        {
+            isShowing = true;
+        }
     }
 
     private MapElement CreatePolyLineOfLocations(IEnumerable<Location> locations)
