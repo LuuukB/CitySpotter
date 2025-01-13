@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using CitySpotter.Domain.Model;
 using CitySpotter.Infrastructure;
 using Mopups.Hosting;
+using CommunityToolkit.Maui;
+using CitySpotter.Domain.Services.Internet;
 
 namespace CitySpotter
 {
@@ -15,6 +17,7 @@ namespace CitySpotter
                 .UseMauiApp<App>()
                 .UseMauiMaps()
                 .ConfigureMopups()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -32,10 +35,17 @@ namespace CitySpotter
 
             builder.Services.AddSingleton<MapViewModel>();
             builder.Services.AddSingleton<MapPage>(s => new MapPage(s.GetRequiredService<MapViewModel>()));
+            builder.Services.AddTransient<InfoPopupViewModel>();
+            builder.Services.AddTransient<InfoPointPopup>();
 
+            builder.Services.AddSingleton<ILocationPermissionsService, LocationPermissionService>();
 
             builder.Services.AddSingleton<MainPage>();
-            
+            builder.Services.AddSingleton<MainPageViewModel>();
+
+            builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+            builder.Services.AddSingleton<IInternetHandler, InternetHandler>();
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

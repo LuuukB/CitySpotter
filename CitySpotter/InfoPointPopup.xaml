@@ -3,24 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
              x:Class="CitySpotter.InfoPointPopup"
+             xmlns:viewmodel="clr-namespace:CitySpotter.Domain.Services"
+             x:DataType="viewmodel:InfoPopupViewModel"
              Title="InfoPointPopup">
 
-    <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
+    <ScrollView HorizontalOptions="Center" VerticalOptions="Center" Padding="10">
         <Border WidthRequest="300" HeightRequest="600"
                         BackgroundColor="White"
                         HorizontalOptions="Center">
             <VerticalStackLayout Spacing="3">
                 <Label 
-                    Text="Informatie"
+                    Text="{Binding LocationName}"
                     FontSize="20"
                     HorizontalOptions="Center">
                 </Label>
                 <Image
-                    Source="nassaubaroniemonument.jpg"
+                    Source="{Binding ImageSource}"
                     HeightRequest="180"
                     WidthRequest="180"
                     Aspect="AspectFit">
                 </Image>
+                <Border BackgroundColor="Transparent" WidthRequest="290" HeightRequest="350" Padding="10" >
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="0"/>
+                    </Border.StrokeShape>
+                    <ScrollView>
+                        <Label LineBreakMode="WordWrap" Text="{Binding Description}" TextColor="Black"></Label>
+                    </ScrollView>
+                </Border>
             </VerticalStackLayout>
                 </Border>
         </ScrollView>

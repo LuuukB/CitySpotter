@@ -30,27 +30,24 @@ namespace CitySpotter.Domain.Services
                     }
                 });
 
-        public static readonly BindableProperty VisibleRegionProperty =
+
+        public static readonly BindableProperty VisibleRegionInMapProperty =
           BindableProperty.Create(
-              nameof(VisibleRegion),
+              nameof(VisibleRegionInMap),
               typeof(MapSpan),
               typeof(BindableMap),
               default(MapSpan),
               propertyChanged: OnVisibleRegionChanged);
-
-
         public ICollection<MapElement> MvvmMapElements
         {
             get => (ICollection<MapElement>)GetValue(MvvmMapElementsProperty);
             set => SetValue(MvvmMapElementsProperty, value);
         }
-
-        public MapSpan VisibleRegion
+        public MapSpan VisibleRegionInMap
         {
-            get => (MapSpan)GetValue(VisibleRegionProperty);
-            set => SetValue(VisibleRegionProperty, value);
+            get => (MapSpan)GetValue(VisibleRegionInMapProperty);
+            set => SetValue(VisibleRegionInMapProperty, value);
         }
-
         private static void OnVisibleRegionChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is BindableMap map && newValue is MapSpan newRegion)
