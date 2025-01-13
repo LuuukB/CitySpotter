@@ -1,4 +1,4 @@
-﻿using CitySpotter.Domain.Services;
+using CitySpotter.Domain.Services;
 using Microsoft.Extensions.Logging;
 using CitySpotter.Domain.Model;
 using CitySpotter.Infrastructure;
@@ -39,6 +39,9 @@ namespace CitySpotter
             builder.Services.AddTransient<InfoPointPopup>();
 
             builder.Services.AddSingleton<ILocationPermissionsService, LocationPermissionService>();
+            builder.Services.AddTransient<SettingsViewModel>();
+            builder.Services.AddTransient<SettingsPage>();
+
 
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainPageViewModel>();
