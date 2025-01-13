@@ -103,7 +103,7 @@ public partial class MapViewModel : ObservableObject
                 else
                 {
                     // Mark pin as inactive when out of range
-                    _pinActivationStatus[pin] = false;
+             //       _pinActivationStatus[pin] = false;
                 }
             }
         }catch(FeatureNotEnabledException e)
@@ -252,12 +252,13 @@ public partial class MapViewModel : ObservableObject
                 latitude = routeLocation.latitude,
                 name = routeLocation.name,
                 descriptionNL = routeLocation.descriptionNL,
+                descriptionENG = routeLocation.descriptionENG,
                 imageSource = routeLocation.imageSource
             }, fileService);
 
-            await viewModel.setData();
+            viewModel.setData();
 
-            await MopupService.Instance.PushAsync(new InfoPointPopup(viewModel));
+            MopupService.Instance.PushAsync(new InfoPointPopup(viewModel));
         }
         else
         {

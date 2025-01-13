@@ -27,12 +27,13 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
     public async Task Init()
     {
         await _sQLiteConnection.CreateTableAsync<RouteLocation>();
-        await AddHistoricalRoute();
+        AddHistoricalRoute();
     }
 
     private async Task AddHistoricalRoute()
     {
         var db = await GetAllRoutes();
+
         if (db.Count == 0)
         {
             await AddRoute(new RouteLocation
@@ -318,13 +319,14 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
             await AddRoute(new RouteLocation
             { longitude = 51.589500, latitude = 4.776250, routeTag = "historischeKilometer" });
         }
-
         Debug.WriteLine("De database heef zoveel punten: " + db.Count);
+
     }
 
     public async Task Drop()
     {
         await _sQLiteConnection.DropTableAsync<RouteLocation>();
+        
     }
 
     public async Task<List<RouteLocation>> GetPointsSpecificRoute(string tagRoute)

@@ -61,7 +61,9 @@ namespace CitySpotter.Domain.Services
             }
 
             // We also initialize the database!
+            
             await _databaseRepo.Init();
+ //           await _databaseRepo.Drop();
             
         }
     }

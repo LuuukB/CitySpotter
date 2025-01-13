@@ -2,6 +2,7 @@
 using CitySpotter.Domain.Model;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Globalization;
+using System.Diagnostics;
 
 
 namespace CitySpotter.Domain.Services
@@ -9,6 +10,8 @@ namespace CitySpotter.Domain.Services
     public partial class InfoPopupViewModel : ObservableObject
     {
         private RouteLocation routeLocation { get; set; }
+        private string resourceFileNL { get; set; }
+        private string resourceFileENG { get; set; }
         private IFileService _fileService { get; set; }
         public InfoPopupViewModel(RouteLocation location, IFileService fileService) { 
             routeLocation = location;
@@ -22,10 +25,18 @@ namespace CitySpotter.Domain.Services
         {
             ImageSource = routeLocation.imageSource;
             LocationName = routeLocation.name;
-            if (CultureInfo.CurrentCulture.Equals("nl-NL"))
-                Description = await _fileService.ReadFileAsync(routeLocation.descriptionNL);
+
+            resourceFileENG = routeLocation.descriptionENG;
+            resourceFileNL = routeLocation.descriptionNL;
+
+
+            if (CultureInfo.CurrentCulture.Equals("nl-NL")) {
+                Description = await _fileService.ReadFileAsync(resourceFileNL);
+            }
             else 
-                Description = await _fileService.ReadFileAsync(routeLocation.descriptionENG);
+            {
+                Description = await _fileService.ReadFileAsync(resourceFileENG);
+            }
         }
     }
 }
