@@ -1,6 +1,5 @@
 using CitySpotter.Domain.Model;
 using SQLite;
-using CitySpotter.Locations.Locations;
 using System.Diagnostics;
 
 

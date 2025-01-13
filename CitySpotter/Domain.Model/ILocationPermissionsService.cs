@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CitySpotter.Domain.Model;
 
-namespace CitySpotter.Domain.Model
+public interface ILocationPermissionsService
 {
-    public interface ILocationPermissionsService
-    {
-        Task<PermissionStatus> CheckAndRequestLocationPermissionAsync();
+    Task<PermissionStatus> CheckAndRequestLocationPermissionAsync();
 
-        Task<bool> ShowSettingsIfPermissionDeniedAsync();
-    }
+    Task<bool> ShowSettingsIfPermissionDeniedAsync();
 }

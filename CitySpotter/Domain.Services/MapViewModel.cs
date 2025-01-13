@@ -1,5 +1,4 @@
 using CitySpotter.Domain.Model;
-using CitySpotter.Locations.Locations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls.Maps;
@@ -110,7 +109,6 @@ public partial class MapViewModel : ObservableObject
         OnPropertyChanged(nameof(HasInternetConnection));
     }
 
-
     private MapElement CreatePolyLineOfLocations(IEnumerable<Location> locations)
     {
         Debug.WriteLine("Constructing {0}", args: nameof(Polyline));
@@ -172,7 +170,7 @@ public partial class MapViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task MarkerClicked(Pin pin)
+    public async Task MarkerClicked(Pin pin)
     {
         Debug.WriteLine("Clicked on Marker.");
 

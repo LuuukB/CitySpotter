@@ -1,11 +1,5 @@
 using CitySpotter.Domain.Services;
-using CitySpotter.Locations.Locations;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui.Controls.Maps;
-using Microsoft.Maui.Devices.Sensors;
-using Microsoft.Maui.Maps;
-using Mopups.Services;
-using System.Diagnostics;
 
 namespace CitySpotter;
 [QueryProperty(nameof(RouteName), "routeName")]
