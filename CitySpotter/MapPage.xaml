@@ -21,10 +21,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+
+
         <Label 
-            Text="Hier ziet u de kaart!"
+            Text="{Binding DistanceToPin}"
             Grid.Row="0"
-            VerticalOptions="Center" 
+                   VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
         <custom:BindableMap 

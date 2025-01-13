@@ -43,7 +43,7 @@ public partial class MapViewModel : ObservableObject
     }
 
 
-    private async Task InitListener(IGeolocation geolocation, GeolocationAccuracy accuracy = GeolocationAccuracy.Best)
+    private async Task InitListener(IGeolocation geolocation, GeolocationAccuracy accuracy = GeolocationAccuracy.High)
     {
         var displayGpsError = false;
 
@@ -86,6 +86,7 @@ public partial class MapViewModel : ObservableObject
         CurrentMapSpan = mapSpan;
     }
 
+    [ObservableProperty] private string _distanceToPin;
     private void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
     {
         var curLoc = e.Location;
@@ -100,6 +101,7 @@ public partial class MapViewModel : ObservableObject
             if (distInMeters <= 20)
             {
                 Debug.WriteLine($"Close enough to {pin.Label}");
+                DistanceToPin = distInMeters.ToString();
                 MarkerClickedCommand.Execute(pin);
             }
         }
