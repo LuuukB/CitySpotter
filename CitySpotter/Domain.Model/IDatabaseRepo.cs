@@ -9,12 +9,12 @@ namespace CitySpotter.Domain.Model
 {
     public interface IDatabaseRepo
     {
-        void Init();
-        List<RouteLocation> GetAllRoutes();
-        void AddRoute(RouteLocation location);
-        void Delete(int id);
-        void Drop();
-        List<RouteLocation> GetPointsSpecificRoute(string routeTag);
-        List<string> GetAllNamesRoutes();
+        Task Init();
+        Task<List<RouteLocation>> GetAllRoutes();
+        Task AddRoute(RouteLocation location);
+        Task Delete(int id);
+        Task Drop();
+        Task<List<RouteLocation>> GetPointsSpecificRoute(string routeTag);
+        Task<List<string>> GetAllNamesRoutes();
     }
 }

@@ -31,9 +31,9 @@ namespace CitySpotter.Domain.Services
             Debug.WriteLine("Loading routes");
             LoadRoutesLocations();
         }
-        private void LoadRoutesLocations()
+        private async Task LoadRoutesLocations()
         { 
-            var allRoutesNames = _databaseRepo.GetAllNamesRoutes();
+            var allRoutesNames = await _databaseRepo.GetAllNamesRoutes();
             RouteNames.Clear();
             foreach (var route in allRoutesNames)
             {
