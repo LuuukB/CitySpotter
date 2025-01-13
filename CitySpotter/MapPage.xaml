@@ -27,6 +27,9 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
+
+       
+
         <custom:BindableMap 
             x:Name="MapView"
             Grid.Row="1"
@@ -47,8 +50,14 @@
         </custom:BindableMap>
 
         <Label Grid.Row="1"
-               Text="No Internet."
+                Text="No Internet."
+               HorizontalTextAlignment="Center"
+               FontSize="25"
+                IsVisible="{Binding HasInternetConnection, Converter={StaticResource InvertedBoolConverter}}"/>
+        <Image Grid.Row="1"
+               Source="{Binding ImageSource}"
                IsVisible="{Binding HasInternetConnection, Converter={StaticResource InvertedBoolConverter}}"/>
+        
 
     </Grid>
 </ContentPage>
