@@ -317,6 +317,8 @@ public partial class MapViewModel : ObservableObject
     }
     private async Task InitListener(IGeolocation geolocation, GeolocationAccuracy accuracy = GeolocationAccuracy.Best)
     {
+        var displayGpsError = false;
+
         try
         {
             Debug.WriteLine("Initializing location listener.");
@@ -329,10 +331,24 @@ public partial class MapViewModel : ObservableObject
                 : "Couldn't start listening";
 
             Debug.WriteLine(status);
+
+            if (!success) displayGpsError = true;
         }
         catch (Exception ex)
         {
+            displayGpsError = true;
             Debug.WriteLine(ex);
+        }
+        finally
+        {
+            if (displayGpsError)
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Kan geen locatie verkrijgen",
+                    "De app kan niet goed werken zolang je locatie niet te verkrijgen. Check je instellingen.",
+                    "OK"
+                );
+            }
         }
     }
     private void ZoomToBreda()
