@@ -3,16 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CitySpotter.SettingsPage"
              Title="SettingsPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+
+            <Style TargetType="Label" x:Key="LabelStyle">
+            <Setter Property="TextColor" Value="{DynamicResource TextColor}"/>
+            </Style>
+
+            <Style TargetType="Button" x:Key="ButtonStyle">
+                <Setter Property="BackgroundColor" Value="{DynamicResource ButtonColor}"/>
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <VerticalStackLayout>
         <Button Command ="{Binding Button_ClickedCommand}" 
-                Text="CollorBlindMode"/>
+            Text="CollorBlindMode"
+                Style="{StaticResource ButtonStyle}"/>
         
+
         <Button Text="Nederlands"
-                Command="{Binding NederlandsButton_ClickedCommand}"/>
+            Command="{Binding NederlandsButton_ClickedCommand}"/>
 
         <Button Text="English"
-        Command="{Binding EnglishButton_ClickedCommand}"/>
-
-        <Label Text="{Binding Name}"/>
+            Command="{Binding EnglishButton_ClickedCommand}"/>
+        <Label Text="{Binding Name}" 
+               Style="{StaticResource LabelStyle}"/>
     </VerticalStackLayout>
+
 </ContentPage>
