@@ -123,4 +123,19 @@
   <data name="GetRoutes" xml:space="preserve">
     <value>Pak Routes</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Kaart</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Instellingen</value>
+  </data>
+  <data name="MapText" xml:space="preserve">
+    <value>Hier ziet u de kaart!</value>
+  </data>
+  <data name="Routes" xml:space="preserve">
+    <value>Routes</value>
+  </data>
+  <data name="ColorBlindMode" xml:space="preserve">
+    <value>Kleurenblindheid Modes</value>
+  </data>
 </root>

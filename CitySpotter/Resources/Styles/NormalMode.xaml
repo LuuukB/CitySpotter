@@ -4,7 +4,7 @@
              x:Class="CitySpotter.Resources.Styles.NormalMode">
 
     <Color x:Key="TextColor">#000000</Color>
-    <Color x:Key="ButtonColor">#555555</Color>
+    <Color x:Key="ButtonColor">#512BD4</Color>
     <Color x:Key="ButtonTextColor">#FFFFFF</Color>
     <Color x:Key="BackgroundColor">#FFFFFF</Color>
     <Color x:Key="SelectedTextColor">#C70039</Color>

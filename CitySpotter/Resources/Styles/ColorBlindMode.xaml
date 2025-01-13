@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CitySpotter.Resources.Styles.ColorBlindMode">
 
-    <Color x:Key="TextColor">#2cff05</Color>
-    <Color x:Key="ButtonColor">#FF10F0</Color>
+    <Color x:Key="TextColor">#333333</Color>
+    <Color x:Key="ButtonColor">#333333</Color>
     <Color x:Key="ButtonTextColor">#FFFFFF</Color>
-    <Color x:Key="BackgroundColor">#581845</Color>
-    <Color x:Key="SelectedText">#C70039</Color>
+    <Color x:Key="BackgroundColor">#FFFFFF</Color>
+    <Color x:Key="SelectedText">#000000</Color>
 </ResourceDictionary>

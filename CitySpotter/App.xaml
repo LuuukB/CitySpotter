@@ -28,7 +28,18 @@
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{DynamicResource BackgroundColor}"/>
                 <Setter Property="Shell.TabBarTitleColor" Value="{DynamicResource SelectedTextColor}"/>
                 <Setter Property="Shell.TabBarUnselectedColor" Value="{DynamicResource TextColor}"/>
+                <Setter Property="Shell.TitleColor" Value="{DynamicResource TextColor}"/>
+                <Setter Property="Shell.BackgroundColor" Value="{DynamicResource BackgroundColor}"/>
             </Style>
+
+            <Style TargetType="Picker" x:Key="PickerStyle">
+                <Setter Property="TextColor" Value="{DynamicResource TextColor}"/>
+            </Style>
+
+            <Style TargetType="Frame" x:Key="FrameStyle">
+                <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}"/>
+            </Style>
+           
         </ResourceDictionary>
     </Application.Resources>
 </Application>
