@@ -15,6 +15,7 @@ namespace CitySpotter.Domain.Services;
 public partial class MapViewModel : ObservableObject
 {
     [ObservableProperty] private string _routeName;
+    [ObservableProperty] private string _imageSource = "nointernetpopupscreen.jpg";
     [ObservableProperty] private ObservableCollection<MapElement> _mapElements = [];
     [ObservableProperty] private MapSpan _currentMapSpan;
     [ObservableProperty] private ObservableCollection<Pin> _pins = [];
@@ -153,7 +154,6 @@ public partial class MapViewModel : ObservableObject
             if (routeLocation.name is not null) CreatePin(routeLocation);
         }
 
-        // NOTE: Yes, lat & long reversed ;)
         MapElements.Add(
             CreatePolyLineOfLocations(routeLocations.Select(x => new Location(x.longitude, x.latitude))));
         MapElements = new ObservableCollection<MapElement>(MapElements);
@@ -178,7 +178,6 @@ public partial class MapViewModel : ObservableObject
         // First find the proper routeLocation
         double tolerance = 0.0001D;
         var routeLocation = (await _databaseRepo.GetAllRoutes()).FirstOrDefault(ro =>
-            // NOTE: LONGIDUDE EN LATITUDE ZIJN OMGEDRAAIT WTF BROEDERS> MAAR DIT WERKT
             // First check latitude
             Math.Abs(ro.longitude - pin.Location.Latitude) < tolerance
 
