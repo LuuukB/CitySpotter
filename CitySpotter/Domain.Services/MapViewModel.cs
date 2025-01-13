@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Mopups.Services;
 using CitySpotter.Domain.Services.Internet;
+using CitySpotter.Domain.Services.FileServices;
 
 
 namespace CitySpotter.Domain.Services;
@@ -187,16 +188,21 @@ public partial class MapViewModel : ObservableObject
 
         if (routeLocation is not null)
         {
+            IFileService fileService = new FileService();
             // Then rev up those fryers
             Debug.WriteLine("Firing pop up.");
-            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation
+            var viewModel = new InfoPopupViewModel(new RouteLocation
             {
                 longitude = routeLocation.longitude,
                 latitude = routeLocation.latitude,
                 name = routeLocation.name,
                 description = routeLocation.description,
                 imageSource = routeLocation.imageSource
-            })));
+            }, fileService);
+
+            await viewModel.setData();
+
+            await MopupService.Instance.PushAsync(new InfoPointPopup(viewModel));
         }
         else
         {

@@ -5,6 +5,7 @@ using CitySpotter.Infrastructure;
 using Mopups.Hosting;
 using CommunityToolkit.Maui;
 using CitySpotter.Domain.Services.Internet;
+using CitySpotter.Domain.Services.FileServices;
 
 namespace CitySpotter
 {
