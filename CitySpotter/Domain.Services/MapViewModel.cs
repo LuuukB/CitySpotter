@@ -251,7 +251,7 @@ public partial class MapViewModel : ObservableObject
                 longitude = routeLocation.longitude,
                 latitude = routeLocation.latitude,
                 name = routeLocation.name,
-                description = routeLocation.description,
+                descriptionNL = routeLocation.descriptionNL,
                 imageSource = routeLocation.imageSource
             }, fileService);
 

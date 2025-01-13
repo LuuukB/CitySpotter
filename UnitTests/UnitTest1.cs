@@ -27,7 +27,7 @@ namespace UnitTests
             {
                 imageSource = "path/to/image.jpg",
                 name = "Test Location",
-                description = "path/to/description.txt"
+                descriptionNL = "path/to/descriptionNL.txt"
             };
 
             InfoPopupViewModel _viewModel = new InfoPopupViewModel(_routeLocation, _mockFileService.Object);

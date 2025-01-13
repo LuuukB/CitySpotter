@@ -58,6 +58,30 @@
 
 	<ItemGroup>
 	  <None Remove="Platforms\Android\Resources\values\strings.xml" />
+	  <None Remove="Resources\Raw\antoniusvanpadaukerkbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\begijnhofbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\bevrijdingsmonumentbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\beyerdbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\bibliotheekbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\chassetheaterbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\gasthuispoortbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\grotekerkbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\grotemarktbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\havermarktbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\huisvanbrechtbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\kasteelbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\kloosterkazernebeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\liefdeszusterbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\nassaubaroniemonumentbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\poortjebeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\ridderstraatbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\spanjaardsgatbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\stadhouderspoortbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\stadhuisbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\vismarktbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\vuurtorenbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\vvvkantoorbeschrijvingENG.txt" />
+	  <None Remove="Resources\Raw\willemmerkxtuinbeschrijvingENG.txt" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -86,6 +110,81 @@
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiAsset Update="Resources\Raw\antoniusvanpadaukerkbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\begijnhofbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\bevrijdingsmonumentbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\beyerdbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\bibliotheekbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\chassetheaterbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\gasthuispoortbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\grotekerkbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\grotemarktbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\havermarktbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\huisvanbrechtbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\kasteelbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\kloosterkazernebeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\liefdeszusterbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\nassaubaroniemonumentbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\poortjebeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\ridderstraatbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\spanjaardsgatbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\stadhouderspoortbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\stadhuisbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\vismarktbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\vuurtorenbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\vvvkantoorbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
+	  <MauiAsset Update="Resources\Raw\willemmerkxtuinbeschrijvingENG.txt">
+	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+	  </MauiAsset>
 	</ItemGroup>
 
 	<ItemGroup>

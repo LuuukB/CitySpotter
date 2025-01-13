@@ -40,7 +40,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.594112,
                 latitude = 4.779417,
                 name = "VVV-Kantoor",
-                description = "vvvkantoorbeschrijving.txt",
+                descriptionNL = "vvvkantoorbeschrijving.txt",
                 imageSource = "vvvkantoor.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -49,7 +49,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.593278,
                 latitude = 4.779388,
                 name = "Liefdeszuster",
-                description = "liefdeszusterbeschrijving.txt",
+                descriptionNL = "liefdeszusterbeschrijving.txt",
                 imageSource = "liefdeszuster.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -58,7 +58,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.592500,
                 latitude = 4.779695,
                 name = "Nassau-Baroniemonument",
-                description = "nassaubaroniemonumentbeschrijving.txt",
+                descriptionNL = "nassaubaroniemonumentbeschrijving.txt",
                 imageSource = "nassaubaroniemonument.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -69,7 +69,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.592833,
                 latitude = 4.778472,
                 name = "Vuurtoren",
-                description = "vuurtorenbeschrijving.txt",
+                descriptionNL = "vuurtorenbeschrijving.txt",
                 imageSource = "vuurtoren.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -82,7 +82,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.590612,
                 latitude = 4.776167,
                 name = "Kasteel Breda",
-                description = "kasteelbeschrijving.txt",
+                descriptionNL = "kasteelbeschrijving.txt",
                 imageSource = "kasteelbreda.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -91,7 +91,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.589695,
                 latitude = 4.776138,
                 name = "Stadhouderspoort",
-                description = "stadhouderspoortbeschrijving.txt",
+                descriptionNL = "stadhouderspoortbeschrijving.txt",
                 imageSource = "stadhouderspoort.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -104,7 +104,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.590028,
                 latitude = 4.774362,
                 name = "Huis van Brecht",
-                description = "huisvanbrechtbeschrijving.txt",
+                descriptionNL = "huisvanbrechtbeschrijving.txt",
                 imageSource = "huisvanbrecht7.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -113,7 +113,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.590195,
                 latitude = 4.773445,
                 name = "Spanjaardsgat",
-                description = "spanjaardsgatbeschrijving.txt",
+                descriptionNL = "spanjaardsgatbeschrijving.txt",
                 imageSource = "spanjaardsgat.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -122,7 +122,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.589833,
                 latitude = 4.773333,
                 name = "Vismarkt",
-                description = "vismarktbeschrijving.txt",
+                descriptionNL = "vismarktbeschrijving.txt",
                 imageSource = "vismarktbreda.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -131,7 +131,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.589362,
                 latitude = 4.774445,
                 name = "Havermarkt",
-                description = "havermarktbeschrijving.txt",
+                descriptionNL = "havermarktbeschrijving.txt",
                 imageSource = "havermarkt.webp",
                 routeTag = "historischeKilometer"
             });
@@ -142,7 +142,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.588833,
                 latitude = 4.775278,
                 name = "Grote Kerk Breda",
-                description = "grotekerkbeschrijving.txt",
+                descriptionNL = "grotekerkbeschrijving.txt",
                 imageSource = "grotekerk.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -153,7 +153,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.588195,
                 latitude = 4.775138,
                 name = "Het Poortje",
-                description = "poortjebeschrijving.txt",
+                descriptionNL = "poortjebeschrijving.txt",
                 imageSource = "hetpoortje.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -162,7 +162,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.587083,
                 latitude = 4.775750,
                 name = "Ridderstraat",
-                description = "ridderstraatbeschrijving.txt",
+                descriptionNL = "ridderstraatbeschrijving.txt",
                 imageSource = "ridderstraat.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -171,7 +171,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.587417,
                 latitude = 4.776555,
                 name = "De Grote Markt",
-                description = "grotemarktbeschrijving.txt",
+                descriptionNL = "grotemarktbeschrijving.txt",
                 imageSource = "grotemarktbreda.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -180,7 +180,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.588028,
                 latitude = 4.776333,
                 name = "Bevrijdingsmonument",
-                description = "bevrijdingsmonumentbeschrijving.txt",
+                descriptionNL = "bevrijdingsmonumentbeschrijving.txt",
                 imageSource = "bevrijdingsmonument.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -189,7 +189,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.588750,
                 latitude = 4.776112,
                 name = "Stadhuis",
-                description = "stadhuisbeschrijving.txt",
+                descriptionNL = "stadhuisbeschrijving.txt",
                 imageSource = "stadhuis.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -202,7 +202,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.587638,
                 latitude = 4.777250,
                 name = "Antonius van Padua Kerk",
-                description = "antoniusvanpadaukerkbeschrijving.txt",
+                descriptionNL = "antoniusvanpadaukerkbeschrijving.txt",
                 imageSource = "paduakerk.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -213,7 +213,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.588000,
                 latitude = 4.778945,
                 name = "Bibliotheek",
-                description = "bibliotheekbeschrijving.txt",
+                descriptionNL = "bibliotheekbeschrijving.txt",
                 imageSource = "bibliotheekbreda.webp",
                 routeTag = "historischeKilometer"
             });
@@ -224,7 +224,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.587722,
                 latitude = 4.781028,
                 name = "Kloosterkazerne",
-                description = "kloosterkazernebeschrijving.txt",
+                descriptionNL = "kloosterkazernebeschrijving.txt",
                 imageSource = "kloosterkazerne.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -233,7 +233,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.587750,
                 latitude = 4.782000,
                 name = "Chassé theater",
-                description = "chassetheaterbeschrijving.txt",
+                descriptionNL = "chassetheaterbeschrijving.txt",
                 imageSource = "chassetheater.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -248,7 +248,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.589667,
                 latitude = 4.781000,
                 name = "Beyerd",
-                description = "beyerdbeschrijving.txt",
+                descriptionNL = "beyerdbeschrijving.txt",
                 imageSource = "beyerd.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -259,7 +259,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.589555,
                 latitude = 4.780000,
                 name = "Gasthuispoort",
-                description = "gasthuispoortbeschrijving.txt",
+                descriptionNL = "gasthuispoortbeschrijving.txt",
                 imageSource = "gasthuispoort.jpg",
                 routeTag = "historischeKilometer"
             });
@@ -274,7 +274,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.589112,
                 latitude = 4.777945,
                 name = "Willem Merkxtuin",
-                description = "willemmerkxtuinbeschrijving.txt",
+                descriptionNL = "willemmerkxtuinbeschrijving.txt",
                 imageSource = "willemmerkxtuin.webp",
                 routeTag = "historischeKilometer"
             });
@@ -285,7 +285,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.589695,
                 latitude = 4.778362,
                 name = "Begijnhof",
-                description = "begijnhofbeschrijving.txt",
+                descriptionNL = "begijnhofbeschrijving.txt",
                 imageSource = "begijnhof.jpg",
                 routeTag = "historischeKilometer"
             });

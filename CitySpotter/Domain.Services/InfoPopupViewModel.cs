@@ -21,7 +21,7 @@ namespace CitySpotter.Domain.Services
         {
             ImageSource = routeLocation.imageSource;
             LocationName = routeLocation.name;
-            Description = await _fileService.ReadFileAsync(routeLocation.description);
+            Description = await _fileService.ReadFileAsync(routeLocation.descriptionNL);
         }
     }
 }

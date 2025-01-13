@@ -7,7 +7,8 @@ namespace CitySpotter.Domain.Model
         public string? name { get; set; }
         [PrimaryKey, AutoIncrement, Column("Index")]
         public int locationInRoute { get; set; }
-        public string? description { get; set; }
+        public string? descriptionNL { get; set; }
+        public string? descriptionENG { get; set; }
         public double latitude { get; set; }
         public double longitude { get; set; }
         public string? imageSource { get; set; }
