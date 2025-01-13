@@ -1,4 +1,4 @@
-﻿using CitySpotter.Domain.Services.FileService;
+﻿using CitySpotter.Domain.Services.FileServices;
 using CitySpotter.Infrastructure;
 using CitySpotter.Locations.Locations;
 using CommunityToolkit.Mvvm.ComponentModel;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CitySpotter.Domain.Services.FileService
+namespace CitySpotter.Domain.Services.FileServices
 {
     public interface IFileService
     {
