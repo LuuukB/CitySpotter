@@ -459,14 +459,18 @@ public partial class MapViewModel : ObservableObject
         {
             // Then rev up those fryers
             Debug.WriteLine("Firing pop up.");
-            await MopupService.Instance.PushAsync(new InfoPointPopup(new InfoPopupViewModel(new RouteLocation
+            var viewModel = new InfoPopupViewModel(new RouteLocation
             {
                 longitude = routeLocation.longitude,
                 latitude = routeLocation.latitude,
                 name = routeLocation.name,
                 description = routeLocation.description,
                 imageSource = routeLocation.imageSource
-            })));
+            });
+
+            await viewModel.setData();
+
+            await MopupService.Instance.PushAsync(new InfoPointPopup(viewModel));
         }
         else
         {

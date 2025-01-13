@@ -14,11 +14,11 @@ namespace CitySpotter.Domain.Services
         private RouteLocation routeLocation { get; set; }
         public InfoPopupViewModel(RouteLocation location) { 
             routeLocation = location;
-            setData();
         }
         [ObservableProperty] private string _ImageSource;
         [ObservableProperty] private string locationName;
         [ObservableProperty] private string _Description;
+
         public async Task setData()
         {
             _ImageSource = routeLocation.imageSource;
