@@ -117,6 +117,10 @@ public partial class MapViewModel : ObservableObject
                     _pinActivationStatus[pin] = false;
                 }
             }
+        }catch(FeatureNotEnabledException e)
+        {
+            displayGpsError = true;
+            Debug.WriteLine(e);
         }
         catch (Exception ex)
         {
