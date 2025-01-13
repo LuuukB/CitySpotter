@@ -5,6 +5,7 @@ using CitySpotter.Infrastructure;
 using Mopups.Hosting;
 using CommunityToolkit.Maui;
 using CitySpotter.Domain.Services.Internet;
+using CitySpotter.Domain.Services.FileService;
 
 namespace CitySpotter
 {
@@ -37,6 +38,7 @@ namespace CitySpotter
             builder.Services.AddSingleton<MapPage>(s => new MapPage(s.GetRequiredService<MapViewModel>()));
             builder.Services.AddTransient<InfoPopupViewModel>();
             builder.Services.AddTransient<InfoPointPopup>();
+            builder.Services.AddTransient<IFileService, FileService>();
 
             builder.Services.AddSingleton<ILocationPermissionsService, LocationPermissionService>();
             builder.Services.AddTransient<SettingsViewModel>();
