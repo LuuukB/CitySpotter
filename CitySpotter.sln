@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitySpotter", "CitySpotter\CitySpotter.csproj", "{A3F17933-68BF-46F7-A408-15EF772534DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CitySpotter", "CitySpotter\CitySpotter.csproj", "{A3F17933-68BF-46F7-A408-15EF772534DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{68542D1F-5ACE-45E8-8A39-E7594E92AC45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{A3F17933-68BF-46F7-A408-15EF772534DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3F17933-68BF-46F7-A408-15EF772534DD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A3F17933-68BF-46F7-A408-15EF772534DD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{68542D1F-5ACE-45E8-8A39-E7594E92AC45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68542D1F-5ACE-45E8-8A39-E7594E92AC45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68542D1F-5ACE-45E8-8A39-E7594E92AC45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68542D1F-5ACE-45E8-8A39-E7594E92AC45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
