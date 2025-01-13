@@ -312,8 +312,29 @@ public partial class MapViewModel : ObservableObject
         System.Timers.Timer timer = new System.Timers.Timer(updateTimeInMs);
         timer.Elapsed += (sender, args) => CheckInternetConnection();
         timer.Start();
-    }
 
+        Task.Run(() => InitListener(geolocation));
+    }
+    private async Task InitListener(IGeolocation geolocation, GeolocationAccuracy accuracy = GeolocationAccuracy.Best)
+    {
+        try
+        {
+            Debug.WriteLine("Initializing location listener.");
+            geolocation.LocationChanged += Geolocation_LocationChanged;
+            var request = new GeolocationListeningRequest(accuracy);
+            var success = await geolocation.StartListeningForegroundAsync(request);
+
+            string status = success
+                ? "Started listening for foreground location updates"
+                : "Couldn't start listening";
+
+            Debug.WriteLine(status);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex);
+        }
+    }
     private void ZoomToBreda()
     {
         Location location = new Location(51.588331, 4.777802);
@@ -321,66 +342,31 @@ public partial class MapViewModel : ObservableObject
         CurrentMapSpan = mapSpan;
     }
 
+    private void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
+    {
+        var curLoc = e.Location;
+
+        Debug.WriteLine($"Last pulled pos: {curLoc.Latitude}, {curLoc.Longitude}");
+
+        // Now check if close to location.
+        foreach (var pin in Pins)
+        {
+            Debug.WriteLine($"Checking if {curLoc.Latitude}, {curLoc.Longitude} close to {pin.Location.Latitude}, {pin.Location.Longitude}");
+            var distInMeters = curLoc.CalculateDistance(pin.Location, DistanceUnits.Kilometers) * 1000;
+            if (distInMeters <= 20)
+            {
+                Debug.WriteLine($"Close enough to {pin.Label}");
+                MarkerClickedCommand.Execute(pin);
+            }
+        }
+    }
+
     private void CheckInternetConnection()
     {
         OnPropertyChanged(nameof(HasInternetConnection));
     }
 
-    public void RouteStarting()
-    {
-        Debug.WriteLine("starting route/timer");
-        _locationTimer = new System.Timers.Timer(5000);
-        _locationTimer.Elapsed += OnTimedEvent;
-        _locationTimer.AutoReset = true;
-        _locationTimer.Start();
-    }
-
-    public void RouteStop()
-    {
-        Debug.WriteLine("stopping route/timer");
-
-        if (_locationTimer != null)
-        {
-            _locationTimer.Stop();
-            _locationTimer.Dispose();
-            _locationTimer = null;
-        }
-    }
-
-    private void OnTimedEvent(object? sender, ElapsedEventArgs e)
-    {
-        Task.Run(OnTimedEventAsync);
-    }
-
-    private async Task OnTimedEventAsync()
-    {
-        PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
-        if (status == PermissionStatus.Granted)
-        {
-            try
-            {
-                Debug.WriteLine("Running {0} at {1}", nameof(OnTimedEventAsync), DateTime.Now.ToShortTimeString());
-
-                var location =
-                    await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
-
-                if (location is not null)
-                {
-                    Debug.WriteLine("Location: {0}", location);
-                    CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(60));
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Fout bij ophalen locatie: {ex.Message}");
-            }
-        }
-        else if (status == PermissionStatus.Denied)
-        {
-            status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-        }
-    }
-
+  
     private MapElement CreatePolyLineOfLocations(IEnumerable<Location> locations)
     {
         Debug.WriteLine("Constructing {0}", args: nameof(Polyline));
