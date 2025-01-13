@@ -8,6 +8,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Mopups.Services;
 using CitySpotter.Domain.Services.Internet;
+using System.Timers;
+using Microsoft.Maui.Devices.Sensors;
+using System.Net.NetworkInformation;
 
 
 namespace CitySpotter.Domain.Services;
@@ -19,6 +22,8 @@ public partial class MapViewModel : ObservableObject
     [ObservableProperty] private ObservableCollection<MapElement> _mapElements = [];
     [ObservableProperty] private MapSpan _currentMapSpan;
     [ObservableProperty] private ObservableCollection<Pin> _pins = [];
+
+    private System.Timers.Timer _locationTimer;
 
     private readonly IGeolocation _geolocation;
     private readonly IDatabaseRepo _databaseRepo;
@@ -42,25 +47,74 @@ public partial class MapViewModel : ObservableObject
         ZoomToBreda();
     }
 
+    public void RouteStarting()
+    {
+        Debug.WriteLine("starting route/timer");
+        _locationTimer = new System.Timers.Timer(2000);
+        _locationTimer.Elapsed += OnTimedEvent;
+        _locationTimer.AutoReset = true;
+        _locationTimer.Start();
 
-    private async Task InitListener(IGeolocation geolocation, GeolocationAccuracy accuracy = GeolocationAccuracy.High)
+    }
+
+
+    public void RouteStop()
+    {
+        Debug.WriteLine("stopping route/timer");
+
+        if (_locationTimer != null)
+        {
+            _locationTimer.Stop();
+            _locationTimer.Dispose();
+            _locationTimer = null;
+        }
+    }
+
+    private void OnTimedEvent(object? sender, ElapsedEventArgs e)
+    {
+        Task.Run(OnTimedEventAsync);
+    }
+
+    private readonly Dictionary<Pin, bool> _pinActivationStatus = new();
+
+    private async Task OnTimedEventAsync()
     {
         var displayGpsError = false;
 
         try
         {
-            Debug.WriteLine("Initializing location listener.");
-            geolocation.LocationChanged += Geolocation_LocationChanged;
-            var request = new GeolocationListeningRequest(accuracy);
-            var success = await geolocation.StartListeningForegroundAsync(request);
+            Debug.WriteLine("Initializing location timer.");
+            var location = await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.High));
+            if (location is null)
+            {
+                displayGpsError = true;
+                return;
+            }
 
-            string status = success
-                ? "Started listening for foreground location updates"
-                : "Couldn't start listening";
+            foreach (var pin in Pins)
+            {
+                Debug.WriteLine($"Checking if {location.Latitude}, {location.Longitude} close to {pin.Location.Latitude}, {pin.Location.Longitude}");
+                var distInMeters = location.CalculateDistance(pin.Location, DistanceUnits.Kilometers) * 1000;
 
-            Debug.WriteLine(status);
+                if (distInMeters <= 20)
+                {
+                    // Check if the pin is already activated (i.e., popup was shown recently)
+                    if (_pinActivationStatus.TryGetValue(pin, out bool isActive) && isActive)
+                    {
+                        Debug.WriteLine($"Already handled pin: {pin.Label}");
+                        continue; // Skip showing the popup again
+                    }
 
-            if (!success) displayGpsError = true;
+                    Debug.WriteLine($"Close enough to {pin.Label}, showing popup.");
+                    _pinActivationStatus[pin] = true; // Mark the pin as active
+                    MarkerClickedCommand.Execute(pin);
+                }
+                else
+                {
+                    // Mark pin as inactive when out of range
+                    _pinActivationStatus[pin] = false;
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -78,7 +132,63 @@ public partial class MapViewModel : ObservableObject
                 );
             }
         }
+        //try
+        //{
+        //    Debug.WriteLine("Running {0} at {1}", nameof(OnTimedEventAsync), DateTime.Now.ToShortTimeString());
+
+        //    var location = await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.High));
+
+        //    if (location is not null)
+        //    {
+        //        Debug.WriteLine("Location: {0}", location);
+        //        CurrentMapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromMeters(60));
+
+
+        //    }
+        //}
+        //catch (Exception ex)
+        //{
+        //    Debug.WriteLine($"Fout bij ophalen locatie: {ex.Message}");
+        //}
     }
+
+
+    //private async Task InitListener(IGeolocation geolocation, GeolocationAccuracy accuracy = GeolocationAccuracy.High)
+    //{
+    //    var displayGpsError = false;
+
+    //    try
+    //    {
+    //        Debug.WriteLine("Initializing location listener.");
+    //        geolocation.LocationChanged += Geolocation_LocationChanged;
+    //        var request = new GeolocationListeningRequest(accuracy);
+    //        var success = await geolocation.StartListeningForegroundAsync(request);
+
+    //        string status = success
+    //            ? "Started listening for foreground location updates"
+    //            : "Couldn't start listening";
+
+    //        Debug.WriteLine(status);
+
+    //        if (!success) displayGpsError = true;
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        displayGpsError = true;
+    //        Debug.WriteLine(ex);
+    //    }
+    //    finally
+    //    {
+    //        if (displayGpsError)
+    //        {
+    //            await Application.Current.MainPage.DisplayAlert(
+    //                "Kan geen locatie verkrijgen",
+    //                "De app kan niet goed werken zolang je locatie niet te verkrijgen. Check je instellingen.",
+    //                "OK"
+    //            );
+    //        }
+    //    }
+    //}
     private void ZoomToBreda()
     {
         Location location = new Location(51.588331, 4.777802);
@@ -86,26 +196,26 @@ public partial class MapViewModel : ObservableObject
         CurrentMapSpan = mapSpan;
     }
 
-    [ObservableProperty] private string _distanceToPin;
-    private void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
-    {
-        var curLoc = e.Location;
+    //[ObservableProperty] private string _distanceToPin;
+    //private void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
+    //{
+    //    var curLoc = e.Location;
 
-        Debug.WriteLine($"Last pulled pos: {curLoc.Latitude}, {curLoc.Longitude}");
+    //    Debug.WriteLine($"Last pulled pos: {curLoc.Latitude}, {curLoc.Longitude}");
 
-        // Now check if close to location.
-        foreach (var pin in Pins)
-        {
-            Debug.WriteLine($"Checking if {curLoc.Latitude}, {curLoc.Longitude} close to {pin.Location.Latitude}, {pin.Location.Longitude}");
-            var distInMeters = curLoc.CalculateDistance(pin.Location, DistanceUnits.Kilometers) * 1000;
-            if (distInMeters <= 20)
-            {
-                Debug.WriteLine($"Close enough to {pin.Label}");
-                DistanceToPin = distInMeters.ToString();
-                MarkerClickedCommand.Execute(pin);
-            }
-        }
-    }
+    //    // Now check if close to location.
+    //    foreach (var pin in Pins)
+    //    {
+    //        Debug.WriteLine($"Checking if {curLoc.Latitude}, {curLoc.Longitude} close to {pin.Location.Latitude}, {pin.Location.Longitude}");
+    //        var distInMeters = curLoc.CalculateDistance(pin.Location, DistanceUnits.Kilometers) * 1000;
+    //        if (distInMeters <= 20)
+    //        {
+    //            Debug.WriteLine($"Close enough to {pin.Label}");
+    //            DistanceToPin = distInMeters.ToString();
+    //            MarkerClickedCommand.Execute(pin);
+    //        }
+    //    }
+    //}
 
     private void CheckInternetConnection()
     {
@@ -135,7 +245,9 @@ public partial class MapViewModel : ObservableObject
     public void OnLoad(string routeTag)
     {
         MainThread.InvokeOnMainThreadAsync(() => CreateRoute(routeTag));
-        Task.Run(() => InitListener(_geolocation));
+        //Task.Run(() => InitListener(_geolocation));
+        Task.Run(() => RouteStarting());
+
         InitInternetCheckTimer();
     }
 
