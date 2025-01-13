@@ -65,6 +65,9 @@ namespace CitySpotter.Domain.Services
                 Debug.WriteLine("No perms granted. Showing settings.");
                 await _permissionsService.ShowSettingsIfPermissionDeniedAsync();
             }
+
+            // We also initialize the database!
+            await _databaseRepo.Init();
         }
     }
 }
