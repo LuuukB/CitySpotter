@@ -35,6 +35,9 @@ namespace CitySpotter
             builder.Services.AddTransient<InfoPopupViewModel>();
             builder.Services.AddTransient<InfoPointPopup>();
 
+            builder.Services.AddTransient<SettingsViewModel>();
+            builder.Services.AddTransient<SettingsPage>();
+
 
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainPageViewModel>();

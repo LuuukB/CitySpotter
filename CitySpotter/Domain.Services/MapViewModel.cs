@@ -23,7 +23,7 @@ namespace CitySpotter.Domain.Services
         [ObservableProperty]
         private string _routeName;
 
-        public string RouteName { get; set; }
+        //public string RouteName { get; set; }
             
         
         private readonly IGeolocation _geolocation;
