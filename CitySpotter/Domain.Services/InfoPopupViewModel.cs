@@ -1,6 +1,7 @@
 ﻿using CitySpotter.Domain.Services.FileServices;
 using CitySpotter.Domain.Model;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Globalization;
 
 
 namespace CitySpotter.Domain.Services
@@ -21,7 +22,10 @@ namespace CitySpotter.Domain.Services
         {
             ImageSource = routeLocation.imageSource;
             LocationName = routeLocation.name;
-            Description = await _fileService.ReadFileAsync(routeLocation.descriptionNL);
+            if (CultureInfo.CurrentCulture.Equals("nl-NL"))
+                Description = await _fileService.ReadFileAsync(routeLocation.descriptionNL);
+            else 
+                Description = await _fileService.ReadFileAsync(routeLocation.descriptionENG);
         }
     }
 }
