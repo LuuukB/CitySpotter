@@ -6,9 +6,9 @@ using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Timers;
 using Mopups.Services;
 using CitySpotter.Domain.Services.Internet;
+
 
 namespace CitySpotter.Domain.Services;
 
@@ -21,8 +21,6 @@ public partial class MapViewModel : ObservableObject
 
     private readonly IGeolocation _geolocation;
     private readonly IDatabaseRepo _databaseRepo;
-
-    private System.Timers.Timer? _locationTimer;
     private readonly IInternetHandler _internetHandler;
 
     public bool HasInternetConnection
@@ -36,15 +34,21 @@ public partial class MapViewModel : ObservableObject
 
     public MapViewModel(IGeolocation geolocation, IDatabaseRepo repository, IInternetHandler internetHandler)
     {
-        _databaseRepo = repository;
         _geolocation = geolocation;
+        _databaseRepo = repository;
         _internetHandler = internetHandler;
 
-        _databaseRepo.Init();
+        ZoomToBreda();
+    }
 
-        if (_databaseRepo.GetAllRoutes().Count == 0)
+    private async Task InitDb()
+    {
+        await _databaseRepo.Init();
+
+        var db = await _databaseRepo.GetAllRoutes();
+        if (db.Count == 0)
         {
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.594112,
                 latitude = 4.779417,
@@ -53,7 +57,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "vvvkantoor.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.593278,
                 latitude = 4.779388,
@@ -62,7 +66,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "liefdeszuster.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.592500,
                 latitude = 4.779695,
@@ -71,9 +75,9 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "nassaubaroniemonument.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.592500, latitude = 4.779388, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.592833,
                 latitude = 4.778472,
@@ -82,11 +86,11 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "vuurtoren.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.592667, latitude = 4.777917, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.590612, latitude = 4.777000, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.590612,
                 latitude = 4.776167,
@@ -95,7 +99,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "kasteelbreda.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.589695,
                 latitude = 4.776138,
@@ -104,11 +108,11 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "stadhouderspoort.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.590333, latitude = 4.776000, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.590388, latitude = 4.775000, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.590028,
                 latitude = 4.774362,
@@ -117,7 +121,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "huisvanbrecht7.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.590195,
                 latitude = 4.773445,
@@ -126,7 +130,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "spanjaardsgat.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.589833,
                 latitude = 4.773333,
@@ -135,7 +139,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "vismarktbreda.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.589362,
                 latitude = 4.774445,
@@ -144,9 +148,9 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "havermarkt.webp",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.588778, latitude = 4.774888, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.588833,
                 latitude = 4.775278,
@@ -155,9 +159,9 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "grotekerk.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.588778, latitude = 4.774888, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.588195,
                 latitude = 4.775138,
@@ -166,7 +170,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "hetpoortje.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.587083,
                 latitude = 4.775750,
@@ -175,7 +179,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "ridderstraat.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.587417,
                 latitude = 4.776555,
@@ -184,7 +188,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "grotemarktbreda.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.588028,
                 latitude = 4.776333,
@@ -193,7 +197,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "bevrijdingsmonument.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.588750,
                 latitude = 4.776112,
@@ -202,11 +206,11 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "stadhuis.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.587972, latitude = 4.776362, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.587500, latitude = 4.776555, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.587638,
                 latitude = 4.777250,
@@ -215,9 +219,9 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "paduakerk.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.588278, latitude = 4.778500, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.588000,
                 latitude = 4.778945,
@@ -226,9 +230,9 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "bibliotheekbreda.webp",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.587362, latitude = 4.780222, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.587722,
                 latitude = 4.781028,
@@ -237,7 +241,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "kloosterkazerne.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.587750,
                 latitude = 4.782000,
@@ -246,13 +250,13 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "chassetheater.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.587750, latitude = 4.781250, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.588612, latitude = 4.780888, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.589500, latitude = 4.780445, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.589667,
                 latitude = 4.781000,
@@ -261,9 +265,9 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "beyerd.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.589500, latitude = 4.780445, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.589555,
                 latitude = 4.780000,
@@ -272,13 +276,13 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "gasthuispoort.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.589417, latitude = 4.779862, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.589028, latitude = 4.779695, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.588555, latitude = 4.778333, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.589112,
                 latitude = 4.777945,
@@ -287,9 +291,9 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "willemmerkxtuin.webp",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.589667, latitude = 4.777805, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             {
                 longitude = 51.589695,
                 latitude = 4.778362,
@@ -298,23 +302,15 @@ public partial class MapViewModel : ObservableObject
                 imageSource = "begijnhof.jpg",
                 routeTag = "historischeKilometer"
             });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.589667, latitude = 4.777805, routeTag = "historischeKilometer" });
-            _databaseRepo.AddRoute(new RouteLocation
+            await _databaseRepo.AddRoute(new RouteLocation
             { longitude = 51.589500, latitude = 4.776250, routeTag = "historischeKilometer" });
         }
 
-        Debug.WriteLine("De database heef zoveel punten: " + _databaseRepo.GetAllRoutes().Count);
-
-        ZoomToBreda();
-        //todo dit in methode zetten 
-        const int updateTimeInMs = 4000;
-        System.Timers.Timer timer = new System.Timers.Timer(updateTimeInMs);
-        timer.Elapsed += (sender, args) => CheckInternetConnection();
-        timer.Start();
-
-        Task.Run(() => InitListener(geolocation));
+        Debug.WriteLine("De database heef zoveel punten: " + db.Count);
     }
+
     private async Task InitListener(IGeolocation geolocation, GeolocationAccuracy accuracy = GeolocationAccuracy.Best)
     {
         var displayGpsError = false;
@@ -382,7 +378,7 @@ public partial class MapViewModel : ObservableObject
         OnPropertyChanged(nameof(HasInternetConnection));
     }
 
-  
+
     private MapElement CreatePolyLineOfLocations(IEnumerable<Location> locations)
     {
         Debug.WriteLine("Constructing {0}", args: nameof(Polyline));
@@ -402,9 +398,25 @@ public partial class MapViewModel : ObservableObject
         return polyline;
     }
 
-    public void CreateRoute(string routeTag)
+    public void OnLoad(string routeTag)
     {
-        var routeLocations = _databaseRepo.GetPointsSpecificRoute(routeTag);
+        Task.Run(InitDb);
+        MainThread.InvokeOnMainThreadAsync(() => CreateRoute(routeTag));
+        Task.Run(() => InitListener(_geolocation));
+        InitInternetCheckTimer();
+    }
+
+    private void InitInternetCheckTimer()
+    {
+        const int updateTimeInMs = 4000;
+        System.Timers.Timer timer = new System.Timers.Timer(updateTimeInMs);
+        timer.Elapsed += (_, _) => CheckInternetConnection();
+        timer.Start();
+    }
+
+    private async Task CreateRoute(string routeTag)
+    {
+        var routeLocations = await _databaseRepo.GetPointsSpecificRoute(routeTag);
 
         foreach (var routeLocation in routeLocations)
         {
@@ -435,7 +447,7 @@ public partial class MapViewModel : ObservableObject
 
         // First find the proper routeLocation
         double tolerance = 0.0001D;
-        var routeLocation = _databaseRepo.GetAllRoutes().FirstOrDefault(ro =>
+        var routeLocation = (await _databaseRepo.GetAllRoutes()).FirstOrDefault(ro =>
             // NOTE: LONGIDUDE EN LATITUDE ZIJN OMGEDRAAIT WTF BROEDERS> MAAR DIT WERKT
             // First check latitude
             Math.Abs(ro.longitude - pin.Location.Latitude) < tolerance

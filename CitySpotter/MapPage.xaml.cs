@@ -25,7 +25,7 @@ public partial class MapPage : ContentPage
             _routeName = value;
             if (BindingContext is MapViewModel viewModel && !string.IsNullOrEmpty(value))
             {
-                viewModel.CreateRoute(value);
+                viewModel.OnLoad(value);
             }
         }
     }

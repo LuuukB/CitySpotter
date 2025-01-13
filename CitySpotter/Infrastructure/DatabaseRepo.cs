@@ -38,7 +38,7 @@ namespace CitySpotter.Infrastructure
         public async Task Drop()
         {
             SQLiteAsyncConnection sQLiteConnection = new (_dpPath);
-            await sQLiteConnection.CreateTableAsync<RouteLocation>();
+            await sQLiteConnection.DropTableAsync<RouteLocation>();
         }
         public async Task<List<RouteLocation>> GetPointsSpecificRoute(string tagRoute) 
         {
