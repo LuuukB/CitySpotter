@@ -4,12 +4,13 @@
              x:Class="CitySpotter.MainPage"
              Title="Routes"
              xmlns:viewModel="clr-namespace:CitySpotter.Domain.Services"
-             x:DataType="viewModel:MainPageViewModel">
+             x:DataType="viewModel:MainPageViewModel"
+             xmlns:localisation="clr-namespace:CitySpotter.Infrastructure">
   
     
     <StackLayout>
         <HorizontalStackLayout>
-        <Button Text="Get Routes"
+            <Button Text="{localisation:Translate GetRoutes}"
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
                 Command ="{Binding GetRoutesForViewCommand}" />

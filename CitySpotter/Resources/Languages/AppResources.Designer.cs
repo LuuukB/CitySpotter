@@ -61,6 +61,15 @@ namespace CitySpotter.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get Routes.
+        /// </summary>
+        internal static string GetRoutes {
+            get {
+                return ResourceManager.GetString("GetRoutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ik ben Erik.
         /// </summary>
         internal static string name {

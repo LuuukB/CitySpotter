@@ -120,4 +120,7 @@
   <data name="name" xml:space="preserve">
     <value>Ik Ben Erik</value>
   </data>
+  <data name="GetRoutes" xml:space="preserve">
+    <value>Pak Routes</value>
+  </data>
 </root>

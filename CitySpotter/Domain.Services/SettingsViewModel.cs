@@ -19,21 +19,18 @@ namespace CitySpotter.Domain.Services
         private string name = LocalizationResources.Instance["name"].ToString();
 
         public LocalizationResources LocalizationResources => LocalizationResources.Instance;
-        public SettingsViewModel() 
-        {
-        }
-
+      
         [RelayCommand]
         private void Button_Clicked()
         {
-            Debug.WriteLine(name);
+            Debug.WriteLine(Name);
             var switchToCulture = AppResources.Culture.TwoLetterISOLanguageName
                 .Equals("nl", StringComparison.InvariantCultureIgnoreCase) ?
                 new CultureInfo("en-US") : new CultureInfo("nl-NL");
 
             LocalizationResources.SetCulture(switchToCulture);
 
-            name = LocalizationResources["name"].ToString();
+            Name = LocalizationResources["name"].ToString();
         }
 
         [RelayCommand]
@@ -41,7 +38,7 @@ namespace CitySpotter.Domain.Services
         {
             Debug.WriteLine("Nederlands");
             LocalizationResources.SetCulture(new CultureInfo("nl-NL"));
-            name = LocalizationResources["name"].ToString();
+            Name = LocalizationResources["name"].ToString();
         }
 
         [RelayCommand]
@@ -49,7 +46,7 @@ namespace CitySpotter.Domain.Services
         {
             Debug.WriteLine("English");
             LocalizationResources.SetCulture(new CultureInfo("en-US"));
-            name = LocalizationResources["name"].ToString();
+            Name = LocalizationResources["name"].ToString();
         }
     }
 }
