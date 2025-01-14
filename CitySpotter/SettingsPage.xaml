@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:localisation="clr-namespace:CitySpotter.Infrastructure"
              x:Class="CitySpotter.SettingsPage"
-             Title="Settings">
+             BackgroundColor ="{DynamicResource BackgroundColor}">
+             
     <VerticalStackLayout>
         <Button Command ="{Binding Button_ClickedCommand}" 
-                Text="CollorBlindMode"/>
-        
-        <Button Text="Nederlands"
-                Command="{Binding NederlandsButton_ClickedCommand}"/>
+                Padding="20"
+                Text="{localisation:Translate ColorBlindMode}"
+                Style="{StaticResource ButtonStyle}"/>
 
-        <Button Text="English"
-        Command="{Binding EnglishButton_ClickedCommand}"/>
 
-        <Label Text="{Binding Name}"/>
+        <Picker x:Name="LanguagePicker"
+                SelectedItem="{Binding PickerItem}"
+                Style="{StaticResource PickerStyle}">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>English</x:String>
+                    <x:String>Nederlands</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+
+            <Picker.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
+             Command="{Binding LanguageChangeCommand}" />
+            </Picker.Behaviors>
+        </Picker>
+
+        <Label Text="{localisation:Translate name}" 
+               Style="{StaticResource LabelStyle}"/>
     </VerticalStackLayout>
+
 </ContentPage>

@@ -61,6 +61,15 @@ namespace CitySpotter.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ColorBlind Mode .
+        /// </summary>
+        internal static string ColorBlindMode {
+            get {
+                return ResourceManager.GetString("ColorBlindMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Get Routes.
         /// </summary>
         internal static string GetRoutes {
@@ -70,11 +79,47 @@ namespace CitySpotter.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Map.
+        /// </summary>
+        internal static string Map {
+            get {
+                return ResourceManager.GetString("Map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you see the Map!.
+        /// </summary>
+        internal static string MapText {
+            get {
+                return ResourceManager.GetString("MapText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text is English.
         /// </summary>
         internal static string name {
             get {
                 return ResourceManager.GetString("name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Routes.
+        /// </summary>
+        internal static string Routes {
+            get {
+                return ResourceManager.GetString("Routes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
     }
