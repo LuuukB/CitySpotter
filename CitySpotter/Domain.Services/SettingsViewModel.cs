@@ -24,7 +24,7 @@ namespace CitySpotter.Domain.Services
 
         public LocalizationResources LocalizationResources => LocalizationResources.Instance;
 
-        public bool isis = true;
+        public bool colorPickerEnabled = true;
 
         public SettingsViewModel()
         {
@@ -41,7 +41,7 @@ namespace CitySpotter.Domain.Services
         [RelayCommand]
         private void Button_Clicked()
         {
-            if (isis)
+            if (colorPickerEnabled)
             {
                 Preferences.Set("theme", "ColorBlindMode");
                 WeakReferenceMessenger.Default.Send(new ThemeChangedMessage("ColorBlindMode"));
@@ -50,7 +50,7 @@ namespace CitySpotter.Domain.Services
                 Preferences.Set("theme", "NormalMode");
                 WeakReferenceMessenger.Default.Send(new ThemeChangedMessage("NormalMode"));
             }
-            isis = !isis;
+            colorPickerEnabled = !colorPickerEnabled;
         }
 
         [RelayCommand]
