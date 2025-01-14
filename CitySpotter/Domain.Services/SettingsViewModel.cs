@@ -60,9 +60,11 @@ namespace CitySpotter.Domain.Services
             if (pickerItem.Equals("Nederlands"))
             {
                 LocalizationResources.SetCulture(new CultureInfo("nl-NL"));
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("nl-NL");
             } else
             {
                 LocalizationResources.SetCulture(new CultureInfo("en-US"));
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             }
         }
     }

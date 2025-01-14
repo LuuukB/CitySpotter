@@ -8,6 +8,7 @@
              
     <VerticalStackLayout>
         <Button Command ="{Binding Button_ClickedCommand}" 
+                Padding="20"
                 Text="{localisation:Translate ColorBlindMode}"
                 Style="{StaticResource ButtonStyle}"/>
 
