@@ -32,6 +32,8 @@ namespace CitySpotter.Domain.Services
         {
             Debug.WriteLine("Nederlands");
             LocalizationResources.SetCulture(new CultureInfo("nl-NL"));
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("nl-NL");
+            Debug.WriteLine("Current culture " + CultureInfo.CurrentCulture);
             Name = LocalizationResources["name"].ToString();
         }
 
@@ -40,6 +42,7 @@ namespace CitySpotter.Domain.Services
         {
             Debug.WriteLine("English");
             LocalizationResources.SetCulture(new CultureInfo("en-US"));
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Name = LocalizationResources["name"].ToString();
         }
     }

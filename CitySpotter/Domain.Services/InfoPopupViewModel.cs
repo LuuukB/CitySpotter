@@ -29,12 +29,15 @@ namespace CitySpotter.Domain.Services
             resourceFileENG = routeLocation.descriptionENG;
             resourceFileNL = routeLocation.descriptionNL;
 
-
-            if (CultureInfo.CurrentCulture.Equals("nl-NL")) {
+            Debug.WriteLine(CultureInfo.CurrentCulture);
+            if (CultureInfo.CurrentCulture.Equals(new CultureInfo("nl-NL")))
+            {
+               
                 Description = await _fileService.ReadFileAsync(resourceFileNL);
             }
-            else 
+            else
             {
+                
                 Description = await _fileService.ReadFileAsync(resourceFileENG);
             }
         }

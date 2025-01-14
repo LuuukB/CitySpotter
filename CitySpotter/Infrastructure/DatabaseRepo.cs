@@ -44,7 +44,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "vvvkantoorbeschrijving.txt",
                 descriptionENG = "vvvkantoorbeschrijvingENG.txt",
                 imageSource = "vvvkantoor.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
@@ -54,7 +54,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "liefdeszusterbeschrijving.txt",
                 descriptionENG = "liefdeszusterbeschrijvingENG.txt",
                 imageSource = "liefdeszuster.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
@@ -64,10 +64,10 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "nassaubaroniemonumentbeschrijving.txt",
                 descriptionENG = "nassaubaroniemonumentbeschrijvingENG.txt",
                 imageSource = "nassaubaroniemonument.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.592500, latitude = 4.779388, routeTag = "historischeKilometer" });
+            { longitude = 51.592500, latitude = 4.779388, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.592833,
@@ -76,12 +76,12 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "vuurtorenbeschrijving.txt",
                 descriptionENG = "vuurtorenbeschrijvingENG.txt",
                 imageSource = "vuurtoren.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.592667, latitude = 4.777917, routeTag = "historischeKilometer" });
+            { longitude = 51.592667, latitude = 4.777917, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.590612, latitude = 4.777000, routeTag = "historischeKilometer" });
+            { longitude = 51.590612, latitude = 4.777000, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.590612,
@@ -90,7 +90,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "kasteelbeschrijving.txt",
                 descriptionENG = "kasteelbeschrijvingENG.txt",
                 imageSource = "kasteelbreda.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
@@ -100,12 +100,12 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "stadhouderspoortbeschrijving.txt",
                 descriptionENG = "stadhouderspoortbeschrijvingENG.txt",
                 imageSource = "stadhouderspoort.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.590333, latitude = 4.776000, routeTag = "historischeKilometer" });
+            { longitude = 51.590333, latitude = 4.776000, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.590388, latitude = 4.775000, routeTag = "historischeKilometer" });
+            { longitude = 51.590388, latitude = 4.775000, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.590028,
@@ -114,7 +114,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "huisvanbrechtbeschrijving.txt",
                 descriptionENG = "huisvanbrechtbeschrijvingENG.txt",
                 imageSource = "huisvanbrecht7.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
@@ -124,7 +124,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "spanjaardsgatbeschrijving.txt",
                 descriptionENG = "spanjaardsgatbeschrijvingENG.txt",
                 imageSource = "spanjaardsgat.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
@@ -134,7 +134,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "vismarktbeschrijving.txt",
                 descriptionENG = "vismarktbeschrijvingENG.txt",
                 imageSource = "vismarktbreda.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
@@ -144,10 +144,10 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "havermarktbeschrijving.txt",
                 descriptionENG = "havermarktbeschrijvingENG.txt",
                 imageSource = "havermarkt.webp",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.588778, latitude = 4.774888, routeTag = "historischeKilometer" });
+            { longitude = 51.588778, latitude = 4.774888, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.588833,
@@ -156,10 +156,10 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "grotekerkbeschrijving.txt",
                 descriptionENG = "grotekerkbeschrijvingENG.txt",
                 imageSource = "grotekerk.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.588778, latitude = 4.774888, routeTag = "historischeKilometer" });
+            { longitude = 51.588778, latitude = 4.774888, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.588195,
@@ -168,7 +168,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "poortjebeschrijving.txt",
                 descriptionENG = "poortjebeschrijvingENG.txt",
                 imageSource = "hetpoortje.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
@@ -178,7 +178,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "ridderstraatbeschrijving.txt",
                 descriptionENG = "ridderstraatbeschrijvingENG.txt",
                 imageSource = "ridderstraat.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
@@ -188,7 +188,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "grotemarktbeschrijving.txt",
                 descriptionENG = "grotemarktbeschrijvingENG.txt",
                 imageSource = "grotemarktbreda.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
@@ -198,7 +198,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "bevrijdingsmonumentbeschrijving.txt",
                 descriptionENG = "bevrijdingsmonumentbeschrijvingENG.txt",
                 imageSource = "bevrijdingsmonument.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
@@ -208,12 +208,12 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "stadhuisbeschrijving.txt",
                 descriptionENG = "stadhuisbeschrijvingENG.txt",
                 imageSource = "stadhuis.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.587972, latitude = 4.776362, routeTag = "historischeKilometer" });
+            { longitude = 51.587972, latitude = 4.776362, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.587500, latitude = 4.776555, routeTag = "historischeKilometer" });
+            { longitude = 51.587500, latitude = 4.776555, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.587638,
@@ -222,10 +222,10 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "antoniusvanpadaukerkbeschrijving.txt",
                 descriptionENG = "antoniusvanpadaukerkbeschrijvingENG.txt",
                 imageSource = "paduakerk.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.588278, latitude = 4.778500, routeTag = "historischeKilometer" });
+            { longitude = 51.588278, latitude = 4.778500, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.588000,
@@ -234,10 +234,10 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "bibliotheekbeschrijving.txt",
                 descriptionENG = "bibliotheekbeschrijvingENG.txt",
                 imageSource = "bibliotheekbreda.webp",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.587362, latitude = 4.780222, routeTag = "historischeKilometer" });
+            { longitude = 51.587362, latitude = 4.780222, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.587722,
@@ -246,7 +246,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "kloosterkazernebeschrijving.txt",
                 descriptionENG = "kloosterkazernebeschrijvingENG.txt",
                 imageSource = "kloosterkazerne.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
@@ -256,14 +256,14 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "chassetheaterbeschrijving.txt",
                 descriptionENG = "chassetheaterbeschrijvingENG.txt",
                 imageSource = "chassetheater.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.587750, latitude = 4.781250, routeTag = "historischeKilometer" });
+            { longitude = 51.587750, latitude = 4.781250, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.588612, latitude = 4.780888, routeTag = "historischeKilometer" });
+            { longitude = 51.588612, latitude = 4.780888, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.589500, latitude = 4.780445, routeTag = "historischeKilometer" });
+            { longitude = 51.589500, latitude = 4.780445, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.589667,
@@ -272,10 +272,10 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "beyerdbeschrijving.txt",
                 descriptionENG = "beyerdbeschrijvingENG.txt",
                 imageSource = "beyerd.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.589500, latitude = 4.780445, routeTag = "historischeKilometer" });
+            { longitude = 51.589500, latitude = 4.780445, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.589555,
@@ -284,14 +284,14 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "gasthuispoortbeschrijving.txt",
                 descriptionENG = "gasthuispoortbeschrijvingENG.txt",
                 imageSource = "gasthuispoort.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.589417, latitude = 4.779862, routeTag = "historischeKilometer" });
+            { longitude = 51.589417, latitude = 4.779862, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.589028, latitude = 4.779695, routeTag = "historischeKilometer" });
+            { longitude = 51.589028, latitude = 4.779695, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.588555, latitude = 4.778333, routeTag = "historischeKilometer" });
+            { longitude = 51.588555, latitude = 4.778333, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.589112,
@@ -300,10 +300,10 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "willemmerkxtuinbeschrijving.txt",
                 descriptionENG = "willemmerkxtuinbeschrijvingENG.txt",
                 imageSource = "willemmerkxtuin.webp",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.589667, latitude = 4.777805, routeTag = "historischeKilometer" });
+            { longitude = 51.589667, latitude = 4.777805, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.589695,
@@ -312,12 +312,12 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 descriptionNL = "begijnhofbeschrijving.txt",
                 descriptionENG = "begijnhofbeschrijvingENG.txt",
                 imageSource = "begijnhof.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.589667, latitude = 4.777805, routeTag = "historischeKilometer" });
+            { longitude = 51.589667, latitude = 4.777805, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.589500, latitude = 4.776250, routeTag = "historischeKilometer" });
+            { longitude = 51.589500, latitude = 4.776250, routeTag = "Historische Kilometer" });
         }
         Debug.WriteLine("De database heef zoveel punten: " + db.Count);
 
