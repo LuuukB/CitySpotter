@@ -1,4 +1,4 @@
-﻿using CitySpotter.Locations.Locations;
+﻿using CitySpotter.Domain.Model;
 using SQLite;
 
 

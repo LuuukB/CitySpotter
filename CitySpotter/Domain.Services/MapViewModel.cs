@@ -1,5 +1,4 @@
 using CitySpotter.Domain.Model;
-using CitySpotter.Locations.Locations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls.Maps;
@@ -8,6 +7,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Mopups.Services;
 using CitySpotter.Domain.Services.Internet;
+using System.Timers;
+using Microsoft.Maui.Devices.Sensors;
+using System.Net.NetworkInformation;
 using CitySpotter.Domain.Services.FileServices;
 
 
@@ -16,13 +18,20 @@ namespace CitySpotter.Domain.Services;
 public partial class MapViewModel : ObservableObject
 {
     [ObservableProperty] private string _routeName;
+    [ObservableProperty] private string _imageSource = "nointernetpopupscreen.jpg";
     [ObservableProperty] private ObservableCollection<MapElement> _mapElements = [];
     [ObservableProperty] private MapSpan _currentMapSpan;
     [ObservableProperty] private ObservableCollection<Pin> _pins = [];
 
+    private System.Timers.Timer _locationTimer;
+    public event EventHandler<string> InternetConnectionLost;
+    public event EventHandler<string> LocationLost;
+
     private readonly IGeolocation _geolocation;
     private readonly IDatabaseRepo _databaseRepo;
     private readonly IInternetHandler _internetHandler;
+    private bool _isShowingNetwerkError = true;
+    private bool _isShowingLocationError = true;
 
     public bool HasInternetConnection
     {
@@ -42,25 +51,65 @@ public partial class MapViewModel : ObservableObject
         ZoomToBreda();
     }
 
+    public void RouteStarting()
+    {
+        Debug.WriteLine("starting route/timer");
+        _locationTimer = new System.Timers.Timer(2000);
+        _locationTimer.Elapsed += OnTimedEvent;
+        _locationTimer.AutoReset = true;
+        _locationTimer.Start();
 
-    private async Task InitListener(IGeolocation geolocation, GeolocationAccuracy accuracy = GeolocationAccuracy.Best)
+    }
+
+    private void OnTimedEvent(object? sender, ElapsedEventArgs e)
+    {
+        Task.Run(OnTimedEventAsync);
+    }
+
+    private readonly Dictionary<Pin, bool> _pinActivationStatus = new();
+
+    private async Task OnTimedEventAsync()
     {
         var displayGpsError = false;
 
         try
         {
-            Debug.WriteLine("Initializing location listener.");
-            geolocation.LocationChanged += Geolocation_LocationChanged;
-            var request = new GeolocationListeningRequest(accuracy);
-            var success = await geolocation.StartListeningForegroundAsync(request);
+            Debug.WriteLine("Initializing location timer.");
+            var location = await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.High));
+            if (location is null)
+            {
+                displayGpsError = true;
+                return;
+            }
 
-            string status = success
-                ? "Started listening for foreground location updates"
-                : "Couldn't start listening";
+            foreach (var pin in Pins)
+            {
+                Debug.WriteLine($"Checking if {location.Latitude}, {location.Longitude} close to {pin.Location.Latitude}, {pin.Location.Longitude}");
+                var distInMeters = location.CalculateDistance(pin.Location, DistanceUnits.Kilometers) * 1000;
 
-            Debug.WriteLine(status);
+                if (distInMeters <= 20)
+                {
+                    // Check if the pin is already activated (i.e., popup was shown recently)
+                    if (_pinActivationStatus.TryGetValue(pin, out bool isActive) && isActive)
+                    {
+                        Debug.WriteLine($"Already handled pin: {pin.Label}");
+                        continue; // Skip showing the popup again
+                    }
 
-            if (!success) displayGpsError = true;
+                    Debug.WriteLine($"Close enough to {pin.Label}, showing popup.");
+                    _pinActivationStatus[pin] = true; // Mark the pin as active
+                    MarkerClickedCommand.Execute(pin);
+                }
+                else
+                {
+                    // Mark pin as inactive when out of range
+             //       _pinActivationStatus[pin] = false;
+                }
+            }
+        }catch(FeatureNotEnabledException e)
+        {
+            displayGpsError = true;
+            Debug.WriteLine(e);
         }
         catch (Exception ex)
         {
@@ -71,14 +120,26 @@ public partial class MapViewModel : ObservableObject
         {
             if (displayGpsError)
             {
-                await Application.Current.MainPage.DisplayAlert(
-                    "Kan geen locatie verkrijgen",
-                    "De app kan niet goed werken zolang je locatie niet te verkrijgen. Check je instellingen.",
-                    "OK"
-                );
+                if (_isShowingLocationError)
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        LocationLost?.Invoke(this, "gps geeft geen locatie meer weer");
+                    });
+                    _isShowingLocationError = false;
+                }
+
             }
+            else 
+            {
+                _isShowingLocationError = true; 
+            }
+            
         }
+        
     }
+
+
     private void ZoomToBreda()
     {
         Location location = new Location(51.588331, 4.777802);
@@ -86,30 +147,25 @@ public partial class MapViewModel : ObservableObject
         CurrentMapSpan = mapSpan;
     }
 
-    private void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
-    {
-        var curLoc = e.Location;
-
-        Debug.WriteLine($"Last pulled pos: {curLoc.Latitude}, {curLoc.Longitude}");
-
-        // Now check if close to location.
-        foreach (var pin in Pins)
-        {
-            Debug.WriteLine($"Checking if {curLoc.Latitude}, {curLoc.Longitude} close to {pin.Location.Latitude}, {pin.Location.Longitude}");
-            var distInMeters = curLoc.CalculateDistance(pin.Location, DistanceUnits.Kilometers) * 1000;
-            if (distInMeters <= 20)
-            {
-                Debug.WriteLine($"Close enough to {pin.Label}");
-                MarkerClickedCommand.Execute(pin);
-            }
-        }
-    }
-
     private void CheckInternetConnection()
     {
         OnPropertyChanged(nameof(HasInternetConnection));
+        if (!HasInternetConnection)
+        {
+            if (_isShowingNetwerkError)
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    InternetConnectionLost?.Invoke(this, "Verbinding is verbroken");
+                    _isShowingNetwerkError = false;
+                });
+            }
+        }
+        else
+        {
+            _isShowingNetwerkError = true;
+        }
     }
-
 
     private MapElement CreatePolyLineOfLocations(IEnumerable<Location> locations)
     {
@@ -133,7 +189,8 @@ public partial class MapViewModel : ObservableObject
     public void OnLoad(string routeTag)
     {
         MainThread.InvokeOnMainThreadAsync(() => CreateRoute(routeTag));
-        Task.Run(() => InitListener(_geolocation));
+        Task.Run(() => RouteStarting());
+
         InitInternetCheckTimer();
     }
 
@@ -154,7 +211,6 @@ public partial class MapViewModel : ObservableObject
             if (routeLocation.name is not null) CreatePin(routeLocation);
         }
 
-        // NOTE: Yes, lat & long reversed ;)
         MapElements.Add(
             CreatePolyLineOfLocations(routeLocations.Select(x => new Location(x.longitude, x.latitude))));
         MapElements = new ObservableCollection<MapElement>(MapElements);
@@ -172,14 +228,13 @@ public partial class MapViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task MarkerClicked(Pin pin)
+    public async Task MarkerClicked(Pin pin)
     {
         Debug.WriteLine("Clicked on Marker.");
 
         // First find the proper routeLocation
         double tolerance = 0.0001D;
         var routeLocation = (await _databaseRepo.GetAllRoutes()).FirstOrDefault(ro =>
-            // NOTE: LONGIDUDE EN LATITUDE ZIJN OMGEDRAAIT WTF BROEDERS> MAAR DIT WERKT
             // First check latitude
             Math.Abs(ro.longitude - pin.Location.Latitude) < tolerance
 
@@ -196,13 +251,14 @@ public partial class MapViewModel : ObservableObject
                 longitude = routeLocation.longitude,
                 latitude = routeLocation.latitude,
                 name = routeLocation.name,
-                description = routeLocation.description,
+                descriptionNL = routeLocation.descriptionNL,
+                descriptionENG = routeLocation.descriptionENG,
                 imageSource = routeLocation.imageSource
             }, fileService);
 
-            await viewModel.setData();
+            viewModel.setData();
 
-            await MopupService.Instance.PushAsync(new InfoPointPopup(viewModel));
+            MopupService.Instance.PushAsync(new InfoPointPopup(viewModel));
         }
         else
         {

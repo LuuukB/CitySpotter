@@ -1,21 +1,27 @@
 using CitySpotter.Domain.Services;
-using CitySpotter.Locations.Locations;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui.Controls.Maps;
-using Microsoft.Maui.Devices.Sensors;
-using Microsoft.Maui.Maps;
-using Mopups.Services;
-using System.Diagnostics;
 
 namespace CitySpotter;
 [QueryProperty(nameof(RouteName), "routeName")]
 public partial class MapPage : ContentPage
 {
     private string _routeName;
+    private MapViewModel _mapViewModel;
     public MapPage(MapViewModel viewModel)
 	{
 		InitializeComponent();
+        _mapViewModel = viewModel;
+        _mapViewModel.InternetConnectionLost += async (sender, message) =>
+        {
+            await DisplayAlert("Geen verbinding", message, "OK");
+        };
+        _mapViewModel.LocationLost += async (sender, message) =>
+        {
+            await DisplayAlert("Geen locatie", message, "OK");
+        };
+
         BindingContext = viewModel;
+
 	}
     public string RouteName
     {

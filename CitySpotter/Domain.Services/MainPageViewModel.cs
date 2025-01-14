@@ -1,14 +1,8 @@
 ﻿using CitySpotter.Domain.Model;
-using CitySpotter.Locations.Locations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CitySpotter.Domain.Services
 {
@@ -31,7 +25,7 @@ namespace CitySpotter.Domain.Services
             Debug.WriteLine("Loading routes");
             LoadRoutesLocations();
         }
-        private async Task LoadRoutesLocations()
+        public async Task LoadRoutesLocations()
         { 
             var allRoutesNames = await _databaseRepo.GetAllNamesRoutes();
             RouteNames.Clear();
@@ -41,7 +35,7 @@ namespace CitySpotter.Domain.Services
             }
         }
         [RelayCommand]
-        private async Task NavigateToMap(string routeName)
+        public async Task NavigateToMap(string routeName)
         {
             Debug.WriteLine("In Navigate to Map");
             if (!string.IsNullOrWhiteSpace(routeName))
@@ -54,7 +48,7 @@ namespace CitySpotter.Domain.Services
         }
 
         [RelayCommand]
-        private async Task PageLoad()
+        public async Task PageLoad()
         {
             // On page load, we check perms and request it if needed.
             Debug.WriteLine("Requesting perms.");
@@ -67,7 +61,10 @@ namespace CitySpotter.Domain.Services
             }
 
             // We also initialize the database!
+            
             await _databaseRepo.Init();
+ //           await _databaseRepo.Drop();
+            
         }
     }
 }

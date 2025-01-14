@@ -9,13 +9,14 @@
 
     <ScrollView HorizontalOptions="Center" VerticalOptions="Center" Padding="10">
         <Border WidthRequest="300" HeightRequest="600"
-                        BackgroundColor="White"
+                        Style="{StaticResource BorderStyle}"
                         HorizontalOptions="Center">
             <VerticalStackLayout Spacing="3">
                 <Label 
                     Text="{Binding LocationName}"
                     FontSize="20"
-                    HorizontalOptions="Center">
+                    HorizontalOptions="Center"
+                    Style="{StaticResource LabelStyle}">
                 </Label>
                 <Image
                     Source="{Binding ImageSource}"
@@ -28,7 +29,7 @@
                         <RoundRectangle CornerRadius="0"/>
                     </Border.StrokeShape>
                     <ScrollView>
-                        <Label LineBreakMode="WordWrap" Text="{Binding Description}" TextColor="Black"></Label>
+                        <Label LineBreakMode="WordWrap" Text="{Binding Description}" Style="{StaticResource LabelStyle}"></Label>
                     </ScrollView>
                 </Border>
             </VerticalStackLayout>

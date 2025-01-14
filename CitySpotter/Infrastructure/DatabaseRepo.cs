@@ -1,6 +1,5 @@
 using CitySpotter.Domain.Model;
 using SQLite;
-using CitySpotter.Locations.Locations;
 using System.Diagnostics;
 
 
@@ -28,12 +27,13 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
     public async Task Init()
     {
         await _sQLiteConnection.CreateTableAsync<RouteLocation>();
-        await AddHistoricalRoute();
+        AddHistoricalRoute();
     }
 
     private async Task AddHistoricalRoute()
     {
         var db = await GetAllRoutes();
+
         if (db.Count == 0)
         {
             await AddRoute(new RouteLocation
@@ -41,267 +41,292 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
                 longitude = 51.594112,
                 latitude = 4.779417,
                 name = "VVV-Kantoor",
-                description = "vvvkantoorbeschrijving.txt",
+                descriptionNL = "vvvkantoorbeschrijving.txt",
+                descriptionENG = "vvvkantoorbeschrijvingENG.txt",
                 imageSource = "vvvkantoor.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.593278,
                 latitude = 4.779388,
                 name = "Liefdeszuster",
-                description = "liefdeszusterbeschrijving.txt",
+                descriptionNL = "liefdeszusterbeschrijving.txt",
+                descriptionENG = "liefdeszusterbeschrijvingENG.txt",
                 imageSource = "liefdeszuster.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.592500,
                 latitude = 4.779695,
                 name = "Nassau-Baroniemonument",
-                description = "nassaubaroniemonumentbeschrijving.txt",
+                descriptionNL = "nassaubaroniemonumentbeschrijving.txt",
+                descriptionENG = "nassaubaroniemonumentbeschrijvingENG.txt",
                 imageSource = "nassaubaroniemonument.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.592500, latitude = 4.779388, routeTag = "historischeKilometer" });
+            { longitude = 51.592500, latitude = 4.779388, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.592833,
                 latitude = 4.778472,
                 name = "Vuurtoren",
-                description = "vuurtorenbeschrijving.txt",
+                descriptionNL = "vuurtorenbeschrijving.txt",
+                descriptionENG = "vuurtorenbeschrijvingENG.txt",
                 imageSource = "vuurtoren.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.592667, latitude = 4.777917, routeTag = "historischeKilometer" });
+            { longitude = 51.592667, latitude = 4.777917, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.590612, latitude = 4.777000, routeTag = "historischeKilometer" });
+            { longitude = 51.590612, latitude = 4.777000, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.590612,
                 latitude = 4.776167,
                 name = "Kasteel Breda",
-                description = "kasteelbeschrijving.txt",
+                descriptionNL = "kasteelbeschrijving.txt",
+                descriptionENG = "kasteelbeschrijvingENG.txt",
                 imageSource = "kasteelbreda.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.589695,
                 latitude = 4.776138,
                 name = "Stadhouderspoort",
-                description = "stadhouderspoortbeschrijving.txt",
+                descriptionNL = "stadhouderspoortbeschrijving.txt",
+                descriptionENG = "stadhouderspoortbeschrijvingENG.txt",
                 imageSource = "stadhouderspoort.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.590333, latitude = 4.776000, routeTag = "historischeKilometer" });
+            { longitude = 51.590333, latitude = 4.776000, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.590388, latitude = 4.775000, routeTag = "historischeKilometer" });
+            { longitude = 51.590388, latitude = 4.775000, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.590028,
                 latitude = 4.774362,
                 name = "Huis van Brecht",
-                description = "huisvanbrechtbeschrijving.txt",
+                descriptionNL = "huisvanbrechtbeschrijving.txt",
+                descriptionENG = "huisvanbrechtbeschrijvingENG.txt",
                 imageSource = "huisvanbrecht7.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.590195,
                 latitude = 4.773445,
                 name = "Spanjaardsgat",
-                description = "spanjaardsgatbeschrijving.txt",
+                descriptionNL = "spanjaardsgatbeschrijving.txt",
+                descriptionENG = "spanjaardsgatbeschrijvingENG.txt",
                 imageSource = "spanjaardsgat.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.589833,
                 latitude = 4.773333,
                 name = "Vismarkt",
-                description = "vismarktbeschrijving.txt",
+                descriptionNL = "vismarktbeschrijving.txt",
+                descriptionENG = "vismarktbeschrijvingENG.txt",
                 imageSource = "vismarktbreda.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.589362,
                 latitude = 4.774445,
                 name = "Havermarkt",
-                description = "havermarktbeschrijving.txt",
+                descriptionNL = "havermarktbeschrijving.txt",
+                descriptionENG = "havermarktbeschrijvingENG.txt",
                 imageSource = "havermarkt.webp",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.588778, latitude = 4.774888, routeTag = "historischeKilometer" });
+            { longitude = 51.588778, latitude = 4.774888, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.588833,
                 latitude = 4.775278,
                 name = "Grote Kerk Breda",
-                description = "grotekerkbeschrijving.txt",
+                descriptionNL = "grotekerkbeschrijving.txt",
+                descriptionENG = "grotekerkbeschrijvingENG.txt",
                 imageSource = "grotekerk.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.588778, latitude = 4.774888, routeTag = "historischeKilometer" });
+            { longitude = 51.588778, latitude = 4.774888, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.588195,
                 latitude = 4.775138,
                 name = "Het Poortje",
-                description = "poortjebeschrijving.txt",
+                descriptionNL = "poortjebeschrijving.txt",
+                descriptionENG = "poortjebeschrijvingENG.txt",
                 imageSource = "hetpoortje.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.587083,
                 latitude = 4.775750,
                 name = "Ridderstraat",
-                description = "ridderstraatbeschrijving.txt",
+                descriptionNL = "ridderstraatbeschrijving.txt",
+                descriptionENG = "ridderstraatbeschrijvingENG.txt",
                 imageSource = "ridderstraat.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.587417,
                 latitude = 4.776555,
                 name = "De Grote Markt",
-                description = "grotemarktbeschrijving.txt",
+                descriptionNL = "grotemarktbeschrijving.txt",
+                descriptionENG = "grotemarktbeschrijvingENG.txt",
                 imageSource = "grotemarktbreda.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.588028,
                 latitude = 4.776333,
                 name = "Bevrijdingsmonument",
-                description = "bevrijdingsmonumentbeschrijving.txt",
+                descriptionNL = "bevrijdingsmonumentbeschrijving.txt",
+                descriptionENG = "bevrijdingsmonumentbeschrijvingENG.txt",
                 imageSource = "bevrijdingsmonument.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.588750,
                 latitude = 4.776112,
                 name = "Stadhuis",
-                description = "stadhuisbeschrijving.txt",
+                descriptionNL = "stadhuisbeschrijving.txt",
+                descriptionENG = "stadhuisbeschrijvingENG.txt",
                 imageSource = "stadhuis.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.587972, latitude = 4.776362, routeTag = "historischeKilometer" });
+            { longitude = 51.587972, latitude = 4.776362, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.587500, latitude = 4.776555, routeTag = "historischeKilometer" });
+            { longitude = 51.587500, latitude = 4.776555, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.587638,
                 latitude = 4.777250,
                 name = "Antonius van Padua Kerk",
-                description = "antoniusvanpadaukerkbeschrijving.txt",
+                descriptionNL = "antoniusvanpadaukerkbeschrijving.txt",
+                descriptionENG = "antoniusvanpadaukerkbeschrijvingENG.txt",
                 imageSource = "paduakerk.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.588278, latitude = 4.778500, routeTag = "historischeKilometer" });
+            { longitude = 51.588278, latitude = 4.778500, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.588000,
                 latitude = 4.778945,
                 name = "Bibliotheek",
-                description = "bibliotheekbeschrijving.txt",
+                descriptionNL = "bibliotheekbeschrijving.txt",
+                descriptionENG = "bibliotheekbeschrijvingENG.txt",
                 imageSource = "bibliotheekbreda.webp",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.587362, latitude = 4.780222, routeTag = "historischeKilometer" });
+            { longitude = 51.587362, latitude = 4.780222, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.587722,
                 latitude = 4.781028,
                 name = "Kloosterkazerne",
-                description = "kloosterkazernebeschrijving.txt",
+                descriptionNL = "kloosterkazernebeschrijving.txt",
+                descriptionENG = "kloosterkazernebeschrijvingENG.txt",
                 imageSource = "kloosterkazerne.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.587750,
                 latitude = 4.782000,
                 name = "Chassé theater",
-                description = "chassetheaterbeschrijving.txt",
+                descriptionNL = "chassetheaterbeschrijving.txt",
+                descriptionENG = "chassetheaterbeschrijvingENG.txt",
                 imageSource = "chassetheater.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.587750, latitude = 4.781250, routeTag = "historischeKilometer" });
+            { longitude = 51.587750, latitude = 4.781250, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.588612, latitude = 4.780888, routeTag = "historischeKilometer" });
+            { longitude = 51.588612, latitude = 4.780888, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.589500, latitude = 4.780445, routeTag = "historischeKilometer" });
+            { longitude = 51.589500, latitude = 4.780445, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.589667,
                 latitude = 4.781000,
                 name = "Beyerd",
-                description = "beyerdbeschrijving.txt",
+                descriptionNL = "beyerdbeschrijving.txt",
+                descriptionENG = "beyerdbeschrijvingENG.txt",
                 imageSource = "beyerd.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.589500, latitude = 4.780445, routeTag = "historischeKilometer" });
+            { longitude = 51.589500, latitude = 4.780445, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.589555,
                 latitude = 4.780000,
                 name = "Gasthuispoort",
-                description = "gasthuispoortbeschrijving.txt",
+                descriptionNL = "gasthuispoortbeschrijving.txt",
+                descriptionENG = "gasthuispoortbeschrijvingENG.txt",
                 imageSource = "gasthuispoort.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.589417, latitude = 4.779862, routeTag = "historischeKilometer" });
+            { longitude = 51.589417, latitude = 4.779862, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.589028, latitude = 4.779695, routeTag = "historischeKilometer" });
+            { longitude = 51.589028, latitude = 4.779695, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.588555, latitude = 4.778333, routeTag = "historischeKilometer" });
+            { longitude = 51.588555, latitude = 4.778333, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.589112,
                 latitude = 4.777945,
                 name = "Willem Merkxtuin",
-                description = "willemmerkxtuinbeschrijving.txt",
+                descriptionNL = "willemmerkxtuinbeschrijving.txt",
+                descriptionENG = "willemmerkxtuinbeschrijvingENG.txt",
                 imageSource = "willemmerkxtuin.webp",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.589667, latitude = 4.777805, routeTag = "historischeKilometer" });
+            { longitude = 51.589667, latitude = 4.777805, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
             {
                 longitude = 51.589695,
                 latitude = 4.778362,
                 name = "Begijnhof",
-                description = "begijnhofbeschrijving.txt",
+                descriptionNL = "begijnhofbeschrijving.txt",
+                descriptionENG = "begijnhofbeschrijvingENG.txt",
                 imageSource = "begijnhof.jpg",
-                routeTag = "historischeKilometer"
+                routeTag = "Historische Kilometer"
             });
             await AddRoute(new RouteLocation
-            { longitude = 51.589667, latitude = 4.777805, routeTag = "historischeKilometer" });
+            { longitude = 51.589667, latitude = 4.777805, routeTag = "Historische Kilometer" });
             await AddRoute(new RouteLocation
-            { longitude = 51.589500, latitude = 4.776250, routeTag = "historischeKilometer" });
+            { longitude = 51.589500, latitude = 4.776250, routeTag = "Historische Kilometer" });
         }
-
         Debug.WriteLine("De database heef zoveel punten: " + db.Count);
+
     }
 
     public async Task Drop()
     {
         await _sQLiteConnection.DropTableAsync<RouteLocation>();
+        
     }
 
     public async Task<List<RouteLocation>> GetPointsSpecificRoute(string tagRoute)
