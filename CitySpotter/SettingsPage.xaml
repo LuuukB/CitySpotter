@@ -28,9 +28,6 @@
              Command="{Binding LanguageChangeCommand}" />
             </Picker.Behaviors>
         </Picker>
-
-        <Label Text="{localisation:Translate name}" 
-               Style="{StaticResource LabelStyle}"/>
     </VerticalStackLayout>
 
 </ContentPage>
