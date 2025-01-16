@@ -61,7 +61,7 @@ namespace CitySpotter.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ColorBlind Mode .
+        ///   Looks up a localized string similar to Colorblindness Mode .
         /// </summary>
         internal static string ColorBlindMode {
             get {
@@ -84,15 +84,6 @@ namespace CitySpotter.Resources.Languages {
         internal static string Map {
             get {
                 return ResourceManager.GetString("Map", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Text is English.
-        /// </summary>
-        internal static string name {
-            get {
-                return ResourceManager.GetString("name", resourceCulture);
             }
         }
         
