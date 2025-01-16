@@ -38,6 +38,7 @@
             MvvmMapElements="{Binding MapElements}"
             VisibleRegionInMap="{Binding CurrentMapSpan}"
             ItemsSource="{Binding Pins}"
+            
             IsShowingUser="True"
             MapType="Hybrid"
             IsVisible="{Binding HasInternetConnection}"

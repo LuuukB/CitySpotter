@@ -21,10 +21,10 @@ namespace CitySpotter.Domain.Services
                         foreach (var element in (IEnumerable<MapElement>)n)
                         {
                             map.MapElements.Add(element);
+                            
                         }
                     }
                 });
-
 
         public static readonly BindableProperty VisibleRegionInMapProperty =
           BindableProperty.Create(

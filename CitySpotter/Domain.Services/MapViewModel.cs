@@ -21,9 +21,10 @@ public partial class MapViewModel : ObservableObject
     [ObservableProperty] private string _imageSource = "nointernetpopupscreen.jpg";
     [ObservableProperty] private ObservableCollection<MapElement> _mapElements = [];
     [ObservableProperty] private MapSpan _currentMapSpan;
-    [ObservableProperty] private Dictionary<Pin, Circle> _pins = [];
+    [ObservableProperty] private ObservableCollection<Pin> _pins = [];
     [ObservableProperty] private bool _RouteIsPaused = false;
 
+    private Dictionary<Pin, Circle> _pinsAndCirkles = [];
     private System.Timers.Timer _locationTimer;
     public event EventHandler<string> InternetConnectionLost;
     public event EventHandler<string> LocationLost;
@@ -39,7 +40,7 @@ public partial class MapViewModel : ObservableObject
     {
         get
         {
-            Debug.WriteLine("Checking Internet connection");
+            //Debug.WriteLine("Checking Internet connection");
             return _internetHandler.HasInternetConnection();
         }
     }
@@ -91,6 +92,8 @@ public partial class MapViewModel : ObservableObject
 
         //stop route
         Pins = [];
+        _pinsAndCirkles = [];
+        _pinActivationStatus = [];
         MapElements = [];
     }
 
@@ -99,7 +102,7 @@ public partial class MapViewModel : ObservableObject
         Task.Run(OnTimedEventAsync);
     }
 
-    private readonly Dictionary<Pin, bool> _pinActivationStatus = new();
+    private Dictionary<Pin, bool> _pinActivationStatus = new();
 
     private async Task OnTimedEventAsync()
     {
@@ -119,9 +122,9 @@ public partial class MapViewModel : ObservableObject
                 return;
             }
 
-            foreach (Pin pin in Pins.Keys)
+            foreach (Pin pin in Pins)
             {
-                Debug.WriteLine($"Checking if {location.Latitude}, {location.Longitude} close to {pin.Location.Latitude}, {pin.Location.Longitude}");
+               
                 var distInMeters = location.CalculateDistance(pin.Location, DistanceUnits.Kilometers) * 1000;
 
                 if (distInMeters <= 20)
@@ -135,7 +138,21 @@ public partial class MapViewModel : ObservableObject
 
                     Debug.WriteLine($"Close enough to {pin.Label}, showing popup.");
                     _pinActivationStatus[pin] = true; // Mark the pin as active
-                    Pins.GetValueOrDefault(pin).FillColor = Colors.Green;
+
+
+                    if (_pinsAndCirkles.TryGetValue(pin, out Circle circle))
+                    {
+                        MainThread.BeginInvokeOnMainThread(() =>
+                        {
+                            // Verander de kleur van de cirkel
+                            circle.FillColor = Colors.Green;
+
+                            // Notify de UI (omdat MapElements geobserveerd wordt)
+                            OnPropertyChanged(nameof(MapElements));
+                        });
+                    }
+                        
+
                     MarkerClickedCommand.Execute(pin);
                 }
                 else
@@ -246,30 +263,43 @@ public partial class MapViewModel : ObservableObject
 
         var routeLocations = await _databaseRepo.GetPointsSpecificRoute(routeTag);
 
+        MapElements.Add(
+            CreatePolyLineOfLocations(routeLocations.Select(x => new Location(x.longitude, x.latitude))));
+        MapElements = new ObservableCollection<MapElement>(MapElements);
+        OnPropertyChanged(nameof(MapElements));
+
         foreach (var routeLocation in routeLocations)
         {
             if (routeLocation.name is not null) CreatePin(routeLocation);
         }
 
-        MapElements.Add(
-            CreatePolyLineOfLocations(routeLocations.Select(x => new Location(x.longitude, x.latitude))));
-        MapElements = new ObservableCollection<MapElement>(MapElements);
-        OnPropertyChanged(nameof(MapElements));
     }
 
     public void CreatePin(RouteLocation routeLocation)
     {
-        Pins.Add(new Pin
+        Pin pin = new Pin
         {
             Label = routeLocation.name,
             Location = new Location(routeLocation.longitude, routeLocation.latitude),
             Type = PinType.Generic
-        }, new Circle
+        };
+        Pins.Add(pin);
+        
+        Circle circle = new Circle
         {
-            Center = new Location(routeLocation.latitude, routeLocation.longitude),
+            Center = new Location(routeLocation.longitude, routeLocation.latitude),
             Radius = new Distance(20),
-            FillColor = Colors.Red
-        });
+            FillColor = Colors.Red,
+            
+        };
+
+        MapElements.Add(circle);
+
+        MapElements = new ObservableCollection<MapElement>(MapElements);
+
+        _pinsAndCirkles.Add(pin,circle);
+
+        OnPropertyChanged(nameof(MapElements));
     }
 
     [RelayCommand]
