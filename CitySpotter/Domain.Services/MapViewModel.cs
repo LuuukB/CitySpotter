@@ -21,7 +21,7 @@ public partial class MapViewModel : ObservableObject
     [ObservableProperty] private string _imageSource = "nointernetpopupscreen.jpg";
     [ObservableProperty] private ObservableCollection<MapElement> _mapElements = [];
     [ObservableProperty] private MapSpan _currentMapSpan;
-    [ObservableProperty] private ObservableCollection<Pin> _pins = [];
+    [ObservableProperty] private Dictionary<Pin, Circle> _pins = [];
     [ObservableProperty] private bool _RouteIsPaused = false;
 
     private System.Timers.Timer _locationTimer;
@@ -80,6 +80,15 @@ public partial class MapViewModel : ObservableObject
     {
         _pause = false;
         RouteIsPaused = false;
+
+        if (_locationTimer != null)
+        {
+            _locationTimer.Stop();
+            _locationTimer.Elapsed -= OnTimedEvent;
+            _locationTimer.Dispose();
+            _locationTimer = null;
+        }
+
         //stop route
         Pins = [];
         MapElements = [];
@@ -110,7 +119,7 @@ public partial class MapViewModel : ObservableObject
                 return;
             }
 
-            foreach (var pin in Pins)
+            foreach (Pin pin in Pins.Keys)
             {
                 Debug.WriteLine($"Checking if {location.Latitude}, {location.Longitude} close to {pin.Location.Latitude}, {pin.Location.Longitude}");
                 var distInMeters = location.CalculateDistance(pin.Location, DistanceUnits.Kilometers) * 1000;
@@ -126,6 +135,7 @@ public partial class MapViewModel : ObservableObject
 
                     Debug.WriteLine($"Close enough to {pin.Label}, showing popup.");
                     _pinActivationStatus[pin] = true; // Mark the pin as active
+                    Pins.GetValueOrDefault(pin).FillColor = Colors.Green;
                     MarkerClickedCommand.Execute(pin);
                 }
                 else
@@ -232,6 +242,8 @@ public partial class MapViewModel : ObservableObject
 
     private async Task CreateRoute(string routeTag)
     {
+
+
         var routeLocations = await _databaseRepo.GetPointsSpecificRoute(routeTag);
 
         foreach (var routeLocation in routeLocations)
@@ -252,6 +264,11 @@ public partial class MapViewModel : ObservableObject
             Label = routeLocation.name,
             Location = new Location(routeLocation.longitude, routeLocation.latitude),
             Type = PinType.Generic
+        }, new Circle
+        {
+            Center = new Location(routeLocation.latitude, routeLocation.longitude),
+            Radius = new Distance(20),
+            FillColor = Colors.Red
         });
     }
 
