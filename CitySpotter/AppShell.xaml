@@ -9,6 +9,27 @@
     Title="CitySpotter"
     Style="{StaticResource TabBarStyle}">
 
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Image Source="agslogo.jpg"
+                   WidthRequest="40"
+                   HeightRequest="40"
+                   HorizontalOptions="End"
+                   VerticalOptions="Center"
+                   Margin="0,0,8,0" />
+
+            <Label Text="CitySpotter"
+                   FontSize="20"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   TextColor="Black" />
+        </Grid>
+    </Shell.TitleView>
 
     <TabBar>
         <ShellContent
@@ -33,9 +54,6 @@
            Title="Help"
            ContentTemplate="{DataTemplate local:HelpPopUpPage}"
            Route="HelpPopUpPage" />-->
-
-
-
     </TabBar>
 
 
