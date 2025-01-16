@@ -4,8 +4,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:localisation="clr-namespace:CitySpotter.Infrastructure"
              x:Class="CitySpotter.SettingsPage"
-             BackgroundColor ="{DynamicResource BackgroundColor}"
-             IconImageSource="agslogo.jpg">
+             BackgroundColor ="{DynamicResource BackgroundColor}">
              
     <VerticalStackLayout>
         <Button Command ="{Binding Button_ClickedCommand}" 
@@ -29,9 +28,6 @@
              Command="{Binding LanguageChangeCommand}" />
             </Picker.Behaviors>
         </Picker>
-
-        <Label Text="{localisation:Translate name}" 
-               Style="{StaticResource LabelStyle}"/>
     </VerticalStackLayout>
 
 </ContentPage>
