@@ -18,6 +18,8 @@ namespace CitySpotter.Domain.Services
             _databaseRepo = database;
             _permissionsService = locationPermissionsService;
             RouteNames = new ObservableCollection<string>();
+
+            LoadRoutesLocations();
         }
         [RelayCommand]
         public void GetRoutesForView() 
