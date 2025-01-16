@@ -81,6 +81,8 @@ public partial class MapViewModel : ObservableObject
         _pause = false;
         RouteIsPaused = false;
         //stop route
+        Pins = [];
+        MapElements = [];
     }
 
     private void OnTimedEvent(object? sender, ElapsedEventArgs e)
