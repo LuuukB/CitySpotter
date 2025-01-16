@@ -129,9 +129,6 @@
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="MapText" xml:space="preserve">
-    <value>Here you see the Map!</value>
-  </data>
   <data name="Routes" xml:space="preserve">
     <value>Routes</value>
   </data>

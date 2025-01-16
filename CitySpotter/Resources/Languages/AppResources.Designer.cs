@@ -88,15 +88,6 @@ namespace CitySpotter.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Here you see the Map!.
-        /// </summary>
-        internal static string MapText {
-            get {
-                return ResourceManager.GetString("MapText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Text is English.
         /// </summary>
         internal static string name {

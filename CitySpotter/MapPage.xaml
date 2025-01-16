@@ -23,13 +23,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label 
-            Text="{localisation:Translate MapText}"
-            Grid.Row="0"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" 
-            Style="{StaticResource LabelStyle}"/>
-
         <custom:BindableMap 
             x:Name="MapView"
             Grid.Row="1"
