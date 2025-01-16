@@ -258,7 +258,15 @@ public partial class MapViewModel : ObservableObject
 
             viewModel.setData();
 
-            MopupService.Instance.PushAsync(new InfoPointPopup(viewModel));
+
+            try
+            {
+                MopupService.Instance.PushAsync(new InfoPointPopup(viewModel));
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Pin Error: {e}");
+            } 
         }
         else
         {
