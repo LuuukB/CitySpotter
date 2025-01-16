@@ -21,6 +21,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Label 
@@ -58,7 +60,29 @@
         <Image Grid.Row="1"
                Source="{Binding ImageSource}"
                IsVisible="{Binding HasInternetConnection, Converter={StaticResource InvertedBoolConverter}}"/>
-        
+
+        <HorizontalStackLayout
+            Grid.Row="2">
+            <Button
+                Text="Pause"
+                Command="{Binding PauseRouteCommand}"/>
+
+            <Button
+                Text="Continue"
+                Command="{Binding ContinueRouteCommand}"/>
+
+            <Button
+                Text="Stop Route"
+                Command="{Binding StopRouteCommand}"/>
+
+        </HorizontalStackLayout>
+
+        <Label
+            x:Name="IsPausedLBL"
+            Text="The map is now paused"
+            Grid.Row="3"
+            IsVisible="{Binding RouteIsPaused}"/>
+
 
     </Grid>
 </ContentPage>

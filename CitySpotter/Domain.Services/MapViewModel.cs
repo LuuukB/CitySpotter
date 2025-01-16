@@ -22,6 +22,7 @@ public partial class MapViewModel : ObservableObject
     [ObservableProperty] private ObservableCollection<MapElement> _mapElements = [];
     [ObservableProperty] private MapSpan _currentMapSpan;
     [ObservableProperty] private ObservableCollection<Pin> _pins = [];
+    [ObservableProperty] private bool _RouteIsPaused = false;
 
     private System.Timers.Timer _locationTimer;
     public event EventHandler<string> InternetConnectionLost;
@@ -32,6 +33,7 @@ public partial class MapViewModel : ObservableObject
     private readonly IInternetHandler _internetHandler;
     private bool _isShowingNetwerkError = true;
     private bool _isShowingLocationError = true;
+    private bool _pause = false;
 
     public bool HasInternetConnection
     {
@@ -61,6 +63,26 @@ public partial class MapViewModel : ObservableObject
 
     }
 
+    [RelayCommand]
+    public void PauseRoute() {
+        RouteIsPaused = true;
+        _pause = true;
+    }
+    [RelayCommand]
+    public void ContinueRoute()
+    {
+        _pause = false;
+        RouteIsPaused = false;
+    }
+
+    [RelayCommand]
+    public void StopRoute()
+    {
+        _pause = false;
+        RouteIsPaused = false;
+        //stop route
+    }
+
     private void OnTimedEvent(object? sender, ElapsedEventArgs e)
     {
         Task.Run(OnTimedEventAsync);
@@ -79,6 +101,10 @@ public partial class MapViewModel : ObservableObject
             if (location is null)
             {
                 displayGpsError = true;
+                return;
+            }
+            if (_pause)
+            {
                 return;
             }
 
