@@ -28,6 +28,7 @@ public partial class MapViewModel : ObservableObject
     private System.Timers.Timer _locationTimer;
     public event EventHandler<string> InternetConnectionLost;
     public event EventHandler<string> LocationLost;
+    private List<Pin> _visitedPins = new List<Pin>();
 
     private readonly IGeolocation _geolocation;
     private readonly IDatabaseRepo _databaseRepo;
@@ -101,99 +102,6 @@ public partial class MapViewModel : ObservableObject
     {
         Task.Run(OnTimedEventAsync);
     }
-
-    private Dictionary<Pin, bool> _pinActivationStatus = new();
-
-    private async Task OnTimedEventAsync()
-    {
-        var displayGpsError = false;
-
-        try
-        {
-            Debug.WriteLine("Initializing location timer.");
-            var location = await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.High));
-            if (location is null)
-            {
-                displayGpsError = true;
-                return;
-            }
-            if (_pause)
-            {
-                return;
-            }
-
-            foreach (Pin pin in Pins)
-            {
-               
-                var distInMeters = location.CalculateDistance(pin.Location, DistanceUnits.Kilometers) * 1000;
-
-                if (distInMeters <= 20)
-                {
-                    // Check if the pin is already activated (i.e., popup was shown recently)
-                    if (_pinActivationStatus.TryGetValue(pin, out bool isActive) && isActive)
-                    {
-                        Debug.WriteLine($"Already handled pin: {pin.Label}");
-                        continue; // Skip showing the popup again
-                    }
-
-                    Debug.WriteLine($"Close enough to {pin.Label}, showing popup.");
-                    _pinActivationStatus[pin] = true; // Mark the pin as active
-
-
-                    if (_pinsAndCirkles.TryGetValue(pin, out Circle circle))
-                    {
-                        MainThread.BeginInvokeOnMainThread(() =>
-                        {
-                            // Verander de kleur van de cirkel
-                            circle.FillColor = Colors.Green;
-
-                            // Notify de UI (omdat MapElements geobserveerd wordt)
-                            OnPropertyChanged(nameof(MapElements));
-                        });
-                    }
-                        
-
-                    MarkerClickedCommand.Execute(pin);
-                }
-                else
-                {
-                    // Mark pin as inactive when out of range
-             //       _pinActivationStatus[pin] = false;
-                }
-            }
-        }catch(FeatureNotEnabledException e)
-        {
-            displayGpsError = true;
-            Debug.WriteLine(e);
-        }
-        catch (Exception ex)
-        {
-            displayGpsError = true;
-            Debug.WriteLine(ex);
-        }
-        finally
-        {
-            if (displayGpsError)
-            {
-                if (_isShowingLocationError)
-                {
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        LocationLost?.Invoke(this, "gps geeft geen locatie meer weer");
-                    });
-                    _isShowingLocationError = false;
-                }
-
-            }
-            else 
-            {
-                _isShowingLocationError = true; 
-            }
-            
-        }
-        
-    }
-
 
     private void ZoomToBreda()
     {
@@ -347,5 +255,122 @@ public partial class MapViewModel : ObservableObject
         {
             Debug.WriteLine($"No {nameof(routeLocation)} found.");
         }
+
     }
+    
+
+
+
+    
+    private bool IsPinVisited(Pin pin)
+    {
+        bool visited = _visitedPins.Any(p => p.Label == pin.Label);
+        Debug.WriteLine($"Checking if pin {pin.Label} is visited: {visited}");
+        return visited;
+    }
+
+
+    private Polyline[] CreatePolyLineOfLocations(IList<Pin> pins)
+    {
+        Debug.WriteLine("Constructing {0} at {1}", nameof(Polyline), DateTime.Now.ToShortTimeString());
+
+        List<Polyline> polylines = [];
+
+        // gaat door de lijst van pins heen en kijkt welke al is visited of niet
+        for (int i = 0; i < pins.Count - 1; i++)
+        {
+            var currentPin = pins[i];
+            var nextPin = pins[i + 1];
+
+            polylines.Add(new Polyline
+            {
+                StrokeWidth = 12,
+                StrokeColor = IsPinVisited(currentPin) ? Colors.Blue : Colors.Red,
+                Geopath = { currentPin.Location, nextPin.Location }
+            });
+        }
+
+        return polylines.ToArray();
+    }
+
+
+
+    private async Task OnTimedEventAsync()
+    {
+        var displayGpsError = false;
+
+        try
+        {
+            Debug.WriteLine("Initializing location timer.");
+            var location = await _geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.High));
+            if (location is null)
+            {
+                displayGpsError = true;
+                return;
+            }
+
+            foreach (var pin in Pins)
+            {
+                var distInMeters = location.CalculateDistance(pin.Location, DistanceUnits.Kilometers) * 1000;
+
+                Debug.WriteLine($"Checking distance to pin: {pin.Label}, Distance: {distInMeters} meters");
+
+                if (distInMeters <= 20 && !_visitedPins.Contains(pin))
+                {
+                    Debug.WriteLine($"Pin {pin.Label} is within range, adding to visited pins.");
+                    _visitedPins.Add(pin);
+                    MarkerClickedCommand.Execute(pin);
+                    // maak de polylines opnieuw na het visiten van een pin
+
+                    MapElements.Clear();
+                    foreach (var polyline in CreatePolyLineOfLocations(Pins.ToList())) MapElements.Add(polyline);
+                    MapElements = new ObservableCollection<MapElement>(MapElements);
+                    
+
+
+                    // Als de gebruiker de laatste pin heeft bereikt, stop dan de route
+                    if (_visitedPins.Count == Pins.Count)
+                    {
+                        _locationTimer.Stop();
+                        Debug.WriteLine("Route complete.");
+                    }
+
+                    break; // Stop met verder zoeken, er is een pin gevonden
+                }
+            }
+        }
+        catch (FeatureNotEnabledException e)
+        {
+            displayGpsError = true;
+            Debug.WriteLine(e);
+        }
+        catch (Exception ex)
+        {
+            displayGpsError = true;
+            Debug.WriteLine(ex);
+        }
+        finally
+        {
+            if (displayGpsError)
+            {
+                if (_isShowingLocationError)
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        LocationLost?.Invoke(this, "GPS geeft geen locatie meer weer");
+                    });
+                    _isShowingLocationError = false;
+                }
+            }
+            else
+            {
+                _isShowingLocationError = true;
+            }
+        }
+    }
+
+
+
+
+
 }
