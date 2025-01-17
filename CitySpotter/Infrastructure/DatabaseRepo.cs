@@ -27,7 +27,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
     public async Task Init()
     {
         await _sQLiteConnection.CreateTableAsync<RouteLocation>();
-        AddHistoricalRoute();
+        await AddHistoricalRoute();
     }
 
     private async Task AddHistoricalRoute()

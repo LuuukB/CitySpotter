@@ -94,7 +94,6 @@ public partial class MapViewModel : ObservableObject
         //stop route
         Pins = [];
         _pinsAndCirkles = [];
-        _pinActivationStatus = [];
         MapElements = [];
     }
 
@@ -308,6 +307,10 @@ public partial class MapViewModel : ObservableObject
                 displayGpsError = true;
                 return;
             }
+            if (_pause) 
+            {
+                return;
+            }
 
             foreach (var pin in Pins)
             {
@@ -323,10 +326,25 @@ public partial class MapViewModel : ObservableObject
                     // maak de polylines opnieuw na het visiten van een pin
 
                     MapElements.Clear();
+                    foreach (var kvp in _pinsAndCirkles)
+                    {
+                        var existingCircle = kvp.Value;
+                        MapElements.Add(existingCircle);
+                    }
                     foreach (var polyline in CreatePolyLineOfLocations(Pins.ToList())) MapElements.Add(polyline);
                     MapElements = new ObservableCollection<MapElement>(MapElements);
-                    
 
+                    if (_pinsAndCirkles.TryGetValue(pin, out Circle circle))
+                    {
+                        MainThread.BeginInvokeOnMainThread(() =>
+                        {
+                            // Verander de kleur van de cirkel
+                            circle.FillColor = Colors.Green;
+
+                            // Notify de UI (omdat MapElements geobserveerd wordt)
+                            OnPropertyChanged(nameof(MapElements));
+                        });
+                    }
 
                     // Als de gebruiker de laatste pin heeft bereikt, stop dan de route
                     if (_visitedPins.Count == Pins.Count)
