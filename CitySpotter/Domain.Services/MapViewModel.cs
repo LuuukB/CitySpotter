@@ -94,6 +94,7 @@ public partial class MapViewModel : ObservableObject
         //stop route
         Pins = [];
         _pinsAndCirkles = [];
+        _visitedPins = [];
         MapElements = [];
     }
 
@@ -326,10 +327,8 @@ public partial class MapViewModel : ObservableObject
                     // maak de polylines opnieuw na het visiten van een pin
 
                     MapElements.Clear();
-                    foreach (var kvp in _pinsAndCirkles)
-                    {
-                        var existingCircle = kvp.Value;
-                        MapElements.Add(existingCircle);
+                    foreach (var Existingcircle in _pinsAndCirkles.Values) {
+                        MapElements.Add(Existingcircle);
                     }
                     foreach (var polyline in CreatePolyLineOfLocations(Pins.ToList())) MapElements.Add(polyline);
                     MapElements = new ObservableCollection<MapElement>(MapElements);
