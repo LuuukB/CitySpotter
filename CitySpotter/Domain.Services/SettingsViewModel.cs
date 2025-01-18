@@ -43,7 +43,17 @@ namespace CitySpotter.Domain.Services
                 LanguagePickerItem = "English";
             }
 
-            ThemePickerItem = "Standard";
+            string theme = Preferences.Get("theme", "NormalMode");
+            if (theme.Equals("AnatropieMode"))
+            {
+                ThemePickerItem = "Anatropie";
+            } else if (theme.Equals("DeuteranopieMode"))
+            {
+                ThemePickerItem = "Deuteranopie";
+            } else
+            {
+                ThemePickerItem = "Standard";
+            }
 
         }
 

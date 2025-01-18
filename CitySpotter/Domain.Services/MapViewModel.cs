@@ -36,6 +36,8 @@ public partial class MapViewModel : ObservableObject
     private bool _isShowingLocationError = true;
     private bool _pause = false;
 
+    private string currrentTheme;
+
     public bool HasInternetConnection
     {
         get
@@ -50,6 +52,7 @@ public partial class MapViewModel : ObservableObject
         _geolocation = geolocation;
         _databaseRepo = repository;
         _internetHandler = internetHandler;
+        currrentTheme = Preferences.Get("theme", "NormalMode").ToString();
 
         ZoomToBreda();
     }
@@ -203,7 +206,8 @@ public partial class MapViewModel : ObservableObject
         {
             Center = new Location(routeLocation.longitude, routeLocation.latitude),
             Radius = new Distance(20),
-            FillColor = Color.FromRgba(255,0,0,48),
+            //TODO kleur veranderen
+            FillColor = getColor("redC"),
         };
 
         MapElements.Add(circle);
@@ -277,14 +281,14 @@ public partial class MapViewModel : ObservableObject
             elementen.Add(new Polyline
             {
                 StrokeWidth = 12,
-                StrokeColor = currentPin.isVisited ? Colors.Blue : Colors.Red,
+                StrokeColor = currentPin.isVisited ? getColor("blue") : getColor("red"),
                 Geopath = { currentPin.Location, nextPin.Location }
             });
             elementen.Add(new Circle
             {
                 Center = pins[i].Location,
                 Radius = new Distance(20),
-                FillColor = currentPin.isVisited ? Color.FromRgba(0,255,0,48) : Color.FromRgba(255, 0, 0, 48),
+                FillColor = currentPin.isVisited ? getColor("greenC") : getColor("redC"),
             });
             
             
@@ -298,6 +302,17 @@ public partial class MapViewModel : ObservableObject
     private async Task OnTimedEventAsync()
     {
         var displayGpsError = false;
+
+        if (!currrentTheme.Equals(Preferences.Get("theme", "NoTheme")))
+        {
+            MapElements.Clear();
+            foreach (var element in CreateMapElements(Pins.ToList())) MapElements.Add(element);
+            MapElements = new ObservableCollection<MapElement>(MapElements);
+
+            currrentTheme = Preferences.Get("theme", "NormalMode").ToString();
+
+            Debug.WriteLine("Theme changed!");
+        }
 
         try
         {
@@ -331,18 +346,6 @@ public partial class MapViewModel : ObservableObject
                     foreach (var element in CreateMapElements(Pins.ToList())) MapElements.Add(element);
                     MapElements = new ObservableCollection<MapElement>(MapElements);
 
-                    if (_pinsAndCirkles.TryGetValue(pin, out Circle circle))
-                    {
-                        MainThread.BeginInvokeOnMainThread(() =>
-                        {
-                            // Verander de kleur van de cirkel
-                            circle.FillColor = getColor("green");
-
-                            // Notify de UI (omdat MapElements geobserveerd wordt)
-                            OnPropertyChanged(nameof(MapElements));
-                        });
-                    }
-
                     // Als de gebruiker de laatste pin heeft bereikt, stop dan de route
                     if (pin.id == 45 && pin.isVisited)
                     {
@@ -353,6 +356,19 @@ public partial class MapViewModel : ObservableObject
                     break; // Stop met verder zoeken, er is een pin gevonden
                 }
             }
+
+            //Debug.WriteLine("Check theme change...");
+
+            //if (!currrentTheme.Equals(Preferences.Get("theme", "NoTheme")))
+            //{
+            //    MapElements.Clear();
+            //    foreach (var element in CreateMapElements(Pins.ToList())) MapElements.Add(element);
+            //    MapElements = new ObservableCollection<MapElement>(MapElements);
+
+            //    currrentTheme = Preferences.Get("theme", "NormalMode").ToString();
+
+            //    Debug.WriteLine("Theme changed!");
+            //}
         }
         catch (FeatureNotEnabledException e)
         {
@@ -386,7 +402,7 @@ public partial class MapViewModel : ObservableObject
 
     public Color getColor(string color)
     {
-        if (Preferences.Get("theme", "gay").Equals("NormalMode"))
+        if (Preferences.Get("theme", "noTheme").Equals("NormalMode"))
         {
             switch (color)
             {
@@ -396,40 +412,49 @@ public partial class MapViewModel : ObservableObject
                 case "blue":
                     return Colors.Blue;
 
-                case "green":
-                    return Colors.Green;
+                case "greenC":
+                    return Color.FromRgba(0, 255, 0, 48);
+
+                case "redC":
+                    return Color.FromRgba(255, 0, 0, 48);
             }
         }
-        else if (Preferences.Get("theme", "gay").Equals("DeuteranopieMode"))
+        else if (Preferences.Get("theme", "noTheme").Equals("DeuteranopieMode"))
         {
             switch (color)
             {
                 case "red":
-                    return Colors.Black;
+                    return Color.FromRgba(0, 160, 255, 255);
 
                 case "blue":
-                    return Colors.FloralWhite;
+                    return Colors.Blue;
 
-                case "green":
-                    return Colors.Chocolate;
+                case "greenC":
+                    return Color.FromRgba(0, 0, 255, 60);
+
+                case "redC":
+                    return Color.FromRgba(0, 160, 255, 60);
             }
         }
-        else if (Preferences.Get("theme", "gay").Equals("AnatropieMode"))
+        else if (Preferences.Get("theme", "noTheme").Equals("AnatropieMode"))
         {
             switch (color)
             {
                 case "red":
-                    return Colors.Black;
+                    return Color.FromRgba(0, 255, 0, 255);
 
                 case "blue":
-                    return Colors.FloralWhite;
+                    return Colors.Blue;
 
-                case "green":
-                    return Colors.Chocolate;
+                case "greenC":
+                    return Color.FromRgba(0, 0, 255, 48);
+
+                case "redC":
+                    return Color.FromRgba(0, 255, 0, 48);
             }
         }
 
-        return Colors.Red;
+        return Color.FromRgba(0, 0, 0, 0);
     }
 
 

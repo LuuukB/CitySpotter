@@ -19,9 +19,9 @@ namespace CitySpotter
                 setTheme(m.Value);
             });
 
-            var theme = Preferences.Get("theme", "System");
+            var theme = Preferences.Get("theme", "NormalMode");
 
-            setTheme("NormalMode");
+            setTheme(theme);
         }
 
 

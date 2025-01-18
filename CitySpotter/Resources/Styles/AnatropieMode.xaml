@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CitySpotter.Resources.Styles.AnatropieMode">
 
-    <Color x:Key="TextColor">#FB928E</Color>
-    <Color x:Key="ButtonColor">#FB9AAC</Color>
+    <Color x:Key="TextColor">#000000</Color>
+    <Color x:Key="ButtonColor">#056ef9</Color>
     <Color x:Key="ButtonTextColor">#FFFFFF</Color>
-    <Color x:Key="BackgroundColor">#FFD8CC</Color>
-    <Color x:Key="SelectedText">#FFFFFF</Color>
-    
+    <Color x:Key="BackgroundColor">#FFFFFF</Color>
+    <Color x:Key="SelectedText">#053eFF</Color>
+
 </ResourceDictionary>

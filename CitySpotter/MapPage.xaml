@@ -56,18 +56,27 @@
                IsVisible="{Binding HasInternetConnection, Converter={StaticResource InvertedBoolConverter}}"/>
 
         <HorizontalStackLayout
-            Grid.Row="2">
+            Grid.Row="2"
+            HorizontalOptions="Center"
+            Spacing="10"
+            Margin="0,3,0,3">
             <Button
                 Text="Pause"
-                Command="{Binding PauseRouteCommand}"/>
+                Command="{Binding PauseRouteCommand}"
+                Style="{StaticResource ButtonStyle}"
+                MinimumWidthRequest="100"/>
 
             <Button
                 Text="Continue"
-                Command="{Binding ContinueRouteCommand}"/>
+                Command="{Binding ContinueRouteCommand}"
+                Style="{StaticResource ButtonStyle}"
+                MinimumWidthRequest="100"/>
 
             <Button
                 Text="Stop Route"
-                Command="{Binding StopRouteCommand}"/>
+                Command="{Binding StopRouteCommand}"
+                Style="{StaticResource ButtonStyle}"
+                MinimumWidthRequest="100"/>
 
         </HorizontalStackLayout>
 

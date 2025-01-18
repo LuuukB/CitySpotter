@@ -54,7 +54,9 @@
         </Picker>
         <Button
             Command="{Binding GuideButtonCommand}"
-            Text="{localisation:Translate GuideText}"/>
+            Text="{localisation:Translate GuideText}"
+            Style="{StaticResource ButtonStyle}"
+            Margin="20,50,20,5"/>
     </VerticalStackLayout>
 
 </ContentPage>
