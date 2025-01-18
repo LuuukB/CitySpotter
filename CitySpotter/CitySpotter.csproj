@@ -188,6 +188,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="GuideDisplay.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="InfoPointPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

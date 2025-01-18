@@ -79,6 +79,15 @@ namespace CitySpotter.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Guide.
+        /// </summary>
+        internal static string GuideText {
+            get {
+                return ResourceManager.GetString("GuideText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Map.
         /// </summary>
         internal static string Map {

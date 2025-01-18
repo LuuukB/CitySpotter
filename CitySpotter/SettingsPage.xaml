@@ -28,6 +28,9 @@
              Command="{Binding LanguageChangeCommand}" />
             </Picker.Behaviors>
         </Picker>
+        <Button
+            Command="{Binding GuideButtonCommand}"
+            Text="{localisation:Translate GuideText}"/>
     </VerticalStackLayout>
 
 </ContentPage>
