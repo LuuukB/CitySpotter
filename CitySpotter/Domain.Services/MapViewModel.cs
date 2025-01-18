@@ -270,11 +270,11 @@ public partial class MapViewModel : ObservableObject
     }
 
 
-    private Polyline[] CreatePolyLineOfLocations(IList<Pin> pins)
+    private List<MapElement> CreateMapElements(IList<Pin> pins)
     {
         Debug.WriteLine("Constructing {0} at {1}", nameof(Polyline), DateTime.Now.ToShortTimeString());
 
-        List<Polyline> polylines = [];
+        List<MapElement> elementen = new List<MapElement>();
 
         // gaat door de lijst van pins heen en kijkt welke al is visited of niet
         for (int i = 0; i < pins.Count - 1; i++)
@@ -282,15 +282,23 @@ public partial class MapViewModel : ObservableObject
             var currentPin = pins[i];
             var nextPin = pins[i + 1];
 
-            polylines.Add(new Polyline
+            elementen.Add(new Polyline
             {
                 StrokeWidth = 12,
                 StrokeColor = IsPinVisited(currentPin) ? Colors.Blue : Colors.Red,
                 Geopath = { currentPin.Location, nextPin.Location }
             });
+            elementen.Add(new Circle
+            {
+                Center = pins[i].Location,
+                Radius = new Distance(20),
+                FillColor = IsPinVisited(currentPin) ? Colors.Green : Colors.Red,
+            });
+            
+            
         }
 
-        return polylines.ToArray();
+        return elementen;
     }
 
 
@@ -327,23 +335,8 @@ public partial class MapViewModel : ObservableObject
                     // maak de polylines opnieuw na het visiten van een pin
 
                     MapElements.Clear();
-                    foreach (var Existingcircle in _pinsAndCirkles.Values) {
-                        MapElements.Add(Existingcircle);
-                    }
-                    foreach (var polyline in CreatePolyLineOfLocations(Pins.ToList())) MapElements.Add(polyline);
+                    foreach (var element in CreateMapElements(Pins.ToList())) MapElements.Add(element);
                     MapElements = new ObservableCollection<MapElement>(MapElements);
-
-                    if (_pinsAndCirkles.TryGetValue(pin, out Circle circle))
-                    {
-                        MainThread.BeginInvokeOnMainThread(() =>
-                        {
-                            // Verander de kleur van de cirkel
-                            circle.FillColor = Colors.Green;
-
-                            // Notify de UI (omdat MapElements geobserveerd wordt)
-                            OnPropertyChanged(nameof(MapElements));
-                        });
-                    }
 
                     // Als de gebruiker de laatste pin heeft bereikt, stop dan de route
                     if (_visitedPins.Count == Pins.Count)
