@@ -132,4 +132,7 @@
   <data name="ColorBlindMode" xml:space="preserve">
     <value>Colorblindness Mode </value>
   </data>
+  <data name="GuideText" xml:space="preserve">
+    <value>Guide</value>
+  </data>
 </root>

@@ -1,9 +1,12 @@
+
 using CitySpotter.Domain.Model;
+using CitySpotter.Domain.Services.FileServices;
 using CitySpotter.Infrastructure;
 using CitySpotter.Resources.Languages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Mopups.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -65,6 +68,22 @@ namespace CitySpotter.Domain.Services
             {
                 LocalizationResources.SetCulture(new CultureInfo("en-US"));
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            }
+        }
+        [RelayCommand]
+        private void GuideButton()
+        {
+            IFileService fileService = new FileService();
+            var viewModel = new GuideDisplayViewModel(fileService);
+            viewModel.setData();
+
+            try
+            {
+                MopupService.Instance.PushAsync(new GuideDisplay(viewModel));
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString);
             }
         }
     }

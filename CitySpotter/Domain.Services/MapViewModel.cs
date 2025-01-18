@@ -240,7 +240,6 @@ public partial class MapViewModel : ObservableObject
 
             viewModel.setData();
 
-
             try
             {
                 MopupService.Instance.PushAsync(new InfoPointPopup(viewModel));
