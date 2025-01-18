@@ -21,14 +21,13 @@ public partial class MapViewModel : ObservableObject
     [ObservableProperty] private string _imageSource = "nointernetpopupscreen.jpg";
     [ObservableProperty] private ObservableCollection<MapElement> _mapElements = [];
     [ObservableProperty] private MapSpan _currentMapSpan;
-    [ObservableProperty] private ObservableCollection<Pin> _pins = [];
+    [ObservableProperty] private ObservableCollection<CustomPin> _pins = [];
     [ObservableProperty] private bool _RouteIsPaused = false;
 
     private Dictionary<Pin, Circle> _pinsAndCirkles = [];
     private System.Timers.Timer _locationTimer;
     public event EventHandler<string> InternetConnectionLost;
     public event EventHandler<string> LocationLost;
-    private List<Pin> _visitedPins = new List<Pin>();
 
     private readonly IGeolocation _geolocation;
     private readonly IDatabaseRepo _databaseRepo;
@@ -94,7 +93,12 @@ public partial class MapViewModel : ObservableObject
         //stop route
         Pins = [];
         _pinsAndCirkles = [];
-        _visitedPins = [];
+        foreach(var pin in Pins)
+        {
+            pin.isVisited = false;
+            _databaseRepo.updateDatabase(pin.id);
+        }
+        
         MapElements = [];
     }
 
@@ -168,7 +172,6 @@ public partial class MapViewModel : ObservableObject
     private async Task CreateRoute(string routeTag)
     {
 
-
         var routeLocations = await _databaseRepo.GetPointsSpecificRoute(routeTag);
 
         MapElements.Add(
@@ -185,13 +188,16 @@ public partial class MapViewModel : ObservableObject
 
     public void CreatePin(RouteLocation routeLocation)
     {
-        Pin pin = new Pin
+        var pin = new CustomPin
         {
             Label = routeLocation.name,
+            isVisited = routeLocation.isVisited,
+            id = routeLocation.locationInRoute,
             Location = new Location(routeLocation.longitude, routeLocation.latitude),
             Type = PinType.Generic
         };
         Pins.Add(pin);
+        
         
         Circle circle = new Circle
         {
@@ -238,7 +244,7 @@ public partial class MapViewModel : ObservableObject
                 imageSource = routeLocation.imageSource
             }, fileService);
 
-            viewModel.setData();
+            await viewModel.setData();
 
             try
             {
@@ -255,20 +261,8 @@ public partial class MapViewModel : ObservableObject
         }
 
     }
-    
 
-
-
-    
-    private bool IsPinVisited(Pin pin)
-    {
-        bool visited = _visitedPins.Any(p => p.Label == pin.Label);
-        Debug.WriteLine($"Checking if pin {pin.Label} is visited: {visited}");
-        return visited;
-    }
-
-
-    private List<MapElement> CreateMapElements(IList<Pin> pins)
+    private List<MapElement> CreateMapElements(IList<CustomPin> pins)
     {
         Debug.WriteLine("Constructing {0} at {1}", nameof(Polyline), DateTime.Now.ToShortTimeString());
 
@@ -283,14 +277,14 @@ public partial class MapViewModel : ObservableObject
             elementen.Add(new Polyline
             {
                 StrokeWidth = 12,
-                StrokeColor = IsPinVisited(currentPin) ? Colors.Blue : Colors.Red,
+                StrokeColor = currentPin.isVisited ? Colors.Blue : Colors.Red,
                 Geopath = { currentPin.Location, nextPin.Location }
             });
             elementen.Add(new Circle
             {
                 Center = pins[i].Location,
                 Radius = new Distance(20),
-                FillColor = IsPinVisited(currentPin) ? Color.FromRgba(0,255,0,48) : Color.FromRgba(255, 0, 0, 48),
+                FillColor = currentPin.isVisited ? Color.FromRgba(0,255,0,48) : Color.FromRgba(255, 0, 0, 48),
             });
             
             
@@ -325,10 +319,11 @@ public partial class MapViewModel : ObservableObject
 
                 Debug.WriteLine($"Checking distance to pin: {pin.Label}, Distance: {distInMeters} meters");
 
-                if (distInMeters <= 20 && !_visitedPins.Contains(pin))
+                if (distInMeters <= 20 && !pin.isVisited)
                 {
                     Debug.WriteLine($"Pin {pin.Label} is within range, adding to visited pins.");
-                    _visitedPins.Add(pin);
+                    pin.isVisited= true;
+                    await _databaseRepo.updateDatabase(pin.id);
                     MarkerClickedCommand.Execute(pin);
                     // maak de polylines opnieuw na het visiten van een pin
 
@@ -337,7 +332,7 @@ public partial class MapViewModel : ObservableObject
                     MapElements = new ObservableCollection<MapElement>(MapElements);
 
                     // Als de gebruiker de laatste pin heeft bereikt, stop dan de route
-                    if (_visitedPins.Count == Pins.Count)
+                    if (pin.id == 45 && pin.isVisited)
                     {
                         _locationTimer.Stop();
                         Debug.WriteLine("Route complete.");

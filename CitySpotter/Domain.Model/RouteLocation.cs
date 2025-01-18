@@ -14,6 +14,7 @@ namespace CitySpotter.Domain.Model
         public string? imageSource { get; set; }
         public bool isVisited { get; set; }
         public string routeTag { get; set; }
+        
         public void setVisited()
         {
             this.isVisited = true;

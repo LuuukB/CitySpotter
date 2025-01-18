@@ -11,4 +11,5 @@ public interface IDatabaseRepo
     Task Drop();
     Task<List<RouteLocation>> GetPointsSpecificRoute(string routeTag);
     Task<List<string>> GetAllNamesRoutes();
+    Task updateDatabase(int locationInRoute);
 }

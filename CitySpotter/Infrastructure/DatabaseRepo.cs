@@ -326,7 +326,7 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
     public async Task Drop()
     {
         await _sQLiteConnection.DropTableAsync<RouteLocation>();
-        
+
     }
 
     public async Task<List<RouteLocation>> GetPointsSpecificRoute(string tagRoute)
@@ -343,5 +343,16 @@ public class DatabaseRepo(string dbPath) : IDatabaseRepo
             .ToList();
 
         return uniqueRouteTags;
+    }
+
+    public async Task updateDatabase(int locationInRoute)
+    {
+        // Haal de huidige waarde van isVisited op
+        var routeLocation = await _sQLiteConnection.FindAsync<RouteLocation>(locationInRoute);
+        if (routeLocation != null)
+        {
+            // Sla de gewijzigde waarde op in de database
+            await _sQLiteConnection.UpdateAsync(routeLocation);
+        }
     }
 }
