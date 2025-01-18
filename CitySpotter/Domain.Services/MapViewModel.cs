@@ -197,8 +197,7 @@ public partial class MapViewModel : ObservableObject
         {
             Center = new Location(routeLocation.longitude, routeLocation.latitude),
             Radius = new Distance(20),
-            FillColor = Colors.Red,
-            
+            FillColor = Color.FromRgba(255,0,0,48),
         };
 
         MapElements.Add(circle);
