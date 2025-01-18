@@ -291,7 +291,7 @@ public partial class MapViewModel : ObservableObject
             {
                 Center = pins[i].Location,
                 Radius = new Distance(20),
-                FillColor = IsPinVisited(currentPin) ? Colors.Green : Colors.Red,
+                FillColor = IsPinVisited(currentPin) ? Color.FromRgba(0,255,0,48) : Color.FromRgba(255, 0, 0, 48),
             });
             
             
