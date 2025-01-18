@@ -34,8 +34,9 @@ namespace CitySpotter
 
             ResourceDictionary dictionary = theme switch
             {
-                "ColorBlindMode" => new Resources.Styles.ColorBlindMode(),
-                "NormalMode" => new Resources.Styles.NormalMode()
+                "DeuteranopieMode" => new Resources.Styles.DeuteranopieMode(),
+                "NormalMode" => new Resources.Styles.NormalMode(),
+                "AnatropieMode" => new Resources.Styles.AnatropieMode()
             };
 
             if (dictionary != null)

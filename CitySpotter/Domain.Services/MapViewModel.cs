@@ -135,7 +135,7 @@ public partial class MapViewModel : ObservableObject
         Debug.WriteLine("Constructing {0}", args: nameof(Polyline));
         Polyline polyline = new Polyline
         {
-            StrokeColor = Colors.Red,
+            StrokeColor = getColor("red"),
             StrokeWidth = 12,
         };
         Debug.WriteLine("Adding to {0}.", args: nameof(polyline.Geopath));
@@ -284,7 +284,7 @@ public partial class MapViewModel : ObservableObject
             polylines.Add(new Polyline
             {
                 StrokeWidth = 12,
-                StrokeColor = IsPinVisited(currentPin) ? Colors.Blue : Colors.Red,
+                StrokeColor = IsPinVisited(currentPin) ? getColor("blue") : getColor("red"),
                 Geopath = { currentPin.Location, nextPin.Location }
             });
         }
@@ -337,7 +337,7 @@ public partial class MapViewModel : ObservableObject
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
                             // Verander de kleur van de cirkel
-                            circle.FillColor = Colors.Green;
+                            circle.FillColor = getColor("green");
 
                             // Notify de UI (omdat MapElements geobserveerd wordt)
                             OnPropertyChanged(nameof(MapElements));
@@ -383,6 +383,54 @@ public partial class MapViewModel : ObservableObject
                 _isShowingLocationError = true;
             }
         }
+    }
+
+    public Color getColor(string color)
+    {
+        if (Preferences.Get("theme", "gay").Equals("NormalMode"))
+        {
+            switch (color)
+            {
+                case "red":
+                    return Colors.Red;
+
+                case "blue":
+                    return Colors.Blue;
+
+                case "green":
+                    return Colors.Green;
+            }
+        }
+        else if (Preferences.Get("theme", "gay").Equals("DeuteranopieMode"))
+        {
+            switch (color)
+            {
+                case "red":
+                    return Colors.Black;
+
+                case "blue":
+                    return Colors.FloralWhite;
+
+                case "green":
+                    return Colors.Chocolate;
+            }
+        }
+        else if (Preferences.Get("theme", "gay").Equals("AnatropieMode"))
+        {
+            switch (color)
+            {
+                case "red":
+                    return Colors.Black;
+
+                case "blue":
+                    return Colors.FloralWhite;
+
+                case "green":
+                    return Colors.Chocolate;
+            }
+        }
+
+        return Colors.Red;
     }
 
 

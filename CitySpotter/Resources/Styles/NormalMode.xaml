@@ -7,5 +7,5 @@
     <Color x:Key="ButtonColor">#512BD4</Color>
     <Color x:Key="ButtonTextColor">#FFFFFF</Color>
     <Color x:Key="BackgroundColor">#FFFFFF</Color>
-    <Color x:Key="SelectedTextColor">#C70039</Color>
+    <Color x:Key="SelectedText">#C70039</Color>
 </ResourceDictionary>

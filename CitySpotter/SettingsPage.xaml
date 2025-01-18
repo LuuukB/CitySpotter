@@ -5,17 +5,41 @@
              xmlns:localisation="clr-namespace:CitySpotter.Infrastructure"
              x:Class="CitySpotter.SettingsPage"
              BackgroundColor ="{DynamicResource BackgroundColor}">
-             
-    <VerticalStackLayout>
-        <Button Command ="{Binding Button_ClickedCommand}" 
-                Padding="20"
-                Text="{localisation:Translate ColorBlindMode}"
-                Style="{StaticResource ButtonStyle}"/>
+            
 
+    <VerticalStackLayout>
+
+        <Label Text="{localisation:Translate ColorBlindMode}"
+               Style="{StaticResource LabelStyle}"
+               Margin="20,20,20,5"/>
+
+        <Picker x:Name="ThemePicker"
+                SelectedItem="{Binding ThemePickerItem}"
+                Style="{StaticResource PickerStyle}"
+                Margin="20,5,20,5">
+            
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Standard</x:String>
+                    <x:String>Deuteranopie</x:String>
+                    <x:String>Anatropie</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+
+            <Picker.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
+     Command="{Binding ThemeChangeCommand}" />
+            </Picker.Behaviors>
+        </Picker>
+
+        <Label Text="{localisation:Translate LanguageMode}"
+               Style="{StaticResource LabelStyle}"
+               Margin="20,50,20,5"/>
 
         <Picker x:Name="LanguagePicker"
-                SelectedItem="{Binding PickerItem}"
-                Style="{StaticResource PickerStyle}">
+                SelectedItem="{Binding LanguagePickerItem}"
+                Style="{StaticResource PickerStyle}"
+                Margin="20,5,20,5">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>English</x:String>
