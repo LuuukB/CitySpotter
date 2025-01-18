@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CitySpotter.Resources.Styles.AnatropieMode">
+
+    <Color x:Key="TextColor">#FB928E</Color>
+    <Color x:Key="ButtonColor">#FB9AAC</Color>
+    <Color x:Key="ButtonTextColor">#FFFFFF</Color>
+    <Color x:Key="BackgroundColor">#FFD8CC</Color>
+    <Color x:Key="SelectedText">#FFFFFF</Color>
+    
+</ResourceDictionary>

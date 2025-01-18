@@ -197,7 +197,10 @@
 	  <MauiXaml Update="MapPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\ColorBlindMode.xaml">
+	  <MauiXaml Update="Resources\Styles\AnatropieMode.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\DeuteranopieMode.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\NormalMode.xaml">

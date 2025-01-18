@@ -27,7 +27,7 @@
                    FontSize="20"
                    VerticalOptions="Center"
                    HorizontalOptions="Start"
-                   TextColor="Black" />
+                   Style="{StaticResource LabelStyle}"/>
         </Grid>
     </Shell.TitleView>
 

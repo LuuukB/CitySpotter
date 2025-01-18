@@ -130,7 +130,13 @@
     <value>Routes</value>
   </data>
   <data name="ColorBlindMode" xml:space="preserve">
-    <value>Colorblindness Mode </value>
+    <value>Colorblindness Mode:</value>
+  </data>
+  <data name="LanguageMode" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="Standard" xml:space="preserve">
+    <value>Standard</value>
   </data>
   <data name="GuideText" xml:space="preserve">
     <value>Guide</value>
