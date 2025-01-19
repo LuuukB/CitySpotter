@@ -5,6 +5,8 @@ namespace CitySpotter.Domain.Services
 {
     public partial class BindableMap : Microsoft.Maui.Controls.Maps.Map
     {
+        public static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1,1);
+
         public static readonly BindableProperty MvvmMapElementsProperty =
             BindableProperty.Create(
                 nameof(MvvmMapElements),
@@ -15,16 +17,19 @@ namespace CitySpotter.Domain.Services
                 // Runt alleen op '= new()', niet op Add() of Clear()!!!
                 propertyChanged: (b, _, n) =>
                 {
+                    semaphoreSlim.Wait();
                     if (b is BindableMap map)
                     {
+                  
                         map.MapElements.Clear();
                         foreach (var element in (IEnumerable<MapElement>)n)
                         {
                             map.MapElements.Add(element);
+                            
                         }
                     }
+                    semaphoreSlim.Release();
                 });
-
 
         public static readonly BindableProperty VisibleRegionInMapProperty =
           BindableProperty.Create(

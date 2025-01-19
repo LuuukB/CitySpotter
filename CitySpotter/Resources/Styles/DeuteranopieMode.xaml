@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CitySpotter.Resources.Styles.NormalMode">
+             x:Class="CitySpotter.Resources.Styles.DeuteranopieMode">
 
     <Color x:Key="TextColor">#000000</Color>
-    <Color x:Key="ButtonColor">#512BD4</Color>
+    <Color x:Key="ButtonColor">#056ef9</Color>
     <Color x:Key="ButtonTextColor">#FFFFFF</Color>
     <Color x:Key="BackgroundColor">#FFFFFF</Color>
-    <Color x:Key="SelectedText">#C70039</Color>
+    <Color x:Key="SelectedText">#053eFF</Color>
+
 </ResourceDictionary>

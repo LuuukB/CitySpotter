@@ -26,10 +26,11 @@
 
             <Style TargetType="Shell" x:Key="TabBarStyle">
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{DynamicResource BackgroundColor}"/>
-                <Setter Property="Shell.TabBarTitleColor" Value="{DynamicResource SelectedTextColor}"/>
                 <Setter Property="Shell.TabBarUnselectedColor" Value="{DynamicResource TextColor}"/>
-                <Setter Property="Shell.TitleColor" Value="{DynamicResource TextColor}"/>
+                
                 <Setter Property="Shell.BackgroundColor" Value="{DynamicResource BackgroundColor}"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="{DynamicResource SelectedText}"/>
+                <Setter Property="Shell.TabBarForegroundColor" Value="{DynamicResource SelectedText}"/>
             </Style>
 
             <Style TargetType="Picker" x:Key="PickerStyle">

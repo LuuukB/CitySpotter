@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="name" xml:space="preserve">
-    <value>Text is English</value>
-  </data>
   <data name="GetRoutes" xml:space="preserve">
     <value>Get Routes</value>
   </data>
@@ -129,13 +126,19 @@
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="MapText" xml:space="preserve">
-    <value>Here you see the Map!</value>
-  </data>
   <data name="Routes" xml:space="preserve">
     <value>Routes</value>
   </data>
   <data name="ColorBlindMode" xml:space="preserve">
-    <value>ColorBlind Mode </value>
+    <value>Colorblindness Mode:</value>
+  </data>
+  <data name="LanguageMode" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="Standard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="GuideText" xml:space="preserve">
+    <value>Guide</value>
   </data>
 </root>

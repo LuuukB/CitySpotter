@@ -9,31 +9,51 @@
     Title="CitySpotter"
     Style="{StaticResource TabBarStyle}">
 
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Image Source="agslogo.jpg"
+                   WidthRequest="40"
+                   HeightRequest="40"
+                   HorizontalOptions="End"
+                   VerticalOptions="Center"
+                   Margin="0,0,8,0" />
+
+            <Label Text="CitySpotter"
+                   FontSize="20"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   Style="{StaticResource LabelStyle}"/>
+        </Grid>
+    </Shell.TitleView>
 
     <TabBar>
-      
         <ShellContent
             Title="{localisation:Translate Routes}"
             ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" />
+            Route="MainPage" 
+            Icon="homeicon.png"/>
 
         <ShellContent
            Title="{localisation:Translate Map}"
            ContentTemplate="{DataTemplate local:MapPage}"
-           Route="MapPage" />  
+           Route="MapPage"
+           Icon="mapicon.png"/>  
         
         <ShellContent
            Title="{localisation:Translate Settings}"
            ContentTemplate="{DataTemplate local:SettingsPage}"
-           Route="SettingsPage" />
+           Route="SettingsPage"
+           Icon="settingicon.png"/>
         
        <!-- <ShellContent
            Title="Help"
            ContentTemplate="{DataTemplate local:HelpPopUpPage}"
            Route="HelpPopUpPage" />-->
-
-
-
     </TabBar>
 
 

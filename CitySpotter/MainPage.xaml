@@ -13,17 +13,6 @@
     </ContentPage.Behaviors>
 
     <StackLayout>
-        <HorizontalStackLayout>
-            <Button Text="{localisation:Translate GetRoutes}"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                Command ="{Binding GetRoutesForViewCommand}" 
-                Style="{StaticResource ButtonStyle}"/>
-
-        
-
-        </HorizontalStackLayout>
-
         <CollectionView ItemsSource="{Binding RouteNames}"
                         SelectionMode="Single"
                         Margin="0,20,0,0">

@@ -1,0 +1,17 @@
+Welkom bij CitySpotter! In dit menu zult u de handleiding vinden. 
+
+Voordat de route kan worden gestart is het van belang om 1 ding te controleren: staan de routes allemaal in de eerste pagina? Als dit niet het geval is, sluit de app compleet af en start opnieuw op. Nu zult u de routes vinden die in de app aanwezig zijn. 
+
+De kaart zal een weergave geven van de locatie waar u zich bevindt. Als u geen route heeft geselecteerd, dan wordt de map zonder enige vorm van navigatie weergegeven.  
+
+Als u de route start die in het “Route” scherm staan, wordt u automatisch doorverwezen naar de kaart met de route die u heeft geselecteerd. Deze kaart bevat alle punten die toebehoren aan de route die u heeft geselecteerd. De bezienswaardigheden worden weergegeven met Pins. Deze pins beschikken over de mogelijkheid om te kunnen lezen en zien wat de bezienswaardigheid is door middel van tekst en een afbeelding.  
+
+Tijdens de route wordt uw locatie bijgehouden. U ontvangt dan een bericht op het scherm zodra u bezienswaardigheid nadert. De progressie wordt tevens ook bijgehouden. U kunt onder de pins zien dat er cirkels staan. Deze zullen van kleur veranderen zodra u deze bezocht heeft. 
+
+Als uw GPS of internetverbinding wegvalt, zal het systeem hier zelf melding van maken. Controleer op uw systeem of GPS en het internet aan staan. De app zal zelf namelijk controleren of deze verbinding zijn hersteld. De route zal vervolgens automatisch weer met u meelopen. 
+
+De app beschikt over 2 talen. Nederlands en Engels. Deze talen zijn toe te passen in de instellingen. 
+
+Ook voor mensen die kleurenblind zijn is er de mogelijkheid om de kleurensamenstelling van de app aan te passen. Er zijn 2 opties namelijk: deuteranopie en protanopie. Uw selectie wordt op het systeem toegepast. 
+
+Tot slot wensen wij u veel plezier bij het gebruiken van de app.  

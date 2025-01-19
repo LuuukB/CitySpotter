@@ -1,4 +1,6 @@
-﻿namespace CitySpotter
+﻿using Microsoft.Maui.Controls.PlatformConfiguration;
+
+namespace CitySpotter
 {
     public partial class AppShell : Shell
     {

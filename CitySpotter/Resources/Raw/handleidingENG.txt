@@ -1,0 +1,17 @@
+Welcome to CitySpotter! In this menu, you will find the user manual.
+
+Before starting the route, it's important to check one thing: are all the routes on the first page? If not, completely close the app and restart it. You will now find the routes available in the app.
+
+The map will display the location where you are. If no route has been selected, the map will be shown without any navigation.
+
+When you start the route listed on the “Route” screen, you will automatically be redirected to the map with the selected route. This map contains all the points that belong to the route you've selected. The landmarks will be shown with pins. These pins allow you to read and view information about the landmark through text and an image.
+
+During the route, your location will be tracked. You will receive a notification on the screen when you approach a landmark. Your progress will also be tracked. You can see circles below the pins. These will change color once you have visited them.
+
+If your GPS or internet connection is lost, the system will notify you. Check if your GPS and internet are turned on. The app will automatically check if these connections have been restored. The route will then continue automatically with you.
+
+The app is available in two languages: Dutch and English. These languages can be selected in the settings.
+
+For people with color blindness, there is also the option to adjust the color scheme of the app. There are two options: deuteranopia and protanopia. Your selection will be applied to the system.
+
+Finally, we wish you lots of fun using the app.
